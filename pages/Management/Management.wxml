@@ -1,0 +1,58 @@
+<view class="page">
+  <!--主体-->
+  <view class="page__bd">
+    <view class="list">
+        <view class="weui-cell__bd">
+          <view class='weui-size'>头像</view>
+          <view class='weui-size-font' bindtap='getBigImg'>
+            <image  src="{{userInfo.avatarUrl}}" ></image>
+            <image src="img/icon-chev-right.png"></image>
+          </view>
+        </view>
+      <navigator url="#" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">
+          <view class='weui-size'>昵称</view>
+          <view class='weui-size-font'>{{userInfo.nickName}}
+            <image src="img/icon-chev-right.png"></image>
+          </view>
+        </view>
+      </navigator>
+      <navigator url="../ShareCode/ShareCode" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">
+          <view class='weui-size'>二维码名片</view>
+          <view class='weui-size-font'>
+            <image src='img/QR-code.png'></image>
+            <image src="img/icon-chev-right.png"></image>
+          </view>
+        </view>
+      </navigator>
+      <navigator url="../phoneBinding/phoneBinding" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">
+          <view class='weui-size'>手机绑定</view>
+          <view class='weui-size-font'><text >{{phoneNum}}</text >
+            <image src="img/icon-chev-right.png"></image>
+          </view>
+        </view>
+      </navigator>
+      <navigator url="../authentication/authentication" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">
+          <view class='weui-size'>实名认证</view>
+          <view class='weui-size-font'><text >{{isRealName}}</text >
+            <image src="img/icon-chev-right.png"></image>
+          </view>
+        </view>
+      </navigator>
+      <navigator url="#" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      </navigator>
+      <navigator url="../address/address" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">
+          <view class='weui-size'>地址管理</view>
+          <view class='weui-size-font'>
+            <image src="img/icon-chev-right.png"></image>
+          </view>
+        </view>
+      </navigator>
+    </view>
+  </view>
+  <!--没有页脚-->
+</view>

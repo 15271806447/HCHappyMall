@@ -1,0 +1,76 @@
+page{
+  background: #E1E1E1;
+}
+
+
+.lflxbox{
+  display: flex;
+  height:  50px;
+  font-size: 16px;
+  line-height: 50px;
+ background: #EBEBEB;
+ margin-bottom: 5px;
+ border-radius: 5px;
+}
+.lfeft{
+  flex: 1;
+  padding-left: 10px;
+}
+.mb10{
+  margin-bottom: 10px;
+}
+.lright{
+  flex: 2;
+  height: 50px;
+   line-height: 50px;
+}
+/* .lflxbox input [placeholder]{
+color: gray;
+} */
+.lfeft1{
+   flex: 1;
+  text-align: center;
+  color: #fff;
+  background: gray;
+  border-radius: 5px;
+  height: 40px;
+  line-height: 40px;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+.lflxboxb{
+  display: flex;
+  height:  50px;
+  font-size: 16px;
+  line-height: 50px;
+ background: #867F80;
+ margin: 10px;
+ border-radius: 5px;
+ color: #fff;
+ text-align: center;
+ margin-top: 40px;
+}
+.placeholderStyle{
+  color: #fff;
+}
+.pdemes{
+  height:  30px;
+  font-size: 16px;
+  line-height: 30px;
+ border-radius: 5px;
+ color: gray;
+ margin-left: 5px;
+}
+.subcard{
+  height:  50px;
+  font-size: 16px;
+  line-height: 50px;
+ border-radius: 25px;
+ color: #FFF;
+ margin-left: 5px;
+ background: #f53f2c;
+ text-align: center;
+ width: 80%;
+ margin: 0 auto;
+ margin-top: 20px;
+}

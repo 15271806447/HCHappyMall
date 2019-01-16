@@ -1,0 +1,76 @@
+<!--logs.wxml-->
+<view class="log-list">
+  <view class='userInfo'>
+    <view class='name'>
+      <text class='user'>收货人：{{address.username}}</text>
+      <text class="tel">{{address.telephone}}</text>
+    </view>
+    <view class="address">
+      <image class="map" src='../image/map.svg'></image>
+      <text> 收货地址：{{address.address}}</text>
+      <image bindtap='address' class="edit" src='../image/right.svg'></image>
+    </view>
+    <text class='no-actived'>（收货不便时，可选择免费代收货服务）</text>
+  </view>
+</view>
+
+<!-- 商品循环开始 -->
+<view class='goodsList'>
+  <view class='goodsInfo'>
+    <text class='goodstitle'>商品信息</text>
+    <view class='goods' wx:for="{{goodsList}}">
+      <image class='goodsPic' src='{{item.productCovermap}}'></image>
+      <text class='goodsname'>{{item.productTitle}}</text>
+      <view class='space-bewteen'>
+        <text class='goodsprice'>￥{{item.originalPrice}}</text>
+        <text class='goodsnumber'>x{{item.count}}</text>
+      </view>
+      <text class='goodsBtn'>七天退换</text >
+  </view>
+</view>
+  <!-- <view class='sends'>
+    <text>配送方式</text>
+      <text>快递免邮</text>
+    </view> -->
+  </view>
+  <view class='delivery'>
+    <view class='item'>
+      <text>买家留言：</text>
+      <input bindinput="bindKeyInput" placeholder="选填：对本次交易的说明"></input>
+    </view>
+    <view class='item'>
+      <text>可用积分</text>
+      <text>{{integral}}</text>
+    </view>
+    <view class='item'>
+      <text>优惠券</text>
+      <image class='dis_pic' src='http://47.107.183.112/img/downArrow.png'></image>
+    </view>
+    <view id='box'>
+      <view class='discount' wx:for="{{coupon}}">
+        <view>
+          <text>￥{{item.money}}</text>
+          <text>{{item.dikou}}</text>
+        </view>
+        <view>
+          <text>幸福学院{{item.name}}优惠券</text>
+          <text>{{item.manjian}}</text>
+        </view>
+        <view bindtap='chooseCoupon' data-index='{{index}}'>{{item.use}}</view>
+      </view>
+    </view>
+    <view class='item'>
+      <text>会员</text>
+      <text>{{delivery.discount}}折</text>
+    </view>
+    <view class='count'>
+      <text>共{{TotalCount}}件商品  小计</text>
+      <text>￥{{TotalPrice}}</text>
+    </view>
+  </view>
+
+  <view class='submit'>
+    合计：
+    <text>￥{{TotalPrice}}</text>
+    <view bindtap='pay' class='pay'>提交订单</view>
+  </view>

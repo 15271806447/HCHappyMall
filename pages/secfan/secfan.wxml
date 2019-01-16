@@ -1,0 +1,13 @@
+<view>
+  <block wx:for="{{firstFansVOList}}" wx:for-item="item">
+    <view class='dirfanlist'>
+      <view class='headeee'>
+        <image src='{{item.imgs}}'></image>
+      </view>
+      <view class='flmid'>
+        <view class='dirfanname'>{{item.nickName}}</view>
+      </view>
+      <view class='payattin'>二级粉丝：{{item.secendFansNum}}人</view>
+    </view>
+  </block>
+</view>

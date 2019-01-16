@@ -1,0 +1,38 @@
+<view class='.box'>
+  <view class='space'></view>
+
+  <view class='user_info'>
+    <view class='circle'>
+      <text class='jifen_total'>积分总额</text>
+      <text class='jifen_number'>{{user.jifenTotal}}</text>
+    </view>
+  </view>
+
+  <view class='space'></view>
+
+  <view wx:if='{{!isShow}}'>
+    <view class='jifen_history'>
+      <text>积分交易记录</text>
+    </view>
+    <block wx:for="{{user.jifenDetail}}" wx:for-item="item">
+      <view class='flinter'>
+        <text class='fx2' decode="{{true}}">{{item.jifenName}}</text>
+        <text class='fx1'>{{item.jifenType}}</text>
+        <text class='fx1 cored'>{{item.jifenNumber}}</text>
+        <text class='fx3'>{{item.jifenDate}}</text>
+      </view>
+    </block>
+  </view>
+
+  <view wx:if='{{isShow}}' >
+      <text class='get_head_title'>积分获取</text>
+      <view class='get_integral' wx:for="{{showMessage}}">
+        <view class='get_top'>
+          <image src='{{item.imgPath}}'></image>
+          <text class='get_title'>{{item.title}}</text>
+        </view>
+        <text class='get_article'>{{item.message}}</text>
+      </view>
+  </view>
+
+</view>

@@ -1,0 +1,81 @@
+<view class='ordet'>
+  <image src='../img/bj.jpg'></image>
+  <view class='popaytype' wx:if="{{orderData.state==1}}">等待买家付款</view>
+  <view class='popaytype' wx:elif="{{orderData.state==2}}">等待卖家发货</view>
+  <view class='popaytype' wx:elif="{{orderData.state==3}}">等待买家收获</view>
+  <view class='popaytype' wx:elif="{{orderData.state==4}}">已完成</view>
+  <view class='popaytype' wx:elif="{{orderData.state==5}}">已取消或退款</view>
+</view>
+
+<view class='buyadress'>
+  <view class='peradmes'>
+    <text class='buyper'>收货人：{{address.userName}}</text>
+    <text class='perfon'>{{address.userPhone}}</text>
+  </view>
+  <view class='ee10'></view>
+  <view class='fadrimg'>
+    <view class='f1'>
+      <image src='../img/address.png'></image>
+    </view>
+    <view class='peradress'>
+      收货地址：{{addr}}
+    </view>
+  </view>
+</view>
+<view class='clear'></view>
+<!-- 商品1 -->
+<block wx:for="{{orderData.orderItemVOList}}" wx:for-item="item">
+  <view class='goodsitem'>
+    <image src='{{imgHeader+item.productCovermap}}' class='f2'></image>
+    <view class='f4 goodstil'>
+      <view class='goodstitle'>{{item.productTitle}}</view>
+      <text class='pricegoods'>￥{{item.originalPrice}}</text>
+      <text class='numgoods'>x{{item.shopNumber}}</text>
+      <view class='notbuy'>7天退货</view>
+    </view>
+  </view>
+</block>
+<!-- 商品2 -->
+<!-- <view class='goodsitem'>
+  <image src='../../img/goodsimg.jpg' class='f2'></image>
+  <view class='f4 goodstil'>
+    <view class='goodstitle'>棉袄</view>
+    <text class='pricegoods'>￥34</text>
+    <text class='numgoods'>x1</text>
+    <view class='notbuy'>7天退货</view>
+  </view>
+</view> -->
+<view class='oderzeng'>
+  <image src='../img/zeng.png'></image>
+  <text class='roadmon'>运费</text>
+  <text class='roadmone'>￥{{orderData.freight}}</text>
+</view>
+<view class='odernum'>
+  <text>订单编号：</text>
+  <text>{{orderData.orderNum}}</text>
+</view>
+<view class='odermon'>
+  <text>商品总额：</text>
+  <text class='ordrresu'>￥{{orderData.allPayment}}</text>
+</view>
+<!-- <view class='odermon'>
+  <text>优惠券抵扣：</text>
+  <text class='ordrresu'>{{coupon==null?"无":"-￥"+preferentialAmount}}</text>
+</view> -->
+<view class='odernumb'>
+  <text>实际金额：</text>
+  <text class='ordrresu'>￥{{orderData.actualPayment}}</text>
+</view>
+<view class='odernumb'>
+  <text>返还积分：</text>
+  <text class='ordrresu'>{{orderData.integral}}</text>
+</view>
+<view class='odertol'>
+<text class='summon'>合计：</text>
+  <text class='summondeta'>￥{{orderData.actualPayment+orderData.freight}}</text>
+  <view class='toPay' wx:if="{{orderData.state==1}}"><text class='toPay' bindtap='toPay'>付款</text></view>
+  <view class='pay' wx:elif="{{orderData.state==2}}"><text class='pay'>已付款</text></view>
+  <view class='pay' wx:elif="{{orderData.state==3}}"><text class='pay' >已付款</text></view>
+  <view class='pay' wx:elif="{{orderData.state==4}}"><text class='pay'>已付款</text></view>
+  <view class='pay' wx:elif="{{orderData.state==5}}"><text class='pay'>退货...</text></view>
+</view>

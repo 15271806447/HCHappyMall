@@ -1,0 +1,108 @@
+
+.box{
+  font-size: 28rpx;
+}
+
+.user_info{
+  padding-top: 50rpx;
+  padding-bottom: 50rpx;
+  background-color: #FF8C00	;
+  margin-bottom: 3px;
+}
+
+
+.circle {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  margin: auto;
+}
+
+.jifen_total{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60rpx;
+}
+
+.jifen_number {
+  font-size: 40rpx;
+  color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jifen_history{
+  margin-top: 50rpx;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.flinter{
+  display: flex;
+  border-bottom: 1px solid #eee;
+}
+.fx1{
+  flex: 1;
+  text-align: center;
+  padding-left: 5rpx; 
+  height: 40px;
+  line-height: 40px;
+}
+.fx2{
+  flex: 2;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+}
+.fx3{
+  flex: 3;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+}
+.cored{
+  color: red;
+}
+
+.get_head_title{
+  font-size: 24rpx;
+  margin-left: 30rpx;
+  color: #FF8C00;
+}
+
+.get_integral{
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+}
+
+.get_top {
+  flex-direction: row;
+  margin-bottom: 2px;
+}
+
+.get_integral image{
+  width: 50rpx;
+  height: 50rpx;
+  margin-left: 50rpx;
+  margin-right: 10rpx;
+  vertical-align: middle;
+}
+
+.get_title{
+  font-size: 32rpx;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.get_article{
+  color: #ccc;
+  font-size: 24rpx;
+  margin-left: 110rpx;
+  margin-right: 50rpx;
+}

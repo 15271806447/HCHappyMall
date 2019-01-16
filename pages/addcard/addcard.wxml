@@ -1,0 +1,41 @@
+<view class='pdemes'>请输入身份信息：</view>
+
+<view class='lflxbox'>
+  <text class='lfeft'>姓名:</text>
+  <input class='lright' placeholder='请输入姓名'></input>
+</view>
+
+<view class='lflxbox'>
+  <text class='lfeft'>身份证:</text>
+  <input class='lright' placeholder='请输入身份证'></input>
+</view>
+<view class='pdemes'>请填写银行卡信息：</view>
+<view class='lflxbox'>
+  <text class='lfeft'>银行卡号:</text>
+  <input class='lright' placeholder='请填写银行卡号'></input>
+</view>
+
+<view class="section lflxbox">
+  <view class="lfeft">选择卡类型:</view>
+  <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}" class='lright'>
+    <view class="picker">{{array[index]}}</view>
+  </picker>
+</view>
+
+<view class='lflxbox'>
+  <text class='lfeft'>手机号:</text>
+  <input class='lright' placeholder='请输入银行卡预留手机号'></input>
+</view>
+
+<view class='lflxbox'>
+  <text class='lfeft'>填写验证码:</text>
+  <input class='lright' placeholder='请输入验证码'></input>
+   <text class='lfeft1'>获取验证码</text>
+</view>
+
+<view class='subcard'>确认绑卡</view>
+
+
+
+
+

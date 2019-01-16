@@ -1,0 +1,5 @@
+<!--index.wxml-->
+<view class="box">
+  <canvas canvas-id='qrcode' style='margin:auto;width:660rpx; height:660rpx; background:#AAA;'>
+  </canvas>
+</view>

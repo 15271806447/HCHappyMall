@@ -1,0 +1,13 @@
+<view class='row'>
+   <view class='discount'wx:for="{{couponVOS}}" wx:for-item="item">
+    <view>
+      <text>{{item.preferentialAmount}}</text>
+      <text>抵用券</text>
+    </view>
+    <view>
+      <text>{{item.name}}</text>
+      <text>满{{item.prepaymentAmount}}可用</text>
+    </view>
+    <view>立即使用</view>
+  </view>
+</view>

@@ -1,0 +1,124 @@
+<view class="swiper-tab">
+  <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap='swichNav'>书籍</view>
+  <view class="swiper-tab-list {{currentTab==2 ? 'on' : ''}}" data-current="2" bindtap='swichNav'>声音课程</view>
+  <view class="swiper-tab-list {{currentTab==3 ? 'on' : ''}}" data-current="3" bindtap='swichNav'>视屏课程</view>
+  <view class="swiper-tab-list {{currentTab==4 ? 'on' : ''}}" data-current="4" bindtap='swichNav'>活动</view>
+</view>
+
+<swiper current="{{current}}" class="swiper-box" duration="300" bindchange="bindChange" style='height:100%'>
+
+  <!-- 书籍 -->
+  <swiper-item>
+    <block wx:for="{{bookArr}}" wx:for-item="item">
+      <view class='collectinglist'>
+        <view class='video-list'>
+          <view class='video-img-left'>
+            <image src='../img/true.jpg'></image>
+          </view>
+          <view class='video-decribe-mid'>
+            <view class='book-name'>{{item.productTitle}}
+              <image class='trash' mode="scaleToFill" src='http://47.107.183.112/img/trash.png' catchtap='delete' data-index='{{index}}' data-type='bookArr'></image>
+            </view>
+            <view class='video-tea'>{{item.productAuthor}}</view>
+            <view class='person-num'>
+              <image src='../img/person.png'></image>
+              <text>{{item.productSales}}</text>
+              <text class='video-price'>￥{{item.memberPrice}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </swiper-item>
+
+  <!-- 声音课程 -->
+
+  <swiper-item>
+    <block wx:for="{{audioArr}}" wx:for-item="item">
+      <view class='collectinglist'>
+        <view class='video-list'>
+          <view class='video-img-left'>
+            <image src='../img/true.jpg'></image>
+          </view>
+          <view class='video-decribe-mid'>
+            <view class='book-name'>{{item.productTitle}}
+              <image class='trash' mode="scaleToFill" src='http://47.107.183.112/img/trash.png' catchtap='delete' data-index='{{index}}' data-type='audioArr'></image>
+            </view>
+            <view class='video-tea'>{{item.productAuthor}}</view>
+            <view class='person-num'>
+              <image src='../img/person.png'></image>
+              <text>{{item.productSales}}</text>
+              <text class='video-price'>￥{{item.memberPrice}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </swiper-item>
+
+  <!-- 视频课程 -->
+  <swiper-item>
+    <block wx:for="{{movieArr}}" wx:for-item="item">
+      <view class='collectinglist'>
+        <view class='video-list'>
+          <view class='video-img-left'>
+            <image src='../img/true.jpg'></image>
+          </view>
+          <view class='video-decribe-mid'>
+            <view class='book-name'>{{item.productTitle}}
+              <image class='trash' mode="scaleToFill" src='http://47.107.183.112/img/trash.png' catchtap='delete' data-index='{{index}}' data-type='movieArr'></image>
+            </view>
+            <view class='video-tea'>{{item.productAuthor}}</view>
+            <view class='person-num'>
+              <image src='../img/person.png'></image>
+              <text>{{item.productSales}}</text>
+              <text class='video-price'>￥{{item.memberPrice}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+  </swiper-item>
+
+
+
+  <!-- 活动 -->
+  <swiper-item>
+    <block wx:for="{{activeArr}}" wx:for-item="item">
+      <view class='collectinglist'>
+        <view class='video-list'>
+          <view class='video-img-left'>
+            <image src='../img/true.jpg'></image>
+          </view>
+          <view class='video-decribe-mid'>
+            <view class='book-name'>{{item.productTitle}}
+              <image class='trash' mode="scaleToFill" src='http://47.107.183.112/img/trash.png' catchtap='delete' data-index='{{index}}' data-type='activeArr'></image>
+            </view>
+            <view class='video-tea'>{{item.productAuthor}}</view>
+            <view class='person-num'>
+              <image src='../img/person.png'></image>
+              <text>{{item.productSales}}</text>
+              <text class='video-price'>￥{{item.memberPrice}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+  </swiper-item>
+</swiper>
+
+
+
+
+<!-- <view class='mb50'></view>
+<view class='bot-sum'>
+  <view class='bot-sum-money'>
+    <text class='bot-tol'>总金额 :</text>
+    <text class='bot-sum-moneyred'>￥999</text>
+  </view>
+</view>
+<view class='bot-sum-bkred'>
+  <view class='bot-sum-buy'>结算</view>
+</view> -->
