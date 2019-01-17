@@ -5,13 +5,12 @@
   min-height: 40%;
   padding-top: 40rpx;
   text-align: center;
-  /* box-sizing: border-box; *//* margin:0 auto; */
-  border: 8rpx solid #f0f0f0;
+
 }
 
 swiper-item image {
-  width: 60%;
-  height: 80%;
+  width: 75%;
+  height: 100%;
 }
 
 .goodsInfo {
@@ -131,7 +130,7 @@ swiper-item image {
   border-radius: 20rpx;
   position: absolute;
   right: 20rpx;
-  top: 72rpx;
+  top: 0rpx;
 }
 
 .jifen, .confirm {
@@ -283,5 +282,8 @@ swiper-item image {
 
 #yellow {
   color: #f53f2c;
-  font-size: 20px;
+  font-size: 18px;
 }
+/* .mtf30{
+  margin-top:0; 
+} */

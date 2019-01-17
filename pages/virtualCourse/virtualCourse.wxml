@@ -3,7 +3,7 @@
   <view class='module'>
     <!-- 图片 -->
     <view class="detail-images">
-      <image src='{{vritualCourse.coverPath}}'></image>
+      <image src='{{vritualCourse.coverPath}}'width="355px" height="360px"></image>
     </view>
     <!-- 描述 -->
     <view class="detail">

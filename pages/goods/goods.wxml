@@ -1,17 +1,17 @@
 <view class='goodspic'>
-  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style='height:360px;'>
     <block wx:for="{{imgUrls}}">
       <swiper-item>
-        <image src="{{item}}" class="slide-image" width="355" height="150" />
+        <image src="{{item}}" class="slide-image" width="355" height="360" />
       </swiper-item>
     </block>
   </swiper>
   <view class='goodsInfo'>
     <text class='info'>{{goods.productTitle}}</text>
-    <view>
+    <!-- <view>
       <image class='share' src='../image/share.svg'>分享</image>
       <text>分享</text>
-    </view>
+    </view> -->
     <view>
       <view class="price">
         <text>￥{{goods.memberPrice}}</text>
@@ -44,7 +44,7 @@
       <text>急速退货</text>
       <text>正品保证</text>
       <text>赠运险费</text>
-      <text>极速退款</text>
+      <text class='mtf30' style='margin-top:0;'>极速退款</text>
     </view>
     <view>
       <text>同梦缘无忧购</text>
