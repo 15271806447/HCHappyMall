@@ -45,7 +45,8 @@ App({
     productCartList: null,
     activeDetail: null,
     ip: null,
-    openid: null
+    openid: null,
+    imageUrl:"http://47.107.183.112:90/img/"
   },
   /**解析地址Code值 */
   analysisCode: function(areaIdPath, userAddress, thatpage) {
