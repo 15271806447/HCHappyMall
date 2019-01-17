@@ -33,7 +33,8 @@ Page({
     }],
     
     fisrtCategory: "active",
-    searchinput: ""
+    searchinput: "",
+    imageUrl: app.globalData.imageUrl
   },
   onLoad: function() {
     this.getSecondClassify();

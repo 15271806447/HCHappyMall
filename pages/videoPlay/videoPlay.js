@@ -16,24 +16,25 @@ Page({
       allEpisodes: "40"
     },
     
-    video: [{
-         videoName: "面对孩子的问题父母怎么处理",
-         videoUrl: "http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400"
-       }, {
-         videoName: "梦想的界定",
-         videoUrl: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
-       }, {
-         videoName: "孩子要怎样获得正能量",
-        videoUrl: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
-       }, {
-         videoName: "孩子成长中的动力和阻力",
-         videoUrl: "http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400"
-      }
+     video: [
+    //      videoName: "面对孩子的问题父母怎么处理",
+    //      videoUrl: "http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400"
+    //    }, {
+    //      videoName: "梦想的界定",
+    //      videoUrl: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
+    //    }, {
+    //      videoName: "孩子要怎样获得正能量",
+    //     videoUrl: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
+    //    }, {
+    //      videoName: "孩子成长中的动力和阻力",
+    //      videoUrl: "http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400"
+    //   }
     ],
     //当前播放的视频索引
     IsHidden: true,
     state: true,
     first_click: false,
+
   },
    /**
    * 生命周期函数--监听页面初次渲染完成
@@ -80,26 +81,15 @@ Page({
       });
     }
   },
-  onLoad:function(e){
-    console.log(e);
+  //获取节的信息
+  getChapterInfo: function (videoId) {
     var that = this;
-    var videoDetail = JSON.parse(e.videoDetail);
-    var videoName = "videoInformation.name";
-    var videoDesption = "videoInformation.desption";
-    var videoSales = "videoInformation.sales";
     var videoNowEpisodes = "videoInformation.nowEpisodes";
     var videoAllEpisodes = "videoInformation.allEpisodes";
-    
     var video = [];
-    that.setData({
-      [videoName]: videoDetail.productTitle,
-      [videoDesption]: videoDetail.courseIntroduce,
-      [videoSales] : videoDetail.productStock
-    })
-
-    console.log(videoDetail.id)
+    var fileId = [];
     wx.request({
-      url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + "&id=" + videoDetail.id,
+      url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + "&id=" + videoId,
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
@@ -107,42 +97,103 @@ Page({
       success: function (res) {
         console.log(res);
         that.setData({
+           
           [videoNowEpisodes]: res.data.data.courseVO.nowNum,
           [videoAllEpisodes]: res.data.data.courseVO.totalNum
-        })
-        for (var i = 0; i < res.data.data.courseVO.hcFSectionInfoList.length;i++){
+        });
+        for (var i = 0; i < res.data.data.courseVO.hcFSectionInfoList.length; i++) {
           var videochapter = { videoName: "", videoUrl: "" };
           videochapter.videoName = res.data.data.courseVO.hcFSectionInfoList[i].chapterName;
-          console.log(res.data.data.courseVO.hcFSectionInfoList[i].fileAddr);
-          console.log(app.globalData.url + '/common/file/showPicture.do?id=' + res.data.data.courseVO.hcFSectionInfoList[i].fileAddr);
-       
-          videochapter.videoUrl = app.globalData.url + '/common/file/showPicture.do?id=' + res.data.data.courseVO.hcFSectionInfoList[i].fileAddr;
-          //videochapter.videoUrl = "H:\\apache-tomcat-7.0.91\\webapps\\ROOT\\upload\\6dcd368363ccf37a27800ff5eec7ed11.avi";
+         that.getFilePath(res.data.data.courseVO.hcFSectionInfoList[i].fileAddr,i);
+          // videochapter.videoUrl = app.globalData.url + '/upload/' + that.getFileName(res.data.data.courseVO.hcFSectionInfoList[i].fileAddr);
+          // videochapter.videoUrl = app.globalData.url + '/upload/' + res.data.data.courseVO.hcFSectionInfoList[i].fileAddr + '.mp4';
+          // videochapter.videoUrl = app.globalData.url + "/common/file/showPicture.do?id=" + res.data.data.courseVO.hcFSectionInfoList[i].fileAddr;
+          // videochapter.videoUrl = that.getFilePath(res.data.data.courseVO.hcFSectionInfoList[i].fileAddr, i)[0];
+          fileId.push(res.data.data.courseVO.hcFSectionInfoList[i].fileAddr);
           video.push(videochapter);
         }
-        // var videochapter1 = { videoName: "面对孩子的问题父母怎么处理", videoUrl: "http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" };
-        // video.push(videochapter1);
-        // console.log(that.data.video.length);
         that.setData({
-          video: video
-        })
+          video: video,
+          fileId: fileId,
+        });
       }
+
+      
     });
-    that.getSecondClassifyName(videoDetail);
-    // console.log(that.data.video.length);
-    // wx.request({
-    //   url: app.globalData.url + '/api/product/getSecondClassify?sid=' + app.globalData.sid + "&firstClassifyId=" + videoDetail.firstClassifyId,
-    //   method: "POST",
-    //   header: {
-    //     'X-Requested-With': 'APP'
-    //   },
-    //   success: function (res) {
-    //     console.log(res);
-    //   }
-    // })
   },
 
-  getSecondClassifyName: function (videoDetail){
+//获取文件的拓展名
+  // getFilePath: function (fileId, index) {
+  //   var that = this;
+  //   var fileName;
+  //   var videoUrl = "video" + "[" + index + "]" + ".videoUrl";
+  //   wx.request({
+  //     url: app.globalData.url + '/api/common/file/get?sid=' + app.globalData.sid + "&id=" + fileId,
+  //     method: 'GET',
+  //     success: function (res) {
+  //       console.log(res);
+  //       var fileLoadArray = res.data.data.storageId.split("/");
+  //       fileName = fileLoadArray[fileLoadArray.length - 1];
+  //       console.log(fileName);
+  //       that.setData({
+  //         [videoUrl]: app.globalData.url + '/upload/' + fileName
+  //       })
+        
+       
+  //     }
+  //   })
+  //   return fileName;
+  // },
+  //获取文件路径
+  getFilePath: function (fileId,index) {
+    var that = this;
+    var myArray = new Array();
+    var videoUrl = "video"+"["+index+"]"+".videoUrl";
+    wx.request({
+      url: app.globalData.url + '/api/common/file/get?id=' + fileId,
+      method: 'GET',
+      success: function (res) {
+        console.log(res);
+        var index = res.data.data.storageId.indexOf("upload");
+        var filePath = app.globalData.url + "/" + res.data.data.storageId.substring(index);
+        console.log(filePath);
+        that.setData({
+          [videoUrl]:filePath
+        })
+        var fileName = res.data.data.fileName.split(".")[0];
+        console.log(fileName);
+        myArray[0] = filePath;
+        myArray[1] = fileName;
+        return myArray;
+      }
+    })
+  },
+
+
+
+  onLoad:function(e){
+    
+    console.log(e);
+    var that = this;
+    
+    var videoDetail = JSON.parse(e.videoDetail);
+    that.getChapterInfo(videoDetail.id);
+    var videoName = "videoInformation.name";
+    var videoDesption = "videoInformation.desption";
+    var videoSales = "videoInformation.sales";
+    that.setData({
+      [videoName]: videoDetail.productTitle,
+      [videoDesption]: videoDetail.courseIntroduce,
+      [videoSales] : videoDetail.productStock
+    });
+
+
+    that.getSecondClassifyName(videoDetail);
+
+  },
+   
+//获取二级分类名称
+ getSecondClassifyName: function (videoDetail){
     var that = this;
     var videoCategory = "videoInformation.category";
     wx.request({
@@ -160,24 +211,7 @@ Page({
     })
   },
 
-// getFile:function(e){
-//   var that = this;
-//   console.log(that.data.video[e.currentTarget.dataset.index].videoUrl);
-//   // console.log(app.globalData.url2(that.data.video[e.currentTarget.dataset.index].videoUrl));
-//   wx.request({
-//     url: app.globalData.url + '/api/common/file/download?sid=' + app.globalData.sid + "&fileId=" + that.data.video[e.currentTarget.dataset.index].videoUrl,
-//     method:'GET',
-//     success:function(res){
-//       console.log(res);
-//       console.log("成功");
-//       that.setData({
-//         info:res.data
-//       })
-//       // videoInformation.thisindex
-//     }
-//   })
-// }
- 
+
 
 
 })

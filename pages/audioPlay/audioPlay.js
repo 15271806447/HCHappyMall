@@ -219,7 +219,7 @@ Page({
     clearInterval(this.data.durationIntval);
   },
 
-  /*
+  /*video
   / 选择视频
   */
   choosevideo: function(e) {
@@ -254,26 +254,15 @@ Page({
     }
   },
 
-
-  onLoad:function(e){
+  //获取节的信息
+  getChapterInfo: function (audioId) {
     var that = this;
-    var audioDetail = JSON.parse(e.audioDetail);
-    var audioName = "audioInformation.name";
-    var audioDesption = "audioInformation.desption";
-    var audioSales = "audioInformation.sales";
     var audioNowEpisodes = "audioInformation.nowEpisodes";
     var audioAllEpisodes = "audioInformation.allEpisodes";
-
     var audio = [];
-    that.setData({
-      [audioName]: audioDetail.productTitle,
-      [audioDesption]: audioDetail.courseIntroduce,
-      [audioSales]: audioDetail.productStock
-    })
-
-    console.log(audioDetail.id)
+    var fileId = [];
     wx.request({
-      url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + "&id=" + audioDetail.id,
+      url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + "&id=" + audioId,
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
@@ -281,26 +270,69 @@ Page({
       success: function (res) {
         console.log(res);
         that.setData({
+
           [audioNowEpisodes]: res.data.data.courseVO.nowNum,
           [audioAllEpisodes]: res.data.data.courseVO.totalNum
-        })
+        });
         for (var i = 0; i < res.data.data.courseVO.hcFSectionInfoList.length; i++) {
           var audiochapter = { audioName: "", audiosrc: "" };
           audiochapter.audioName = res.data.data.courseVO.hcFSectionInfoList[i].chapterName;
-          console.log(res.data.data.courseVO.hcFSectionInfoList[i].fileAddr);
-          console.log(app.globalData.url + '/common/file/showPicture.do?id=' + res.data.data.courseVO.hcFSectionInfoList[i].fileAddr);
-
-          audiochapter.audiosrc = app.globalData.url + '/common/file/showPicture.do?id=' + res.data.data.courseVO.hcFSectionInfoList[i].fileAddr;
+          that.getFilePath(res.data.data.courseVO.hcFSectionInfoList[i].fileAddr, i);
+          // videochapter.videoUrl = app.globalData.url + '/upload/' + that.getFileName(res.data.data.courseVO.hcFSectionInfoList[i].fileAddr);
+          // videochapter.videoUrl = app.globalData.url + '/upload/' + res.data.data.courseVO.hcFSectionInfoList[i].fileAddr + '.mp4';
+          fileId.push(res.data.data.courseVO.hcFSectionInfoList[i].fileAddr);
           audio.push(audiochapter);
         }
-        // var videochapter1 = { videoName: "面对孩子的问题父母怎么处理", videoUrl: "http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" };
-        // video.push(videochapter1);
-        // console.log(that.data.video.length);
         that.setData({
-          audiolist: audio
-        })
+          audiolist: audio,
+          fileId: fileId,
+        });
       }
+
+
     });
+  },
+
+  //获取文件路径
+  getFilePath: function (fileId, index) {
+    var that = this;
+    var myArray = new Array();
+    var audiosrc = "audiolist" + "[" + index + "]" + ".audiosrc";
+    wx.request({
+      url: app.globalData.url + '/api/common/file/get?id=' + fileId,
+      method: 'GET',
+      success: function (res) {
+        console.log(res);
+        var index = res.data.data.storageId.indexOf("upload");
+        var filePath = app.globalData.url + "/" + res.data.data.storageId.substring(index);
+        console.log(filePath);
+        that.setData({
+          [audiosrc]: filePath
+        })
+        var fileName = res.data.data.fileName.split(".")[0];
+        console.log(fileName);
+        myArray[0] = filePath;
+        myArray[1] = fileName;
+        return myArray;
+      }
+    })
+  },
+
+  onLoad:function(e){
+    var that = this;
+    var audioDetail = JSON.parse(e.audioDetail);
+    that.getChapterInfo(audioDetail.id);
+    var audioName = "audioInformation.name";
+    var audioDesption = "audioInformation.desption";
+    var audioSales = "audioInformation.sales";
+
+    that.setData({
+      [audioName]: audioDetail.productTitle,
+      [audioDesption]: audioDetail.courseIntroduce,
+      [audioSales]: audioDetail.productStock
+    })
+
+   
     that.getSecondClassifyName(audioDetail);
   },
 

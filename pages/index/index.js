@@ -106,6 +106,7 @@ Page({
     previousMargin: 0,
     nextMargin: 0,
     searchinput: "",
+    imageUrl: app.globalData.imageUrl
   },
   onLoad: function() {
     var that = this;

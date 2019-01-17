@@ -1,6 +1,6 @@
 <view wx:if="{{canIUse}}">
     <view class='header'>
-        <image src='http://47.107.183.112/img/logo-octocat.png'></image>
+        <image src='{{imageUrl}}logo-octocat.png'></image>
         <text>同源梦幸福学院</text>
     </view>
     <view class='content'>

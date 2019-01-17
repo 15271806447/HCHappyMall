@@ -5,7 +5,7 @@ page {
 /* 头部开始 */
 
 .header {
-  background: url('http://47.107.183.112/img/personCenter.jpg') no-repeat;
+  background: url('http://47.107.183.112:90/img/personCenter.jpg') no-repeat;
   background-size: cover;
   height: 300rpx;
   display: flex;

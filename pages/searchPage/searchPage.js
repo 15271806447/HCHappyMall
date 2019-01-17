@@ -54,7 +54,8 @@ Page({
     searchinput: "",
     priceFilter: [0, 0],
     hidden: "hidden",
-    all_state: true
+    all_state: true,
+    imageUrl: app.globalData.imageUrl
   },
 
   onLoad: function(options) {

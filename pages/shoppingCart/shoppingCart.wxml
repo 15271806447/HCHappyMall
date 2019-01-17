@@ -1,7 +1,7 @@
 <view class='header'>
-  <image class='productListImage' mode="scaleToFill" src='http://47.107.183.112/img/shop.png'></image>
+  <image class='productListImage' mode="scaleToFill" src='{{imageUrl}}shop.png'></image>
   <text>同源梦幸福学院</text>
-  <image class='productListImage' mode="scaleToFill" src='http://47.107.183.112/img/trash.png' catchtap='delete'></image>
+  <image class='productListImage' mode="scaleToFill" src='{{imageUrl}}trash.png' catchtap='delete'></image>
 </view>
 
 <checkbox-group bindchange="checkboxChange">

@@ -5,11 +5,11 @@ const app = getApp()
 Page({
   data: {
     user: {
-      userImg: 'http://47.107.183.112/img/userImg.jpg',
+      userImg: 'http://47.107.183.112:90/img/userImg.jpg',
       userName: "南墙在哪",
       member: false
-    }
-    
+    },
+    imageUrl: app.globalData.imageUrl
   },
   //扫码开始-------------------------------------------------------------------
   //扫码开始-------------------------------------------------------------------
@@ -82,6 +82,11 @@ Page({
   //扫码结束
 
   onLoad: function () {
+    var user = this.data.user;
+    user.userImg = app.globalData.userInfo.avatarUrl
+    this.setData({
+      'user':user
+    })
     wx.request({
       url: app.globalData.url + '/api/personalCenter/checkAuthentication?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
       method: "POST",

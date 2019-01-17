@@ -7,10 +7,10 @@
     <!-- 用户名 -->
     <text class='userName'>{{user.userName}}</text>
     <view class='view_VIP' wx:if="{{user.member}}==true">
-      <image class="VIP" src='http://47.107.183.112/img/VIP.png'></image>
+      <image class="VIP" src='{{imageUrl}}VIP.png'></image>
     </view>
     <view class='VIP' wx:elif="{{user.member}}==false">
-      <image class="ordinary" src='http://47.107.183.112/img/normal.png'></image>
+      <image class="ordinary" src='{{imageUrl}}normal.png'></image>
     </view>
   </view>
 </view>
@@ -25,24 +25,24 @@
       <navigator url='../orderdetails/orderdetails'>
         全部订单
       </navigator>
-      <image class="iconImage" src='http://47.107.183.112/img/rightArrow.png'></image>
+      <image class="iconImage" src='{{imageUrl}}rightArrow.png'></image>
     </view>
   </view>
   <view class='orderStatus'>
     <navigator class='li' url='../orderdetails/orderdetails?state=1'>
-      <image src='http://47.107.183.112/img/待付 款.png'></image>
+      <image src='{{imageUrl}}待付 款.png'></image>
       <text>待付款</text>
     </navigator>
     <navigator class='li' url='../orderdetails/orderdetails?state=2'>
-      <image src='http://47.107.183.112/img/待发 货.png'></image>
+      <image src='{{imageUrl}}待发 货.png'></image>
       <text>待发货</text>
     </navigator>
     <navigator class='li' url='../orderdetails/orderdetails?state=3'>
-      <image src='http://47.107.183.112/img/已完成订单.png'></image>
+      <image src='{{imageUrl}}已完成订单.png'></image>
       <text>待收货</text>
     </navigator>
     <navigator class='li' url='../orderdetails/orderdetails?state=4'>
-      <image src='http://47.107.183.112/img/售后退款.png'></image>
+      <image src='{{imageUrl}}售后退款.png'></image>
       <text>售后/退款</text>
     </navigator>
   </view>
@@ -56,39 +56,39 @@
   </view>
   <view class='module'>
     <navigator class='moduleli sannjiayi' url='../wallet/wallet'>
-      <image src='http://47.107.183.112/img/wallet.png' mode='scaleToFill'></image>
+      <image src='{{imageUrl}}wallet.png' mode='scaleToFill'></image>
       <text>我的钱包</text>
     </navigator>
     <navigator class='moduleli' url='../collection/collection'>
-      <image src='http://47.107.183.112/img/collection.png' mode='scaleToFill'></image>
+      <image src='{{imageUrl}}collection.png' mode='scaleToFill'></image>
       <text>收藏商品</text>
     </navigator>
     <navigator class='moduleli third' url='../memberCenter/memberCenter'>
-      <image src='http://47.107.183.112/img/member.png' mode='scaleToFill'></image>
+      <image src='{{imageUrl}}member.png' mode='scaleToFill'></image>
       <text>会员中心</text>
     </navigator>
     <navigator class='moduleli sannjiayi' url='../mylession/mylession'>
-      <image src='http://47.107.183.112/img/course.png' mode='scaleToFill'></image>
+      <image src='{{imageUrl}}course.png' mode='scaleToFill'></image>
       <text>我的课程</text>
     </navigator>
     <navigator class='moduleli' url='../integral/integral'>
-      <image src='http://47.107.183.112/img/myIntegral.png' mode='scaleToFill'></image>
+      <image src='{{imageUrl}}myIntegral.png' mode='scaleToFill'></image>
       <text>我的积分</text>
     </navigator>
     <navigator class='moduleli third' url='../favourable/favourable'>
-      <image src='http://47.107.183.112/img/myCoupon.png' mode='scaleToFill'></image>
+      <image src='{{imageUrl}}myCoupon.png' mode='scaleToFill'></image>
       <text>我的优惠券</text>
     </navigator>
     <navigator class='moduleli sannjiayi lastsan' url='../myActivities/myActivities'>
-      <image src='http://47.107.183.112/img/activity.png' mode='scaleToFill'></image>
+      <image src='{{imageUrl}}activity.png' mode='scaleToFill'></image>
       <text>我的活动</text>
     </navigator>
     <navigator class='moduleli lastsan' url='../Management/Management'>
-      <image src='http://47.107.183.112/img/message.png' mode='scaleToFill'></image>
+      <image src='{{imageUrl}}message.png' mode='scaleToFill'></image>
       <text>个人信息</text>
     </navigator>
     <navigator class='moduleli third lastsan' url='../address/address'>
-      <image src='http://47.107.183.112/img/management.png' mode='scaleToFill'></image>
+      <image src='{{imageUrl}}management.png' mode='scaleToFill'></image>
       <text>地址管理</text>
     </navigator>
   </view>

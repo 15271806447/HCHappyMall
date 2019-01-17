@@ -7,7 +7,8 @@ Page({
     'checkAll': false,
     'totalCount': 0,
     'totalPrice': 0,
-    timeSetAdd: null
+    timeSetAdd: null,
+    imageUrl: app.globalData.imageUrl
   },
 
   onLoad: function() {

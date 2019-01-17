@@ -82,15 +82,15 @@ page {
   align-items: center;
   margin-bottom: 15rpx;
   background-color: #fff;
-  background: url("http://47.107.183.112/img/banner1.jpg") no-repeat;
+  background: url("http://47.107.183.112:90/img/banner1.jpg") no-repeat;
   background-size:cover;
 }
 .selection .audioheader {
-  background: url("http://47.107.183.112/img/banner2.jpg") no-repeat;
+  background: url("http://47.107.183.112:90/img/banner2.jpg") no-repeat;
   background-size:cover;
 }
 .selection .videoheader  {
-  background: url("http://47.107.183.112/img/banner3.jpg");
+  background: url("http://47.107.183.112:90/img/banner3.jpg");
   background-size:cover;
 }
 
