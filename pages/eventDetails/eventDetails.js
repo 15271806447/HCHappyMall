@@ -10,6 +10,7 @@ Page({
     isFolded: true,
     rows: 5,
     activitiesList: {
+      id:"",
       coverPath: "",
       productTitle: "",
       activitiPlace: "",
@@ -20,6 +21,7 @@ Page({
       showColor: "#ff0000",
       imgArr: []
     },
+    isClick: false
   },
 
   showActiveDetail: function(options) {
@@ -30,6 +32,7 @@ Page({
       activeDetail = app.globalData.activeDetail;
       console.log(app.globalData.activeDetail);
       //填写属性
+      activitiesList.id = activeDetail.id;
       activitiesList.coverPath = activeDetail.productCovermap;
       activitiesList.productTitle = activeDetail.productTitle;
       if (activeDetail.price == 0) {
@@ -45,7 +48,7 @@ Page({
     } else { 
       //填写属性
       activeDetail = JSON.parse(options.activeDetail);
-      
+      activitiesList.id = activeDetail.id;
       activitiesList.coverPath = activeDetail.coverPath;
       activitiesList.productTitle = activeDetail.productTitle;
       if (activeDetail.price == 0) {
@@ -65,7 +68,28 @@ Page({
     })
 
   },
-
+  /**
+      * 收藏
+      */
+  collection: function () {
+    if (!this.data.isClick == true) {
+      wx.showToast({
+        title: '已收藏',
+      });
+      var collectionId = app.collectionProduct(app.globalData.uid, this.data.activitiesList.id);
+      this.setData({
+        'collectionId': collectionId
+      })
+    } else {
+      wx.showToast({
+        title: '已取消收藏',
+      });
+       app.removeCollection(this.data.collectionId);
+    }
+    this.setData({
+      isClick: !this.data.isClick
+    })
+  },
 /**
  * 设置图片数组
  */

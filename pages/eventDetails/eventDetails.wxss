@@ -29,6 +29,21 @@ page {
 .detail-tilte{
 font-size: 30rpx;
 margin: 20rpx 0 0 30rpx;
+display: flex;
+}
+.actltle{
+  flex: 3;
+}
+.fl1{
+   flex: 1;
+}
+.accolec{
+   flex: 1;
+}
+#yellow {
+  color: #f53f2c;
+  font-size: 20px;
+  margin-right: 5px;
 }
 .detail-describe{
   font-size: 27rpx;

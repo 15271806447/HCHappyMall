@@ -9,7 +9,12 @@
       <!-- 描述 -->
       <view class="detail">
         <view class='detail-tilte'>
-          <text>{{activitiesList.productTitle}}</text>
+          <text class='actltle'>{{activitiesList.productTitle}}</text>
+          <view class='collection' bindtap='collection'>
+            <text wx:if="{{isClick}}" id='yellow'>★</text>
+            <text wx:else id='yellow'>☆</text>
+            <text>收藏</text>
+          </view>
         </view>
         <view class='detail-describe'>
           <text>地点：{{activitiesList.activitiPlace}}</text>
