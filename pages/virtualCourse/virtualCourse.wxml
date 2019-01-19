@@ -57,13 +57,13 @@
     <view wx:if="{{isCharge}}">
       <!-- <视频> -->
       <view class='playing-img'>
-        <image src='http://47.107.94.80/play.png'></image>
+        <image src='../image/play.png'></image>
       </view>
     </view>
     <view wx:else>
       <!-- 音频 -->
       <view class='playing-img'>
-        <image src='http://47.107.94.80/voice.png'></image>
+        <image src='../image/voice.png'></image>
       </view>
     </view>
 
@@ -71,7 +71,7 @@
     <view wx:if="{{item.isCharge}}">
       <!-- 锁图标 -->
       <view class='unfree'>
-        <image src='http://47.107.94.80/block.png'></image>
+        <image src='../image/block.png'></image>
       </view>
 
     </view>

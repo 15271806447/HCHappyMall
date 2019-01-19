@@ -1,5 +1,5 @@
 //app.js
-
+var md5 = require('pages/utils/md5.js');
 App({
   onLaunch: function() {
     var that = this;
@@ -37,7 +37,7 @@ App({
     })
   },
   globalData: {
-    url: "http://www.xfxy.awcp.org.cn/",
+    url: "https://www.xfxy.awcp.org.cn",
     userInfo: null,
     sid: null,
     uid: '',
@@ -46,7 +46,7 @@ App({
     activeDetail: null,
     ip: null,
     openid: null,
-    imageUrl:"http://47.107.183.112:90/img/"
+    imageUrl: "http://47.107.183.112:90/img/"
   },
   /**解析地址Code值 */
   analysisCode: function(areaIdPath, userAddress, thatpage) {
@@ -93,8 +93,7 @@ App({
       "total_fee": money,
       "openid": app.globalData.openid
     }
-    // openid:"obm715Y4E6Wff5Ol-t-xUzzxSbmg" app.globalData.openid
-    // TODO OPENID不能给固定值
+
     console.log('支付接口参数===================');
     console.log(object);
     // 预下单
@@ -105,24 +104,31 @@ App({
       header: {
         'X-Requested-With': 'APP'
       },
-      // MD5(appId = wxd678efh567hg6787 & nonceStr=5K8264ILTKCH16CQ2502SI8ZNMTM67VS & package = prepay_id = wx2017033010242291fcfe0db70013231072 & signType=MD5 & timeStamp = 1490840662 & key=qazwsxedcrfvtgbyhnujmikolp111111)
-      // oh_fG5akvp6ds40wHXLVAL_bAla8
       success: function(res) {
         console.log(res);
         var result = res;
-        var myDate = new Date();
-        console.log(result.data.data.nonce_str);
+        // var sign = md5.hexMD5('appId=wx167f9676d1d7c380&nonceStr=' + result.data.data.nonce_str + '&package=prepay_id=' + result.data.data.prepay_id + '&signType=MD5&timeStamp=' + time + '& key=70bcafecff934c55bf6d6d90d75bce6c').toUpperCase();
+        // console.log('sign加密前' + 'appId=wx167f9676d1d7c380&nonceStr=' + result.data.data.nonce_str + '&package=prepay_id=' + result.data.data.prepay_id + '&signType=MD5&timeStamp=' + time + '& key=70bcafecff934c55bf6d6d90d75bce6c');
         wx.requestPayment({
-          timeStamp: String(myDate.getTime() / 1000),
-          nonceStr: result.data.data.nonce_str,
-          package: result.data.data.prepay_id,
+          timeStamp: result.data.data.timeStamp,
+          nonceStr: result.data.data.nonceStr,
+          package: result.data.data.package,
           signType: 'MD5',
-          paySign: result.data.data.sign,
+          paySign: result.data.data.paySign,
           success(res) {
+            console.log(res);
             console.log('支付成功')
           },
           fail(res) {
-            console.log('支付失败')
+            console.log('支付失败');
+            console.log(res);
+          },
+          complete(res){
+            console.log('完成');
+            //TODO 携带参数页面跳转到详情页
+            wx.navigateTo({
+              url: '../orderdetail/orderdetail',
+            })
           }
         })
       }

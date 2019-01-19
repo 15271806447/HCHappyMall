@@ -45,7 +45,7 @@ Page({
     var that = this;
     var pace = this.data.orderData.actualPayment + this.data.orderData.freight
     wx.navigateTo({
-      url: '../pay/pay?TotalPrice=' + pace + '&orderId=' + that.data.orderData.id + '&orderItemVOList=' + JSON.stringify(that.data.orderData.orderItemVOList)
+      url: '../pay/pay?TotalPrice=' + pace + '&orderId=' + that.data.orderData.id + '&orderItemVOList=' + JSON.stringify(that.data.orderData.orderItemVOList + '&type=details')
     })
   },
   onLoad: function (options) {

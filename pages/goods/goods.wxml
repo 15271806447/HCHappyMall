@@ -63,16 +63,16 @@
     </view>
   </view>
 
-  <view class='appraise'>
+  <!-- <view class='appraise'>
     <text class='appTitle'>商品评价（123435）</text>
     <text class='appraiseinfo' wx:for="{{appraiseList}}">{{item.appraise}}({{item.count}})</text>
-  </view>
-  <view class='user'>
+  </view> -->
+  <!-- <view class='user'>
     <text>{{appraiseInfo.name}}</text>
     <text>{{appraiseInfo.info}}</text>
     <text>查看全部评价</text>
   </view>
-  <text>继续拖动，查看图文详情</text>
+  <text>继续拖动，查看图文详情</text> -->
 </view>
 
 

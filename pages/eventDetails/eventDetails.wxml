@@ -18,7 +18,7 @@
           <text>时间：{{activitiesList.beginTime}}至{{activitiesList.endTime}}</text>
         </view>
         <view class='detail-money' style='color="{{item.showColor}}"'>
-          <text>{{activitiesList.price}}</text>
+          <text>￥{{activitiesList.price}}</text>
         </view>
       </view>
     </view>

@@ -143,22 +143,13 @@ Page({
     this.getAddress();
     this.getWallet();
   },
+  onShow:function(){
+    this.onLoad();
+  },
   /**
    * 把购物车传来的数据属性名转换一下
    */
   change: function(obejct) {
-    // var product = {
-    //   productName: "",
-    //   productId: "",
-    //   productImage: "",
-    //   checked: false,
-    //   count: null, //数量
-    //   oldprice: "",
-    //   discount: 1,
-    //   price: 0,
-    //   cartId: 0
-    // }
-    // {
     var data = obejct.map(function(item) {
       return {
         productTitle: item.productName,
