@@ -34,6 +34,7 @@
     "pages/recharge/recharge",
     "pages/eventDetails/eventDetails",
     "pages/virtualCourse/virtualCourse",
+    "pages/orderdetail/orderdetail",
     "pages/orderdetails/orderdetails",
     "pages/collection/collection",
     "pages/mylession/mylession",

@@ -10,7 +10,7 @@ Page({
     isFolded: true,
     rows: 5,
     activitiesList: {
-      id:"",
+      id: "",
       coverPath: "",
       productTitle: "",
       activitiPlace: "",
@@ -24,7 +24,7 @@ Page({
     isClick: false
   },
 
-  showActiveDetail: function(options) {
+  showActiveDetail: function (options) {
     var that = this;
     var activeDetail = null;
     var activitiesList = new Object();
@@ -45,7 +45,7 @@ Page({
       activitiesList.beginTime = "2019年1月10日";
       activitiesList.endTime = "2019年1月25日";
       activitiesList.activitiIntroduction = activeDetail.courseIntroduce;
-    } else { 
+    } else {
       //填写属性
       activeDetail = JSON.parse(options.activeDetail);
       activitiesList.id = activeDetail.id;
@@ -84,16 +84,16 @@ Page({
       wx.showToast({
         title: '已取消收藏',
       });
-       app.removeCollection(this.data.collectionId);
+      app.removeCollection(this.data.collectionId);
     }
     this.setData({
       isClick: !this.data.isClick
     })
   },
-/**
- * 设置图片数组
- */
-  setImgArr: function() {
+  /**
+   * 设置图片数组
+   */
+  setImgArr: function () {
     var that = this;
     var activeDetail = this.data.activeDetailList;
     wx.request({
@@ -102,7 +102,7 @@ Page({
         'X-Requested-With': 'APP'
       },
       method: 'POST',
-      success: function(res) {
+      success: function (res) {
         var TotalList = res.data.data.hcProductPictureList;
         var imgArrList = new Array(TotalList.length);
         for (var i = 0; i < TotalList.length; i++) {
@@ -120,7 +120,7 @@ Page({
   },
 
   // 格式化日期
-  dateSplite: function(date) {
+  dateSplite: function (date) {
     date = date.substring(0, 10);
     return date;
   },
@@ -128,7 +128,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     this.showActiveDetail(options);
     // this.setImgArr();
   },
@@ -136,52 +136,52 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   },
-  change: function(e) {
+  change: function (e) {
     if (this.data.isFolded) {
       this.setData({
         isFolded: false,
@@ -194,7 +194,7 @@ Page({
       });
     }
   },
-  previewImg: function(e) {
+  previewImg: function (e) {
     var index = e.currentTarget.dataset.index;
     var imgArr = this.data.activities.imgArr;
     wx.previewImage({
@@ -203,5 +203,13 @@ Page({
     })
 
 
+  },
+  buyNow: function () {
+var that = this;
+console.log("要传输的数据：");
+    console.log(that.data.activitiesList);
+    wx:wx.navigateTo({
+      url: '../confirm/confirm?type=' + 'good' + '&productInfo=' + encodeURIComponent(JSON.stringify(this.data.activitiesList)),
+    })
   }
 })

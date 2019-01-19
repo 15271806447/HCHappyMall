@@ -120,7 +120,11 @@ Page({
   },
   onLoad: function(options) {
     var that = this;
+    console.log("参数");
+    console.log(options);
+    console.log(options.type);
     if (options.type == 'goods') {
+      console.log("执行了1");
       console.log("type=goods");
       var productInfo = JSON.parse(options.productInfo);
       console.log(productInfo);
@@ -132,7 +136,33 @@ Page({
       that.setData({
         'goodsList': goodsList
       })
-    } else { //拿到订单数据
+    } else if (options.type == 'good'){
+      console.log("执行了2");
+      console.log(options.productInfo);
+      var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
+      console.log(productInfo);
+      var goodsList = [1];
+      var product = {
+        productName: "",
+        oldprice: "",
+        productImage: "",
+        count: 1,
+        price: 0
+      };
+      product.productName = productInfo.productTitle;
+      product.oldprice = productInfo.price;
+      product.productImage = productInfo.coverPath;
+      product.price = productInfo.price;
+      console.log("数据1？：");
+      console.log(product);
+      goodsList[0] = product;
+      console.log("数据2？：");
+      console.log(goodsList);
+      that.setData({
+        'goodsList': goodsList
+      })
+    }else { //拿到订单数据
+      console.log("执行了3");
       var data = this.change(app.globalData.productCartList);
       that.setData({
         'goodsList': data

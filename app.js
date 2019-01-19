@@ -38,6 +38,7 @@ App({
   },
   globalData: {
     url: "http://www.xfxy.awcp.org.cn/",
+    url: "http://localhost:8080/",
     userInfo: null,
     sid: null,
     uid: '',
