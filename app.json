@@ -1,12 +1,12 @@
 {
   "pages": [
+    
     "pages/index/index",
     "pages/videoPlay/videoPlay",
-    
+    "pages/orderdetail/orderdetail",
     "pages/addcard/addcard",
     "pages/Management/Management",
     "pages/bindbankcards/bindbankcards",
-   
     "pages/shoppingCart/shoppingCart",
     "pages/goods/goods",
     "pages/favourable/favourable",
