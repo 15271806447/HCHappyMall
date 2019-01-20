@@ -50,7 +50,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    /**
+     * 从支付页跳转
+     */
+    if(options.type=='pay'){
+      console.log(JSON.parse(options.orderDetail));
+      var orderDetail = JSON.parse(options.orderDetail).orderVO;
+      // var orderData=new Object();
+      // orderData.state = orderDetail.state;
+      // orderData.orderItemVOList = orderDetail.orderItemVOList;
+      this.setData({
+        'orderData': orderDetail
+      })
+      return;
+    }
     var orderData = options.orderData;
+    console.log(orderData);
     this.setData({
       orderData: JSON.parse(orderData)
     })

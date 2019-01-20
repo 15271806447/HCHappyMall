@@ -25,25 +25,34 @@ Page({
         isActive: "no-active",
       }
     ],
-    activity : [{
+    activity: [{
       productCovermap: 'http://47.107.183.112/img/tourism.png',
       productTitle: '厦门+鼓浪屿6日5晚半自助游(5钻)·双旦狂欢 9人小团 ',
       originalPrice: '免费',
       productSales: "9999"
     }],
-    
+
     fisrtCategory: "active",
     searchinput: "",
     imageUrl: app.globalData.imageUrl
   },
   onLoad: function() {
-    this.getSecondClassify();
+    console.log('findIndex:' + app.globalData.findIndex);
+    this.getSecondClassify(app.globalData.findIndex);
     this.searchProduct();
+    if (community_id) {
+      // 处理完成后，清空缓存值
+      app.globalData.findIndex = null;
+    }
+  },
+  onShow: function (){
+    this.onLoad();
   },
   /**
    * 拿二级分类
+   * index 当前的选择分类索引
    */
-  getSecondClassify: function () {
+  getSecondClassify: function(index) {
     var that = this;
     wx.showLoading({
       title: '加载中',
@@ -55,17 +64,22 @@ Page({
       header: {
         'X-Requested-With': 'APP'
       },
-      success: function (res) {
+      success: function(res) {
         console.log(res);
         var SecondClassifyList = res.data.data.hcProductSecondClassifyList;
         var categoryList = [];
         for (let i = 0; i < SecondClassifyList.length; i++) {
           var SecondClassify = new Object;
           SecondClassify.category = SecondClassifyList[i].secondClassName;
-          SecondClassify.isActive = "no-active";
+          if (i == index) {
+            SecondClassify.isActive = "active";
+          } else {
+            SecondClassify.isActive = "no-active";
+          }
           SecondClassify.id = SecondClassifyList[i].id;
           categoryList.push(SecondClassify);
         }
+
         that.setData({
           'categoryList': categoryList
         })
@@ -76,7 +90,7 @@ Page({
   /**
    * 跳转活动详情
    */
-  activityDetail:function(e){
+  activityDetail: function(e) {
     var index = e.currentTarget.dataset.index;
     console.log(JSON.stringify(this.data.activity[index]));
     app.globalData.activeDetail = this.data.activity[index];
@@ -87,9 +101,9 @@ Page({
   /**
    * 搜索
    */
-  searchProduct: function () {
+  searchProduct: function() {
     var that = this;
-    var  firstClassifyId = app.globalData.firstClassifyList[3].id;
+    var firstClassifyId = app.globalData.firstClassifyList[3].id;
     var categoryList = this.data.categoryList;
     var categoryId = "";
     for (let i = 0; i < categoryList.length; i++) {
@@ -103,12 +117,12 @@ Page({
       header: {
         'X-Requested-With': 'APP'
       },
-      success: function (res) {
+      success: function(res) {
         console.log(res);
         console.log('=================');
         console.log(app.globalData.url + '/api/product/searchProduct?sid=' + app.globalData.sid + "&firstClassifyId=" + firstClassifyId + "&secondClassifyId=" + categoryId + "&keyword=" + that.data.searchinput + "&minStr=0" + "&maxStr=0" + "&page=1&size=12");
         var hcProductInfoList = res.data.data.hcProductInfoList;
-        if (hcProductInfoList == null){
+        if (hcProductInfoList == null) {
           wx.showToast({
             title: '没有内容!!!',
             icon: 'none',
@@ -168,12 +182,12 @@ Page({
   /**
    * 输入内容同步
    */
-  inputBind:function(e){
+  inputBind: function(e) {
     this.setData({
-      'searchinput':e.detail.value
+      'searchinput': e.detail.value
     })
   },
-  query:function(){
+  query: function() {
     this.searchProduct();
   }
 

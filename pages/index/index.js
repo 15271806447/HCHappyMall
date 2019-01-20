@@ -414,6 +414,24 @@ Page({
       })
     }
     console.log('TotalIndex:' + TotalIndex);
-
+  },
+  health:function(){
+    app.globalData.findIndex = 1;
+    wx.switchTab({
+      url: '../find/find',
+    })
+  },
+  life: function () {
+    app.globalData.findIndex = 2;
+    wx.switchTab({
+      url: '../find/find',
+    })
+  },
+  education: function () {
+    app.globalData.findIndex = 0;
+    wx.switchTab({
+      url: '../find/find',
+    })
   }
+  
 })

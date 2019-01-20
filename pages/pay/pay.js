@@ -30,14 +30,11 @@ Page({
     this.getOrderByOrderId();
   },
   pay: function() {
-
-    // this.setData({
-    //   'TotalPrice':1.00
-    // })
+    var that = this;
     console.log('money:' + this.data.TotalPrice);
     getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function() {
       wx.navigateTo({
-        url: '../orderdetail/orderdetail',
+        url: '../orderdetail/orderdetail?orderDetail='+JSON.stringify(that.data.orderDetail)+'&type=pay',
       })
     });
   },
@@ -59,7 +56,8 @@ Page({
         wx.hideLoading();
         var orderNum = res.data.data.orderVO.orderNum;
         that.setData({
-          'orderNum': orderNum
+          'orderNum': orderNum,
+          'orderDetail': res.data.data
         })
       }
     })

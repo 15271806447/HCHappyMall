@@ -46,7 +46,8 @@ App({
     activeDetail: null,
     ip: null,
     openid: null,
-    imageUrl: "http://47.107.183.112:90/img/"
+    imageUrl: "http://47.107.183.112:90/img/",
+    findIndex: null
   },
   /**解析地址Code值 */
   analysisCode: function(areaIdPath, userAddress, thatpage) {
