@@ -143,7 +143,7 @@ Page({
     this.getAddress();
     this.getWallet();
   },
-  onShow:function(){
+  onShow: function() {
     this.onLoad();
   },
   /**
@@ -308,15 +308,25 @@ Page({
   },
 
   /**
-   * 存储订单到数据库
+   * 存储订单到数据库 
    */
   createOrder: function() {
     var that = this;
-    if(this.data.address==null){
+    console.log(this.data.address.id);
+    if (this.data.address.id == "") {
       wx.showModal({
         title: '出错',
         content: '请先添加收货地址',
+        success(res) {
+          if (res.confirm) {
+            console.log('用户点击确定');
+            that.address();
+          } else if (res.cancel) {
+            console.log('用户点击取消');
+          }
+        }
       })
+      return;
     }
     var hcOrderItemList = Array(this.data.goodsList.length);
     var goodsList = this.data.goodsList;
@@ -362,8 +372,8 @@ Page({
         console.log("创建订单结果：")
         console.log(res);
         var productName = "";
-        for(let i = 0; i < that.data.goodsList.length; i++){
-          productName +=goodsList[i].productTitle+',';
+        for (let i = 0; i < that.data.goodsList.length; i++) {
+          productName += goodsList[i].productTitle + ',';
         }
         wx.navigateTo({
           url: '../pay/pay?TotalPrice=' + that.data.TotalPrice + '&orderId=' + res.data.data.orderId + '&product=' + productName,

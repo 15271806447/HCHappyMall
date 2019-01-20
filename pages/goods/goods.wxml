@@ -52,7 +52,7 @@
     </view>
   </view>
 
-  <view class='goodsinfo'>
+  <!-- <view class='goodsinfo'>
     <view>
       <text>送至 ：福建厦门思明莲前软件园二期海路</text>
       <image class='pic' src='../image/right.svg'></image>
@@ -61,7 +61,7 @@
       <text>ISBN : 978-7-302-22446-4</text>
       <image class='pic' src='../image/right.svg'></image>
     </view>
-  </view>
+  </view> -->
 
   <!-- <view class='appraise'>
     <text class='appTitle'>商品评价（123435）</text>
@@ -77,19 +77,19 @@
 
 
 <view class='footer'>
-  <view>
+  <!-- <view>
     <image class='fotpic' src='../image/service2.svg'></image>
     <text>客服</text>
   </view>
   <view>
     <image class='fotpic' src='../image/store2.svg'></image>
     <text>进店</text>
-  </view>
+  </view> -->
   <view bindtap='collection'>
     <text wx:if="{{isClick}}" id='yellow'>★</text>
     <text wx:else  id='yellow'>☆</text>
     <text>收藏</text>
   </view>
-  <text catchtap='JoinShoppingCart'>加入购物车</text>
-  <text bindtap='buyNow'>立即购买</text>
+  <text class="tet" catchtap='JoinShoppingCart'>加入购物车</text>
+  <text class="tet buy" bindtap='buyNow'>立即购买</text>
 </view>

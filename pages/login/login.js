@@ -29,7 +29,7 @@ Page({
               console.log(res);
               getApp().globalData.sid = res.data.data.sid;
               getApp().globalData.uid = res.data.data.uid;
-              getApp().globalData.openid = res.data.data.uid;
+              getApp().globalData.openid = res.data.data.oid;
               console.log('APP：')
               console.log(getApp());
 

@@ -266,23 +266,25 @@ swiper-item image {
   height: 80rpx;
 }
 
-.footer text:nth-child(4), .footer text:nth-child(5) {
-  padding: 0 20rpx;
+.footer .tet {
+  padding: 0 4%;
   color: #fff;
   font-size: 36rpx;
   line-height: 120rpx;
-  border: 2rpx solid orange;
+  /* border: 1% solid orange; */
   background-color: orange;
+  width: 20%;
 }
 
-.footer text:nth-child(5) {
-  border: 2rpx solid red;
+.footer .tet.buy  {
   background-color: red;
+  width: 19%;
+  border-right: 1% solid red;
 }
 
 #yellow {
   color: #f53f2c;
-  font-size: 18px;
+  font-size: 22px;
 }
 /* .mtf30{
   margin-top:0; 
