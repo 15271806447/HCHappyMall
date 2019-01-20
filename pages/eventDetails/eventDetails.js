@@ -209,7 +209,7 @@ var that = this;
 console.log("要传输的数据：");
     console.log(that.data.activitiesList);
     wx:wx.navigateTo({
-      url: '../confirm/confirm?type=' + 'good' + '&productInfo=' + encodeURIComponent(JSON.stringify(this.data.activitiesList)),
+      url: '../confirm/confirm?type=' + 'activit' + '&productInfo=' + encodeURIComponent(JSON.stringify(this.data.activitiesList)),
     })
   }
 })

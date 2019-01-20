@@ -124,8 +124,6 @@ Page({
     console.log(options);
     console.log(options.type);
     if (options.type == 'goods') {
-      console.log("执行了1");
-      console.log("type=goods");
       var productInfo = JSON.parse(options.productInfo);
       console.log(productInfo);
       productInfo.count = 1;
@@ -136,28 +134,19 @@ Page({
       that.setData({
         'goodsList': goodsList
       })
-    } else if (options.type == 'good'){
-      console.log("执行了2");
-      console.log(options.productInfo);
+    } else if (options.type == 'activit'){
       var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
-      console.log(productInfo);
       var goodsList = [1];
       var product = {
-        productName: "",
-        oldprice: "",
-        productImage: "",
+        productTitle: "",
+        productCovermap: "",
         count: 1,
-        price: 0
+        originalPrice: 0
       };
-      product.productName = productInfo.productTitle;
-      product.oldprice = productInfo.price;
-      product.productImage = productInfo.coverPath;
-      product.price = productInfo.price;
-      console.log("数据1？：");
-      console.log(product);
+      product.productTitle = productInfo.productTitle;
+      product.productCovermap = productInfo.coverPath;
+      product.originalPrice = productInfo.price;
       goodsList[0] = product;
-      console.log("数据2？：");
-      console.log(goodsList);
       that.setData({
         'goodsList': goodsList
       })
