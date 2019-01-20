@@ -206,7 +206,7 @@ Page({
         break;
     }
     wx.navigateTo({
-      url: '../orderdetail/orderdetail?orderData=' + JSON.stringify( orderData)
+      url: '../orderdetail/orderdetail?orderData=' + JSON.stringify(orderData)
     })
   },
   toPay: function (e) {

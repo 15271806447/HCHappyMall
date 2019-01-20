@@ -10,7 +10,7 @@
          <view class='header_b'>
              <view class='distance'>
                 <text>附近驿站</text>
-                <text>距离所选地址{{distance}}米</text>
+                <text>所选地址</text>
              </view>
              <view class='selected'>
                 <text class='recommend'>[推荐驿站]</text>

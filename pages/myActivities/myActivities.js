@@ -49,8 +49,6 @@ Page({
         var TotalList = res.data.data.activitiesVOS;
         //中间变量，用于将后台变量放到data中的list中
         var activeList = new Array(TotalList.length);
-
-
         for (var i = 0; i < TotalList.length; i++) {
           var activeObj = {
             productId: "",

@@ -8,9 +8,7 @@ Page({
     imgHeader: app.globalData.url + '/common/file/showPicture.do?id=',
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
+
   getOrderform:function(){
     var that = this;
     wx.request({
@@ -48,12 +46,14 @@ Page({
       url: '../pay/pay?TotalPrice=' + pace + '&orderId=' + that.data.orderData.id + '&orderItemVOList=' + JSON.stringify(that.data.orderData.orderItemVOList + '&type=details')
     })
   },
+    /**
+   * 生命周期函数--监听页面加载
+   */
   onLoad: function (options) {
     var orderData = options.orderData;
     this.setData({
       orderData: JSON.parse(orderData)
     })
-
     this.getOrderform();
     
   },

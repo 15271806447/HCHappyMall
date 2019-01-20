@@ -8,8 +8,9 @@ Page({
   data: {
     details: "",
     isFolded: true,
-    rows: 5,
+    rows: 3,
     activitiesList: {
+      id: "",
       coverPath: "",
       productTitle: "",
       activitiPlace: "",
@@ -20,6 +21,7 @@ Page({
       showColor: "#ff0000",
       imgArr: []
     },
+    isClick: false
   },
 
   showActiveDetail: function(options) {
@@ -30,6 +32,7 @@ Page({
       activeDetail = app.globalData.activeDetail;
       console.log(app.globalData.activeDetail);
       //填写属性
+      activitiesList.id = activeDetail.id;
       activitiesList.coverPath = activeDetail.productCovermap;
       activitiesList.productTitle = activeDetail.productTitle;
       if (activeDetail.price == 0) {
@@ -42,10 +45,10 @@ Page({
       activitiesList.beginTime = "2019年1月10日";
       activitiesList.endTime = "2019年1月25日";
       activitiesList.activitiIntroduction = activeDetail.courseIntroduce;
-    } else { 
+    } else {
       //填写属性
       activeDetail = JSON.parse(options.activeDetail);
-      
+      activitiesList.id = activeDetail.id;
       activitiesList.coverPath = activeDetail.coverPath;
       activitiesList.productTitle = activeDetail.productTitle;
       if (activeDetail.price == 0) {
@@ -65,10 +68,31 @@ Page({
     })
 
   },
-
-/**
- * 设置图片数组
- */
+  /**
+   * 收藏
+   */
+  collection: function() {
+    if (!this.data.isClick == true) {
+      wx.showToast({
+        title: '已收藏',
+      });
+      var collectionId = app.collectionProduct(app.globalData.uid, this.data.activitiesList.id);
+      this.setData({
+        'collectionId': collectionId
+      })
+    } else {
+      wx.showToast({
+        title: '已取消收藏',
+      });
+      app.removeCollection(this.data.collectionId);
+    }
+    this.setData({
+      isClick: !this.data.isClick
+    })
+  },
+  /**
+   * 设置图片数组
+   */
   setImgArr: function() {
     var that = this;
     var activeDetail = this.data.activeDetailList;
@@ -179,5 +203,10 @@ Page({
     })
 
 
+  },
+  buyNow: function() {
+    wx: wx.navigateTo({
+      url: '../confirm/confirm?type=' + 'good' + '&productInfo=' + encodeURIComponent(JSON.stringify(this.data.activitiesList)),
+    })
   }
 })

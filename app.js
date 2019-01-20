@@ -81,8 +81,9 @@ App({
    * orderid: 订单号
    * spbill_create_ip: 用户终端ip
    * money:总金额
+   * callback:回调
    */
-  pay: function(body, orderid, money) {
+  pay: function(body, orderid, money,callback) {
     var app = getApp();
     console.log(app);
     var object = {
@@ -126,9 +127,8 @@ App({
           complete(res){
             console.log('完成');
             //TODO 携带参数页面跳转到详情页
-            wx.navigateTo({
-              url: '../orderdetail/orderdetail',
-            })
+            callback();
+          
           }
         })
       }

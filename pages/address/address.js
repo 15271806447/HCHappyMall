@@ -6,7 +6,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    distance: 1032,
     address:'',
     addressId:['','','','','',''],
     show:true,

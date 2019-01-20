@@ -9,7 +9,12 @@
       <!-- 描述 -->
       <view class="detail">
         <view class='detail-tilte'>
-          <text>{{activitiesList.productTitle}}</text>
+          <text class='actltle'>{{activitiesList.productTitle}}</text>
+          <view class='collection' bindtap='collection'>
+            <text wx:if="{{isClick}}" id='yellow'>★</text>
+            <text wx:else id='yellow'>☆</text>
+            <text>收藏</text>
+          </view>
         </view>
         <view class='detail-describe'>
           <text>地点：{{activitiesList.activitiPlace}}</text>
@@ -18,7 +23,7 @@
           <text>时间：{{activitiesList.beginTime}}至{{activitiesList.endTime}}</text>
         </view>
         <view class='detail-money' style='color="{{item.showColor}}"'>
-          <text>￥{{activitiesList.price}}</text>
+          <text>{{activitiesList.price}}</text>
         </view>
       </view>
     </view>
@@ -47,5 +52,5 @@
     </view>
   </view>
   <!-- 图片展示模块结束了 -->
-  <button type="primary" class="button-hover">立即参加</button>
+  <button type="primary" bindtap='buyNow' class="button-hover">立即参加</button>
 </view>

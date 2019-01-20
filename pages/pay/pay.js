@@ -13,7 +13,7 @@ Page({
    */
   onLoad: function(options) {
     //如果是从detail页跳转
-    if (options.type =='details'){
+    if (options.type == 'details') {
       var orderItemVOList = options.orderItemVOList;
       this.setData({
         'TotalPrice': options.TotalPrice,
@@ -35,7 +35,11 @@ Page({
     //   'TotalPrice':1.00
     // })
     console.log('money:' + this.data.TotalPrice);
-    getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice);
+    getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function() {
+      wx.navigateTo({
+        url: '../orderdetail/orderdetail',
+      })
+    });
   },
   // 查询订单
   getOrderByOrderId: function() {
