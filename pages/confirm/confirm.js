@@ -120,12 +120,7 @@ Page({
   },
   onLoad: function(options) {
     var that = this;
-    console.log("参数");
-    console.log(options);
-    console.log(options.type);
     if (options.type == 'goods') {
-      console.log("执行了1");
-      console.log("type=goods");
       var productInfo = JSON.parse(options.productInfo);
       console.log(productInfo);
       productInfo.count = 1;
@@ -136,9 +131,7 @@ Page({
       that.setData({
         'goodsList': goodsList
       })
-    } else if (options.type == 'good') {
-      console.log("执行了2");
-      console.log(options.productInfo);
+    } else if (options.type == 'activit') {//参加线下活动订单
       var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
       console.log(productInfo);
       var goodsList = [1];
@@ -155,16 +148,34 @@ Page({
       product.productCovermap = productInfo.coverPath;
       product.price = productInfo.price;
       product.originalPrice = productInfo.price;
-      console.log("数据1？：");
-      console.log(product);
       goodsList[0] = product;
-      console.log("数据2？：");
-      console.log(goodsList);
       that.setData({
         'goodsList': goodsList
       })
-    } else { //拿到订单数据
-      console.log("执行了3");
+    } else if (options.type == 'member') {//充值会员的订单
+      var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
+      console.log(productInfo);
+      var goodsList = [1];
+      var product = {
+        productTitle: "",
+        oldprice: "",
+        originalPrice: "",
+        productCovermap: "",
+        count: 1,
+        price: 0
+      };
+      product.productTitle = productInfo.memberCategoryName;
+      product.oldprice = productInfo.price;
+      product.productCovermap = productInfo.coverPath;
+      product.price = productInfo.price;
+      product.originalPrice = productInfo.price;
+      goodsList[0] = product;
+      that.setData({
+        'goodsList': goodsList
+      })
+      console.log("会员数据：");
+      console.log(that.data.goodsList);
+    }else { //拿到订单数据
       var data = this.change(app.globalData.productCartList);
       that.setData({
         'goodsList': data
@@ -204,6 +215,27 @@ Page({
         var goodsList = [1];
         goodsList[0] = productInfo;
         console.log(goodsList);
+        that.setData({
+          'goodsList': goodsList
+        })
+      } else if (options.type == 'good') {
+        var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
+        console.log(productInfo);
+        var goodsList = [1];
+        var product = {
+          productTitle: "",
+          oldprice: "",
+          originalPrice: "",
+          productCovermap: "",
+          count: 1,
+          price: 0
+        };
+        product.productTitle = productInfo.productTitle;
+        product.oldprice = productInfo.price;
+        product.productCovermap = productInfo.coverPath;
+        product.price = productInfo.price;
+        product.originalPrice = productInfo.price;
+        goodsList[0] = product;
         that.setData({
           'goodsList': goodsList
         })

@@ -206,7 +206,7 @@ Page({
   },
   buyNow: function() {
     wx: wx.navigateTo({
-      url: '../confirm/confirm?type=' + 'good' + '&productInfo=' + encodeURIComponent(JSON.stringify(this.data.activitiesList)),
+      url: '../confirm/confirm?type=' + 'activit' + '&productInfo=' + encodeURIComponent(JSON.stringify(this.data.activitiesList)),
     })
   }
 })
