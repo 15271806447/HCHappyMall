@@ -45,7 +45,8 @@ Page({
     integral: 0,
     TotalPrice: 0,
     TotalCount: 0,
-    IsLoad: false
+    IsLoad: false,
+    options: false
   },
   pay: function() {
     //判断是否实名注册
@@ -148,7 +149,9 @@ Page({
         originalPrice: "",
         productCovermap: "",
         count: 1,
-        price: 0
+        price: 0,
+        productInfo: '',
+        options: ''
       };
       product.productTitle = productInfo.productTitle;
       product.oldprice = productInfo.price;
@@ -163,6 +166,11 @@ Page({
       that.setData({
         'goodsList': goodsList
       })
+    } else if (options.type == 'address') {
+      this.setData({
+        options: true
+      })
+      //这个地方不做逻辑，逻辑要写在下面，否则会被覆盖
     } else { //拿到订单数据
       console.log("执行了3");
       var data = this.change(app.globalData.productCartList);
@@ -174,8 +182,30 @@ Page({
     this.showCoupon();
     this.getAddress();
     this.getWallet();
+
+    if (options.type == 'address') { //从地址页来的
+      var hcUserAddressList = JSON.parse(options.address);
+      var address = {
+        username: null,
+        telephone: null,
+        address: null,
+        id: null,
+      };
+      address.username = hcUserAddressList.userName;
+      address.telephone = hcUserAddressList.userPhone;
+      address.address = hcUserAddressList.userAddress;
+      address.id = hcUserAddressList.id;
+      this.setData({
+        goodsList: app.globalData.goodsList,
+        delivery: app.globalData.delivery,
+        coupon: app.globalData.coupon,
+        integral: app.globalData.integral,
+        address: address
+      })
+      console.log(options.address);
+    }
   },
-  onShow: function (options) {
+  onShow: function(options) {
     this.onLoad(options);
   },
   /**
@@ -193,31 +223,8 @@ Page({
       }
     })
     return data;
+  },
 
-  },
-  onShow(options) {
-    if (this.data.IsLoad == true) {
-      var that = this;
-      if (options.type == 'goods') {
-        console.log("type=goods");
-        var productInfo = JSON.parse(options.productInfo);
-        var goodsList = [1];
-        goodsList[0] = productInfo;
-        console.log(goodsList);
-        that.setData({
-          'goodsList': goodsList
-        })
-      } else { //拿到订单数据
-        that.setData({
-          'goodsList': app.globalData.productCartList
-        })
-      }
-      //拿到可用优惠券
-      this.showCoupon();
-      this.getAddress();
-      this.getWallet();
-    }
-  },
   /**
    * 获取积分总额
    */
@@ -416,35 +423,41 @@ Page({
   /**
    * 获取用户地址
    */
-  getAddress: function() {
+  getAddress: function(options) {
     var that = this;
-    wx.request({
-      url: app.globalData.url + '/api/userAddress/getAddress?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid,
-      method: "POST",
-      header: {
-        'X-Requested-With': 'APP'
-      },
-      success: function(res) {
-        console.log(res);
-        var address = that.data.address;
-        var hcUserAddressList = res.data.data.hcUserAddressList;
-        //没有收货就选择默认值
-        if (hcUserAddressList.length == 0) {
-          return;
-        }
-        for (let i = 0; i < hcUserAddressList.length; i++) {
-          if (hcUserAddressList[i].isDefault == true) {
-            address.username = hcUserAddressList[i].userName;
-            address.telephone = hcUserAddressList[i].userPhone;
-            address.address = hcUserAddressList[i].userAddress;
-            address.id = hcUserAddressList[i].id;
+    var address = that.data.address;
+    var options = this.data.options
+    if (!options) {
+      wx.request({
+        url: app.globalData.url + '/api/userAddress/getAddress?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid,
+        method: "POST",
+        header: {
+          'X-Requested-With': 'APP'
+        },
+        success: function(res) {
+          console.log(res);
+          var hcUserAddressList = res.data.data.hcUserAddressList;
+          //没有收货就选择默认值
+          if (hcUserAddressList.length == 0) {
+            return;
           }
+          for (let i = 0; i < hcUserAddressList.length; i++) {
+            if (hcUserAddressList[i].isDefault == true) {
+              address.username = hcUserAddressList[i].userName;
+              address.telephone = hcUserAddressList[i].userPhone;
+              address.address = hcUserAddressList[i].userAddress;
+              address.id = hcUserAddressList[i].id;
+            }
+          }
+          that.setData({
+            'address': address
+          })
         }
-        that.setData({
-          'address': address
-        })
-      }
-    })
+      })
+    } else {
+      console.log("没请求");
+      return;
+    }
   },
 
 
@@ -457,8 +470,12 @@ Page({
     })
   },
   address: function() {
-    wx.navigateTo({
-      url: '../address/address',
+    app.globalData.goodsList = this.data.goodsList;
+    app.globalData.delivery = this.data.delivery;
+    app.globalData.coupon = this.data.coupon;
+    app.globalData.integral = this.data.integral;
+    wx.reLaunch({
+      url: '../address/address?type=goods'
     })
   }
 

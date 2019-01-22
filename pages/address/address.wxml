@@ -24,7 +24,7 @@
    </view>
    <view class='select'>
        <view>
-          <view class='item' wx:for="{{addressList}}">
+          <view class='item' wx:for="{{addressList}}"  bindtap='select' data-index='{{index}}'>
            <view>
            <text>{{item.userName}}</text>
            <text>{{item.userPhone}}</text>

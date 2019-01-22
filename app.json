@@ -3,7 +3,6 @@
     
     "pages/index/index",
     "pages/videoPlay/videoPlay",
-    "pages/orderdetail/orderdetail",
     "pages/addcard/addcard",
     "pages/Management/Management",
     "pages/bindbankcards/bindbankcards",
@@ -25,7 +24,6 @@
     "pages/audioPlay/audioPlay",
     "pages/find/find",
     "pages/address/address",
-    
     "pages/addAddress/addAddress",
     "pages/paid/paid",
     "pages/message/message",
@@ -34,6 +32,7 @@
     "pages/recharge/recharge",
     "pages/eventDetails/eventDetails",
     "pages/virtualCourse/virtualCourse",
+    "pages/orderdetail/orderdetail",
     "pages/orderdetails/orderdetails",
     "pages/collection/collection",
     "pages/mylession/mylession",

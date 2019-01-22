@@ -48,7 +48,10 @@ App({
     openid: null,
     imageUrl: "http://47.107.183.112:90/img/",
     findIndex: null,
-    goodsInfo: null
+    goodsInfo: null,//详情页商品
+    goodsList: null,//订单页数据
+    delivery: null,//订单页折扣
+    integral: null,//订单页积分
   },
   /**解析地址Code值 */
   analysisCode: function(areaIdPath, userAddress, thatpage) {
