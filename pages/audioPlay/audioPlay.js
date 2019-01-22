@@ -292,6 +292,9 @@ Page({
   getAudioPaht:function(id){
     return app.globalData.url + '/common/file/showPicture.do?id=' + id;
   },
+  /**
+   * 获得视频
+   */
   getAudioTime: function (videoPath,i) {
     var that = this;
     var audioTime = "audiolist" + "[" + i + "]" + ".audioTime";

@@ -432,6 +432,15 @@ Page({
     wx.switchTab({
       url: '../find/find',
     })
+  },
+  /**
+   * 领积分页面跳转
+   */
+  integral: function(){
+    wx.showModal({
+      title: '消息',
+      content: '该模块暂未开通!!!',
+      showCancel: false
+    })
   }
-  
 })

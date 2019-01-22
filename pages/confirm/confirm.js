@@ -123,10 +123,10 @@ Page({
     console.log("参数");
     console.log(options);
     console.log(options.type);
-    if (options.type == 'goods') {
+    if (options.type == 'goods') { //来源商品详情页
       console.log("执行了1");
       console.log("type=goods");
-      var productInfo = JSON.parse(options.productInfo);
+      var productInfo = app.globalData.goodsInfo;
       console.log(productInfo);
       productInfo.count = 1;
       productInfo.productCovermap = app.globalData.url + '/common/file/showPicture.do?id=' + productInfo.productCovermap;
@@ -136,7 +136,7 @@ Page({
       that.setData({
         'goodsList': goodsList
       })
-    } else if (options.type == 'good') {
+    } else if (options.type == 'good') { //来源活动
       console.log("执行了2");
       console.log(options.productInfo);
       var productInfo = JSON.parse(decodeURIComponent(options.productInfo));

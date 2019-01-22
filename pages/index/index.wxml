@@ -32,30 +32,30 @@
     <text class='nav_text'>会员中心</text>
   </navigator>
   <!-- 领积分 -->
-  <navigator url="../find/find" hover-class="navigator-hover" class='nav_block'>
+  <view bindtap='integral' hover-class="navigator-hover" class='nav_block'>
     <image src='{{imageUrl}}integral.png' class='nav_img'></image>
     <text class='nav_text'>领积分</text>
-  </navigator>
+  </view>
   <!-- 粉丝 -->
   <navigator url="../recomend/recomend" hover-class="navigator-hover" class='nav_block'>
     <image src='{{imageUrl}}fan.png' class='nav_img'></image>
     <text class='nav_text'>专属粉丝</text>
   </navigator>
   <!-- 健康 -->
-  <navigator url="../find/find" hover-class="navigator-hover" class='nav_block'>
+  <view bindtap='health' hover-class="navigator-hover" class='nav_block'>
     <image src='{{imageUrl}}health.png' class='nav_img'></image>
     <text class='nav_text'>健康</text>
-  </navigator>
+  </view>
   <!-- 生活 -->
-  <navigator url="../find/find" hover-class="navigator-hover" class='nav_block'>
+  <view bindtap='life' hover-class="navigator-hover" class='nav_block'>
     <image src='{{imageUrl}}life.png' class='nav_img'></image>
-    <text class='nav_text'>生活</text>
-  </navigator>
+    <text class='nav_text'>旅游</text>
+  </view>
   <!-- 教育 -->
-  <navigator url="../find/find" hover-class="navigator-hover" class='nav_block'>
+  <view bindtap='education' hover-class="navigator-hover" class='nav_block'>
     <image src='{{imageUrl}}education.png' class='nav_img'></image>
     <text class='nav_text'>教育</text>
-  </navigator>
+  </view>
 </view>
 <!-- 书城 -->
 <view class='selection'>
