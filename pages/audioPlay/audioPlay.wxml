@@ -64,7 +64,7 @@
     <view class='index center'>{{index+1}}</view>
     <view class='colum'>
       <view>{{item.audioName}}</view>
-      <view class='time'>音频 {{audioTime}}</view>
+      <view class='time'>音频 {{item.audioTime}}</view>
     </view>
   </view>
 </view>
