@@ -38,8 +38,8 @@ Page({
         'X-Requested-With': 'APP'
       },
       success: function (res1) {
+        console.log(app.globalData.uid);
         console.log(res1);
-        console.log(res1.data.data.couponVOS[0].name);
         that.setData({
           couponVOS: res1.data.data.couponVOS
         })
@@ -52,7 +52,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(1);
     this.favdata();
    
   },

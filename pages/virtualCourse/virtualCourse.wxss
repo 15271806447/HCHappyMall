@@ -8,35 +8,36 @@ page {
 }
 .module{
   width: 100%;
-  height: 530rpx;
+  /* height: 530rpx; */
   background-color: white;
-  overflow:hidden;
+  /* overflow:hidden; */
   position: relative;
   box-shadow:5px 5px 10px rgba(0,0,0,0.1);
+  padding-bottom: 20px;
 }
 
 .detail-images{
   width: 100%;
-  height: 360px;
+  height: 340px;
 }
 .detail-images image{
   width: 100%;
   height: 100%;
 }
 .detail-tilte{
-font-size: 35rpx;
+font-size: 46rpx;
 margin: 20rpx 0 0 30rpx;
 }
 .detail-describe{
-  font-size: 27rpx;
+  font-size: 32rpx;
   margin: 10rpx 0rpx 0rpx 30rpx;
-  color: #6a6a6a;
+  color: gray;
 }
 .detail-money  {
   width: 40rpx;
   height: 100%;
   color:#999;
-  font-size: 35rpx;
+  font-size: 34rpx;
   position: absolute;
   margin-left: 540rpx;
   margin-top: -180rpx;
@@ -60,10 +61,11 @@ margin: 20rpx 0 0 30rpx;
 
 .membership-price{
  position: absolute;
- font-size: 35rpx;
+ font-size: 40rpx;
  color: red;
  margin-right: 30rpx;
  top: 75rpx;
+ font-weight: bold;
 }
 
 

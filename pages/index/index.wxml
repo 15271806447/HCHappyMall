@@ -32,10 +32,10 @@
     <text class='nav_text'>会员中心</text>
   </navigator>
   <!-- 领积分 -->
-  <navigator url="../find/find" hover-class="navigator-hover" class='nav_block'>
+  <view bindtap='integral' hover-class="navigator-hover" class='nav_block'>
     <image src='{{imageUrl}}integral.png' class='nav_img'></image>
     <text class='nav_text'>领积分</text>
-  </navigator>
+  </view>
   <!-- 粉丝 -->
   <navigator url="../recomend/recomend" hover-class="navigator-hover" class='nav_block'>
     <image src='{{imageUrl}}fan.png' class='nav_img'></image>
@@ -46,7 +46,7 @@
     <image src='{{imageUrl}}health.png' class='nav_img'></image>
     <text class='nav_text'>健康</text>
   </view>
-  <!-- 旅游 -->
+  <!-- 生活 -->
   <view bindtap='life' hover-class="navigator-hover" class='nav_block'>
     <image src='{{imageUrl}}life.png' class='nav_img'></image>
     <text class='nav_text'>旅游</text>

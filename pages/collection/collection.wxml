@@ -11,13 +11,13 @@
   <swiper-item>
     <block wx:for="{{bookArr}}" wx:for-item="item">
       <view class='collectinglist'>
-        <view class='video-list'>
+        <view class='video-list' catchtap='toGoods' data-index='{{index}}' data-type='bookArr'>
           <view class='video-img-left'>
-            <image src='../img/true.jpg'></image>
+            <image src='{{item.productCovermap}}'></image>
           </view>
           <view class='video-decribe-mid'>
             <view class='book-name'>{{item.productTitle}}
-              <image class='trash' mode="scaleToFill" src='http://47.107.183.112/img/trash.png' catchtap='delete' data-index='{{index}}' data-type='bookArr'></image>
+              <image class='trash' mode="scaleToFill" src='{{imageUrl}}trash.png' catchtap='delete' data-index='{{index}}' data-type='bookArr'></image>
             </view>
             <view class='video-tea'>{{item.productAuthor}}</view>
             <view class='person-num'>
@@ -36,13 +36,13 @@
   <swiper-item>
     <block wx:for="{{audioArr}}" wx:for-item="item">
       <view class='collectinglist'>
-        <view class='video-list'>
+        <view class='video-list'  catchtap='toGoods' data-index='{{index}}' data-type='audioArr'>
           <view class='video-img-left'>
-            <image src='../img/true.jpg'></image>
+            <image src='{{item.productCovermap}}'></image>
           </view>
           <view class='video-decribe-mid'>
             <view class='book-name'>{{item.productTitle}}
-              <image class='trash' mode="scaleToFill" src='http://47.107.183.112/img/trash.png' catchtap='delete' data-index='{{index}}' data-type='audioArr'></image>
+              <image class='trash' mode="scaleToFill" src='{{imageUrl}}trash.png' catchtap='delete' data-index='{{index}}' data-type='audioArr'></image>
             </view>
             <view class='video-tea'>{{item.productAuthor}}</view>
             <view class='person-num'>
@@ -60,13 +60,13 @@
   <swiper-item>
     <block wx:for="{{movieArr}}" wx:for-item="item">
       <view class='collectinglist'>
-        <view class='video-list'>
+        <view class='video-list'  catchtap='toGoods' data-index='{{index}}' data-type='movieArr'>
           <view class='video-img-left'>
-            <image src='../img/true.jpg'></image>
+            <image src='{{item.productCovermap}}'></image>
           </view>
           <view class='video-decribe-mid'>
             <view class='book-name'>{{item.productTitle}}
-              <image class='trash' mode="scaleToFill" src='http://47.107.183.112/img/trash.png' catchtap='delete' data-index='{{index}}' data-type='movieArr'></image>
+              <image class='trash' mode="scaleToFill" src='{{imageUrl}}trash.png' catchtap='delete' data-index='{{index}}' data-type='movieArr'></image>
             </view>
             <view class='video-tea'>{{item.productAuthor}}</view>
             <view class='person-num'>
@@ -87,13 +87,13 @@
   <swiper-item>
     <block wx:for="{{activeArr}}" wx:for-item="item">
       <view class='collectinglist'>
-        <view class='video-list'>
+        <view class='video-list'  catchtap='toGoods' data-index='{{index}}' data-type='activeArr'>
           <view class='video-img-left'>
-            <image src='../img/true.jpg'></image>
+            <image src='{{item.productCovermap}}'></image>
           </view>
           <view class='video-decribe-mid'>
             <view class='book-name'>{{item.productTitle}}
-              <image class='trash' mode="scaleToFill" src='http://47.107.183.112/img/trash.png' catchtap='delete' data-index='{{index}}' data-type='activeArr'></image>
+              <image class='trash' mode="scaleToFill" src='{{imageUrl}}trash.png' catchtap='delete' data-index='{{index}}' data-type='activeArr'></image>
             </view>
             <view class='video-tea'>{{item.productAuthor}}</view>
             <view class='person-num'>

@@ -3,7 +3,7 @@
   <view class='module'>
     <!-- 图片 -->
     <view class="detail-images">
-      <image src='{{vritualCourse.coverPath}}'width="355px" height="360px"></image>
+      <image src='{{vritualCourse.coverPath}}'width="355px" height="340px"></image>
     </view>
     <!-- 描述 -->
     <view class="detail">
@@ -57,13 +57,13 @@
     <view wx:if="{{isCharge}}">
       <!-- <视频> -->
       <view class='playing-img'>
-        <image src='../image/play.png'></image>
+        <image src='http://47.107.94.80/play.png'></image>
       </view>
     </view>
     <view wx:else>
       <!-- 音频 -->
       <view class='playing-img'>
-        <image src='../image/voice.png'></image>
+        <image src='http://47.107.94.80/voice.png'></image>
       </view>
     </view>
 
@@ -71,13 +71,13 @@
     <view wx:if="{{item.isCharge}}">
       <!-- 锁图标 -->
       <view class='unfree'>
-        <image src='../image/block.png'></image>
+        <image src='http://47.107.94.80/block.png'></image>
       </view>
 
     </view>
     <view wx:else>
       <!-- 试学 -->
-      <view class='free'>
+      <view class='free' bindtap='free'>
         <text>试学</text>
       </view>
     </view>

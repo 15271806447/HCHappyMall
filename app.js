@@ -47,7 +47,8 @@ App({
     ip: null,
     openid: null,
     imageUrl: "http://47.107.183.112:90/img/",
-    findIndex: null
+    findIndex: null,
+    goodsInfo: null
   },
   /**解析地址Code值 */
   analysisCode: function(areaIdPath, userAddress, thatpage) {
@@ -140,7 +141,7 @@ App({
    * 返回awcp规定图片url
    */
   url: function(id) {
-    return app.globalData.url + ':80/common/file/showPicture.do?id=' + id;
+    return app.globalData.url + '/common/file/showPicture.do?id=' + id;
   },
   /**
    * 收藏商品

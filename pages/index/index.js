@@ -404,13 +404,13 @@ Page({
       TotalIndex = index + 4;
       var productInfo = JSON.stringify(TotalList[TotalIndex])
       wx: wx.navigateTo({
-        url: '../virtualCourse/virtualCourse?productInfo=' + productInfo,
+        url: '../virtualCourse/virtualCourse?productInfo=' + productInfo + '&type=AudioItem',
       })
     } else if (firstClassify == 'VideoItem') {
       TotalIndex = index + 8;
       var productInfo = JSON.stringify(TotalList[TotalIndex])
       wx: wx.navigateTo({
-        url: '../virtualCourse/virtualCourse?productInfo=' + productInfo,
+        url: '../virtualCourse/virtualCourse?productInfo=' + productInfo + '&type=VideoItem',
       })
     }
     console.log('TotalIndex:' + TotalIndex);
@@ -432,6 +432,15 @@ Page({
     wx.switchTab({
       url: '../find/find',
     })
+  },
+  /**
+   * 领积分页面跳转
+   */
+  integral: function(){
+    wx.showModal({
+      title: '消息',
+      content: '该模块暂未开通!!!',
+      showCancel: false
+    })
   }
-  
 })

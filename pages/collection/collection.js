@@ -1,4 +1,4 @@
-var app = getApp()
+var app = getApp();
 Page({
   data: {
 
@@ -25,7 +25,8 @@ Page({
     state: false,
     first_click: false,
     //是否加载过页面
-    isLoad: false
+    isLoad: false,
+    imageUrl: app.globalData.imageUrl
   },
 
 
@@ -52,12 +53,13 @@ Page({
       method: "POST",
       success: function(res) {
         console.log(res);
-
+        var products = res.data.data.hcCollectionVOList;
+        for (let i = 0; i < products.length;i++){
+          products[i].productCovermap = app.globalData.url + '/common/file/showPicture.do?id=' + products[i].productCovermap;
+        }
         that.setData({
           products: res.data.data.hcCollectionVOList
         })
-        var products = res.data.data.hcCollectionVOList;
-
         var type = app.globalData.firstClassifyList;
         console.log(app.globalData.firstClassifyList);
         for (var i = 0; i < type.length; i++) {
@@ -113,7 +115,6 @@ Page({
       content: '您确定要删除收藏么？',
       success(res) {
         if (res.confirm) {
-          
           if (type == 'bookArr') {
             app.removeCollection(that.data.bookArr[index].id);
             var bookArr = that.data.bookArr;
@@ -186,39 +187,29 @@ Page({
 
   },
 
-  // getHeight:function(e){
-  //   console.log(e.currentTarget.dataset.current);
-  //   var that = this;
-  //   var obj = wx.createSelectorQuery();
-  //   var h;
-  //   var changeHeight = [];
-  //   changeHeight = that.data.bookArr;
-  //   if(e.currentTarget.dataset.current == 1){
-  //     changeHeight = that.data.bookArr;
-  //   } else if (e.currentTarget.dataset.current == 2){
-  //     changeHeight = that.data.audioArr;
-  //   } else if (e.currentTarget.dataset.current == 3){
-  //     changeHeight = that.data.movieArr;
-  //   }else{
-  //     changeHeight = that.data.activeArr;
-  //   }
-  //   that.setData({
-  //     change: changeHeight,
-  //   })
-  //   console.log(that.data.change);
-  //   obj.select('.collectinglist').boundingClientRect(function (rect) {
-  //     console.log(rect);
-  //     h = rect.height * changeHeight.length;
-  //     console.log(h);
-  //     that.setData({
-  //       height:h
-  //     })
-
-  //   })
-  //   obj.exec();
-  //   console.log(that.data.height);
-  // }
-
-
+  /**
+   * 详情页跳转
+   */
+  toGoods:function(e){
+    //TODO 获取到索引
+    var index = e.currentTarget.dataset.index;
+    var type = e.currentTarget.dataset.type;
+    var that = this;
+    var productInfo = null;
+    if (type == 'bookArr') {
+      productInfo = that.data.bookArr[index];
+    } else if (type == 'movieArr') {
+      productInfo = that.data.movieArr[index];
+    } else if (type == 'audioArr') {
+      productInfo = that.data.audioArr[index];
+    } else if (type == 'activeArr') {
+      productInfo = that.data.activeArr[index];
+    }
+    //appdata接收
+    app.globalData.goodsInfo = productInfo;
+    wx.navigateTo({
+      url: '../goods/goods?type=collection',
+    })
+  }
 
 })

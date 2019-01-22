@@ -45,18 +45,25 @@ Page({
         count: 12,
       },
     ],
-    isClick:false
+    isClick: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var productInfo = JSON.parse(options.productInfo);
-    console.log(productInfo);
-    this.setData({
-      'goods': productInfo
-    })
+    if (options.type == "collection") {
+      //TODO
+      this.setData({
+        'goods': app.globalData.goodsInfo
+      })
+    } else {
+      var productInfo = JSON.parse(options.productInfo);
+      console.log(productInfo);
+      this.setData({
+        'goods': productInfo
+      })
+    }
     this.getProductPicture();
   },
   /**
@@ -75,7 +82,7 @@ Page({
         console.log(res.data.data.hcProductPictureList);
         var imgUrls = that.data.imgUrls;
         for (var i = 0; i < res.data.data.hcProductPictureList.length; i++) {
-          imgUrls[i] = app.globalData.url+'/common/file/showPicture.do?id=' + res.data.data.hcProductPictureList[i].productImgPath;
+          imgUrls[i] = app.globalData.url + '/common/file/showPicture.do?id=' + res.data.data.hcProductPictureList[i].productImgPath;
         }
         that.setData({
           'imgUrls': imgUrls
@@ -86,7 +93,7 @@ Page({
   /**
    * 收藏
    */
-  collection:function() {
+  collection: function() {
     if (!this.data.isClick == true) {
       wx.showToast({
         title: '已收藏',
@@ -108,14 +115,14 @@ Page({
   /**
    * 加入购物车
    */
-  JoinShoppingCart: function(){
+  JoinShoppingCart: function() {
     var that = this;
     wx.showModal({
       title: '成功添加购物车！！！',
       content: '可在购物车中修改商品数量！',
       showCancel: false,
       confirmText: '返回',
-      success: function (res) {
+      success: function(res) {
         if (res.confirm) {
           //商品添加购物车接口
           var id = that.data.goods.id;
@@ -127,7 +134,7 @@ Page({
             header: {
               'X-Requested-With': 'APP'
             },
-            success: function (res) {
+            success: function(res) {
               console.log(res);
               console.log('url:' + app.globalData.url + '/api/productCart/addToProductCart?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid + "&productId=" + id);
             }
@@ -136,10 +143,10 @@ Page({
       }
     })
   },
-  buyNow:function(){
-    
-    wx:wx.navigateTo({
-      url: '../confirm/confirm?productInfo=' + JSON.stringify(this.data.goods)+'&type='+'goods',
+  buyNow: function() {
+    app.globalData.goodsInfo = this.data.goods
+    wx: wx.navigateTo({
+      url: '../confirm/confirm?type=goods',
     })
   }
 
