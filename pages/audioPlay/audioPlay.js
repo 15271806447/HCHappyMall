@@ -2,40 +2,30 @@ const app = getApp()
 const innerAudioContext = wx.createInnerAudioContext();
 Page({
   data: {
-    audioInformation:{
-      name: "寂静之声-亲子教育",
+    audioInformation: {
+      name: "",
       //当前播放的视频索引
       thisindex: 1,
-      coverimg: "https://goss.veer.com/creative/vcg/veer/800water/veer-146156021.jpg", 
-      desption: "正面管教是目前全球领先的教育方法，源自美国，由简尼尔森博士等教育专家历经30多年实践发展与完善，让数以千万计的家长学会了“不骄纵不惩罚”“和善与坚定”并行的育儿方法。",
+      coverimg: "",
+      desption: "",
       // 评分
-      sales: 7.4,
-      category: "家庭",
+      sales: 0.0,
+      category: "",
       // 当前更新集数
-      nowEpisodes: "10",
+      nowEpisodes: "",
       // 全部更新集数
-      allEpisodes: "40"
+      allEpisodes: ""
     },
     IsHidden: true,
     state: true,
     first_click: false,
     //音频封面图
-    audiolist: [{
-        audiosrc: 'http://47.107.183.112/audio/Sugar.mp3',
-        audioName: "面对孩子的问题父母怎么处理"
-      },
-      {
-        audiosrc: 'http://47.107.183.112/audio/seeyouagain.mp3',
-        audioName: "梦想的界定"
-      },
-      {
-        audiosrc: 'http://47.107.183.112/audio/test.mp3',
-        audioName: "孩子要怎样获得正能量"
-      },
-      {
-        audiosrc: 'http://47.107.183.112/audio/GuitarSound.mp3',
-        audioName: "孩子成长中的动力和阻力"
-      }
+    audiolist: [
+      // {
+      //   audiosrc: '',
+      //   audioName: "",
+      //   audioTime:0,
+      // }
     ],
     isPlayAudio: false,
     // 音频跳转
@@ -44,10 +34,11 @@ Page({
     audioDuration: 0,
     showTime1: '00:00',
     showTime2: '00:00',
-    audioTime: 0
+    imageUrl: app.globalData.imageUrl
+    //audioTime: 0
   },
   onReady(res) {
-    
+
   },
   onShow: function() {
     this.Initialization();
@@ -59,11 +50,12 @@ Page({
 
     var t = this;
     var index = this.data.audioInformation.thisindex;
-    if (this.data.audiolist[index].audiosrc.length != 0) {
+
+    if (t.data.audiolist[index].audiosrc.length != 0) {
       //设置src
-      innerAudioContext.src = this.data.audiolist[index].audiosrc;
+      innerAudioContext.src = t.data.audiolist[index].audiosrc;
       console.log('index:' + index);
-      console.log(this.data.audiolist[index].audiosrc);
+      console.log(t.data.audiolist[index].audiosrc);
       //运行一次
       innerAudioContext.play();
       innerAudioContext.pause();
@@ -98,8 +90,8 @@ Page({
       audioTime: 0,
       isPlayAudio: false,
       showTime1: '00:00',
-    isPlayAudio: false
-      });
+      isPlayAudio: false
+    });
   },
   /**
    * 拖动进度条事件
@@ -235,7 +227,7 @@ Page({
   /**
    * 下拉按钮
    */
-  toggle: function () {
+  toggle: function() {
     var list_state = this.data.state,
       first_state = this.data.first_click;
     if (!first_state) {
@@ -255,7 +247,7 @@ Page({
   },
 
   //获取节的信息
-  getChapterInfo: function (audioId) {
+  getChapterInfo: function(audioId) {
     var that = this;
     var audioNowEpisodes = "audioInformation.nowEpisodes";
     var audioAllEpisodes = "audioInformation.allEpisodes";
@@ -267,20 +259,25 @@ Page({
       header: {
         'X-Requested-With': 'APP'
       },
-      success: function (res) {
+      success: function(res) {
         console.log(res);
+        var courseVO = res.data.data.courseVO;
         that.setData({
 
-          [audioNowEpisodes]: res.data.data.courseVO.nowNum,
-          [audioAllEpisodes]: res.data.data.courseVO.totalNum
+          [audioNowEpisodes]: courseVO.nowNum,
+          [audioAllEpisodes]: courseVO.totalNum
         });
-        for (var i = 0; i < res.data.data.courseVO.hcFSectionInfoList.length; i++) {
-          var audiochapter = { audioName: "", audiosrc: "" };
-          audiochapter.audioName = res.data.data.courseVO.hcFSectionInfoList[i].chapterName;
-          that.getFilePath(res.data.data.courseVO.hcFSectionInfoList[i].fileAddr, i);
-          // videochapter.videoUrl = app.globalData.url + '/upload/' + that.getFileName(res.data.data.courseVO.hcFSectionInfoList[i].fileAddr);
-          // videochapter.videoUrl = app.globalData.url + '/upload/' + res.data.data.courseVO.hcFSectionInfoList[i].fileAddr + '.mp4';
-          fileId.push(res.data.data.courseVO.hcFSectionInfoList[i].fileAddr);
+        for (var i = 0; i < courseVO.hcFSectionInfoList.length; i++) {
+          var audiochapter = {
+            audioName: "",
+            audiosrc: "",
+            audioTime: '加载中...',
+          };
+          var hcFSectionInfo = courseVO.hcFSectionInfoList[i];
+          audiochapter.audioName = hcFSectionInfo.chapterName;
+          audiochapter.audiosrc = that.getAudioPaht(hcFSectionInfo.fileAddr);
+          that.getAudioTime(audiochapter.audiosrc,i);
+          fileId.push(hcFSectionInfo.fileAddr);
           audio.push(audiochapter);
         }
         that.setData({
@@ -292,16 +289,58 @@ Page({
 
     });
   },
+  getAudioPaht:function(id){
+    return app.globalData.url + '/common/file/showPicture.do?id=' + id;
+  },
+  getAudioTime: function (videoPath,i) {
+    var that = this;
+    var audioTime = "audiolist" + "[" + i + "]" + ".audioTime";
+    const innerAudioContext = wx.createInnerAudioContext()  //初始化createInnerAudioContext接口
+    //设置播放地址
+    innerAudioContext.src = videoPath;
+
+    //音频进入可以播放状态，但不保证后面可以流畅播放
+    innerAudioContext.onCanplay(() => {
+      innerAudioContext.duration //类似初始化-必须触发-不触发此函数延时也获取不到
+      setTimeout(function () {
+        //在这里就可以获取到大家梦寐以求的时长了
+        console.log(innerAudioContext.duration); //延时获取长度 单位：秒
+        var time = that.toTime(innerAudioContext.duration);
+        that.setData({
+          [audioTime]: time
+        })
+      },1000)  //这里设置延时1秒获取
+    })
+  },
+  toTime: function (s) {
+    var day = Math.floor(s / (24 * 3600)); // Math.floor()向下取整 
+    var hour = Math.floor((s - day * 24 * 3600) / 3600);
+    var minute = Math.floor((s - day * 24 * 3600 - hour * 3600) / 60);
+    var second = Math.floor(s - day * 24 * 3600 - hour * 3600 - minute * 60);
+    var time = '00:00';
+    if (hour > 0 && minute < 10) {
+      time = hour + ":0" + minute + ":" + second;
+    } else if (hour > 0 && minute > 10) {
+      time = hour + ":" + minute + ":" + second;
+    } else if (hour <= 0 && minute < 10) {
+      time = "0" + minute + ":" + second;
+    } else if (hour <= 0 && minute > 10) {
+      time = minute + ":" + second;
+    } else if (hour <= 0 && minute <= 0) {
+      time = "00:" + second;
+    }
+    return time;
+  },
 
   //获取文件路径
-  getFilePath: function (fileId, index) {
+  getFilePath: function(fileId, index) {
     var that = this;
     var myArray = new Array();
     var audiosrc = "audiolist" + "[" + index + "]" + ".audiosrc";
     wx.request({
       url: app.globalData.url + '/api/common/file/get?id=' + fileId,
       method: 'GET',
-      success: function (res) {
+      success: function(res) {
         console.log(res);
         var index = res.data.data.storageId.indexOf("upload");
         var filePath = app.globalData.url + "/" + res.data.data.storageId.substring(index);
@@ -318,26 +357,31 @@ Page({
     })
   },
 
-  onLoad:function(e){
+  onLoad: function(e) {
     var that = this;
-    var audioDetail = JSON.parse(e.audioDetail);
+    var audioDetail = JSON.parse(decodeURIComponent(e.audioDetail));
+    console.log('audioDetail');
+    console.log(audioDetail);
     that.getChapterInfo(audioDetail.id);
     var audioName = "audioInformation.name";
     var audioDesption = "audioInformation.desption";
     var audioSales = "audioInformation.sales";
-
+    var audioCoverimg = "audioInformation.coverimg";
     that.setData({
       [audioName]: audioDetail.productTitle,
       [audioDesption]: audioDetail.courseIntroduce,
-      [audioSales]: audioDetail.productStock
+      [audioSales]: audioDetail.productStock,
+      [audioCoverimg]: audioDetail.coverPath
     })
 
-   
+
     that.getSecondClassifyName(audioDetail);
+    console.log('that');
+    console.log(that);
   },
 
 
-  getSecondClassifyName: function (audioDetail) {
+  getSecondClassifyName: function(audioDetail) {
     var that = this;
     var audioCategory = "audioInformation.category";
     wx.request({
@@ -346,7 +390,7 @@ Page({
       header: {
         'X-Requested-With': 'APP'
       },
-      success: function (res) {
+      success: function(res) {
         console.log(res);
         that.setData({
           [audioCategory]: res.data.data.hcProductSecondClassifyList[0].secondClassName

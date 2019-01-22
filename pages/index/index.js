@@ -404,13 +404,13 @@ Page({
       TotalIndex = index + 4;
       var productInfo = JSON.stringify(TotalList[TotalIndex])
       wx: wx.navigateTo({
-        url: '../virtualCourse/virtualCourse?productInfo=' + productInfo,
+        url: '../virtualCourse/virtualCourse?productInfo=' + productInfo + '&type=AudioItem',
       })
     } else if (firstClassify == 'VideoItem') {
       TotalIndex = index + 8;
       var productInfo = JSON.stringify(TotalList[TotalIndex])
       wx: wx.navigateTo({
-        url: '../virtualCourse/virtualCourse?productInfo=' + productInfo,
+        url: '../virtualCourse/virtualCourse?productInfo=' + productInfo + '&type=VideoItem',
       })
     }
     console.log('TotalIndex:' + TotalIndex);

@@ -16,24 +16,25 @@ Page({
       productStock:'',
       price: '',
       memberPrice:'',
-      courseIntroduce: "本教程为Java入门第一季，欢迎来到精彩的Java编程世界！Java语言已经成为当前软件开发行业中主流的开发语言。本教程将介绍Java环境搭建、工具使用、基础语法。带领大家一步一步的踏入Java达人殿堂！Let’s go!",
+      courseIntroduce: "",
     },
-    courseList: [{
-        chapterName: "1.  java基础-常用dos命令  环境变量的配置",
-        isCharge: false,
-      },
-      {
-        chapterName: "1.  java基础-常用dos命令  环境变量的配置",
-        isCharge: true,
-      },
-      {
-        chapterName: "1.  java基础-常用dos命令  环境变量的配置",
-        isCharge: true,
-      },
-      {
-        chapterName: "1.  java基础-常用dos命令  环境变量的配置",
-        isCharge: true,
-      },
+    courseList: [
+      // {
+      //   chapterName: "1.  java基础-常用dos命令  环境变量的配置",
+      //   isCharge: false,
+      // },
+      // {
+      //   chapterName: "1.  java基础-常用dos命令  环境变量的配置",
+      //   isCharge: true,
+      // },
+      // {
+      //   chapterName: "1.  java基础-常用dos命令  环境变量的配置",
+      //   isCharge: true,
+      // },
+      // {
+      //   chapterName: "1.  java基础-常用dos命令  环境变量的配置",
+      //   isCharge: true,
+      // },
     ],
     hidden: false,
     nocancel: false,
@@ -71,6 +72,8 @@ Page({
    
     this.getCourseInfo();
     // this.checkCourse();
+
+    this.flagVideoAndAudio(options);
   },
   /**
    * 跳转购买
@@ -229,6 +232,33 @@ Page({
       }
     })
   },
+
+  /* 视频音频播放页面 */
+  free:function(){
+    var that = this;
+    console.log(this);
+    var type = that.data.type;
+    if (type == 'VideoItem'){
+      wx.navigateTo({
+        url: '../videoPlay/videoPlay?type=1&videoDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)),
+      })
+    } else if (type == 'AudioItem'){
+      wx.navigateTo({
+        url: '../audioPlay/audioPlay?type=1&audioDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)),
+      })
+    }
+    
+  },
+
+
+
   /**判断视屏与音频交互*/
+  flagVideoAndAudio: function (options){
+    var that = this;
+    var type = options.type;
+    that.setData({
+      'type':type
+    })
+  },
 })
 
