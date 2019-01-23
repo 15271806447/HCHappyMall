@@ -143,6 +143,9 @@ Page({
       }
     })
   },
+  /**
+   * 立即购买
+   */
   buyNow: function() {
     app.globalData.goodsInfo = this.data.goods;
     wx: wx.navigateTo({
