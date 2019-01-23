@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isMemberPay:false,
     TotalPrice: 0
   },
 
@@ -12,9 +13,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    if (options.isMemberPay != null && options.isMemberPay !=""){
     this.setData({
       isMemberPay: options.isMemberPay
     });
+    }
+    console.log("是否会员购买：");
+    console.log(options.isMemberPay);
+    console.log(this.data.isMemberPay);
     this.setData({
       memberTypeId: options.memberTypeId
     });
@@ -37,7 +43,7 @@ Page({
   },
   pay: function() {
     var that = this;
-    if (that.data.isMemberPay) {
+    if (that.data.isMemberPay==true) {
       getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function () {
         wx.redirectTo({
           url: '../memberCenter/memberCenter?isPaySuccess=' + 'true' + '&memberTypeId=' + that.data.memberTypeId,
@@ -46,7 +52,7 @@ Page({
     } else {
       console.log('money:' + this.data.TotalPrice);
       getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function() {
-        wx.navigateTo({
+        wx.redirectTo({
           url: '../orderdetail/orderdetail?orderDetail=' + JSON.stringify(that.data.orderDetail) + '&type=pay',
         })
       });
