@@ -121,13 +121,8 @@ Page({
   },
   onLoad: function(options) {
     var that = this;
-    console.log("参数");
-    console.log(options);
-    console.log(options.type);
-    if (options.type == 'goods') { //来源商品详情页
-      console.log("执行了1");
-      console.log("type=goods");
-      var productInfo = app.globalData.goodsInfo;
+    if (options.type == 'goods') {
+      var productInfo = JSON.parse(options.productInfo);
       console.log(productInfo);
       productInfo.count = 1;
       productInfo.productCovermap = app.globalData.url + '/common/file/showPicture.do?id=' + productInfo.productCovermap;
@@ -137,9 +132,7 @@ Page({
       that.setData({
         'goodsList': goodsList
       })
-    } else if (options.type == 'good') { //来源活动
-      console.log("执行了2");
-      console.log(options.productInfo);
+    } else if (options.type == 'activit') { //参加线下活动订单
       var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
       console.log(productInfo);
       var goodsList = [1];
@@ -158,11 +151,7 @@ Page({
       product.productCovermap = productInfo.coverPath;
       product.price = productInfo.price;
       product.originalPrice = productInfo.price;
-      console.log("数据1？：");
-      console.log(product);
       goodsList[0] = product;
-      console.log("数据2？：");
-      console.log(goodsList);
       that.setData({
         'goodsList': goodsList
       })
@@ -171,8 +160,30 @@ Page({
         options: true
       })
       //这个地方不做逻辑，逻辑要写在下面，否则会被覆盖
+    } else if (options.type == 'member') { //充值会员的订单
+      var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
+      console.log(productInfo);
+      var goodsList = [1];
+      var product = {
+        productTitle: "",
+        oldprice: "",
+        originalPrice: "",
+        productCovermap: "",
+        count: 1,
+        price: 0
+      };
+      product.productTitle = productInfo.memberCategoryName;
+      product.oldprice = productInfo.price;
+      product.productCovermap = productInfo.coverPath;
+      product.price = productInfo.price;
+      product.originalPrice = productInfo.price;
+      goodsList[0] = product;
+      that.setData({
+        'goodsList': goodsList
+      })
+      console.log("会员数据：");
+      console.log(that.data.goodsList);
     } else { //拿到订单数据
-      console.log("执行了3");
       var data = this.change(app.globalData.productCartList);
       that.setData({
         'goodsList': data
@@ -222,7 +233,51 @@ Page({
         count: item.count, //数量
       }
     })
-    return data;
+    return data; 
+  },
+  onShow(options) {
+    if (this.data.IsLoad == true) {
+      var that = this;
+      if (options.type == 'goods') {
+        console.log("type=goods");
+        var productInfo = JSON.parse(options.productInfo);
+        var goodsList = [1];
+        goodsList[0] = productInfo;
+        console.log(goodsList);
+        that.setData({
+          'goodsList': goodsList
+        })
+      } else if (options.type == 'good') {
+        var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
+        console.log(productInfo);
+        var goodsList = [1];
+        var product = {
+          productTitle: "",
+          oldprice: "",
+          originalPrice: "",
+          productCovermap: "",
+          count: 1,
+          price: 0
+        };
+        product.productTitle = productInfo.productTitle;
+        product.oldprice = productInfo.price;
+        product.productCovermap = productInfo.coverPath;
+        product.price = productInfo.price;
+        product.originalPrice = productInfo.price;
+        goodsList[0] = product;
+        that.setData({
+          'goodsList': goodsList
+        })
+      } else { //拿到订单数据
+        that.setData({
+          'goodsList': app.globalData.productCartList
+        })
+      }
+      //拿到可用优惠券
+      this.showCoupon();
+      this.getAddress();
+      this.getWallet();
+    } 
   },
 
   /**

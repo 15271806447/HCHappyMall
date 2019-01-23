@@ -6,11 +6,11 @@
     <image src='{{user.userImg}}' class='userImg'></image>
     <!-- 用户名 -->
     <text class='userName'>{{user.userName}}</text>
-    <view class='view_VIP' wx:if="{{user.member}}==true">
+    <view class='view_VIP' wx:if="{{user.member}}">
       <image class="VIP" src='{{imageUrl}}VIP.png'></image>
     </view>
-    <view class='VIP' wx:elif="{{user.member}}==false">
-      <image class="ordinary" src='{{imageUrl}}normal.png'></image>
+    <view class='view_VIP' wx:else>
+      <image class="VIP" src='{{imageUrl}}normal.png'></image>
     </view>
   </view>
 </view>

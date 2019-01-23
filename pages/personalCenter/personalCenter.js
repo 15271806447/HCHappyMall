@@ -81,9 +81,31 @@ Page({
   },
   //扫码结束
 
+  //检查是否是会员
+cheakMember : function(){
+  var that = this;
+  wx.request({
+    url: app.globalData.url + '/api/personalCenter/getUserMember?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
+    method: "POST",
+    header: {
+      'X-Requested-With': 'APP'
+    },
+    success(res) {
+      var memberTypeId = res.data.data.hcUserMember.memberTypeId;
+      if (memberTypeId == null || memberTypeId == ""){
+        that.data.user.member = false;
+      }else{
+        that.data.user.member = true;
+      }
+      console.log("是否会员：");
+      console.log(that.data.user.member);
+    }
+  })
+},
   onLoad: function () {
     var user = this.data.user;
-    user.userImg = app.globalData.userInfo.avatarUrl
+    user.userImg = app.globalData.userInfo.avatarUrl;
+    user.userName = app.globalData.userInfo.nickName;
     this.setData({
       'user':user
     })
@@ -113,5 +135,6 @@ Page({
         }
       }
     })
+    this.cheakMember();
   }
 })

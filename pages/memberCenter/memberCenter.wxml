@@ -43,4 +43,4 @@
     </view>
   </view>
 </view>
-<button class='footer'>购买会员</button>
+<button class='footer' data-indext_num='{{thisindex}}' bindtap='recharge'>立即充值</button>
