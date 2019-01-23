@@ -85,12 +85,14 @@ Page({
             bool = false;
           }
           var memberType = {
+            id:"",
             memberCategoryName: "",
             price: "",
             memberSign: "",
             ischecked: bool,
             program: ""
           };
+          memberType.id = hcMemberTypeList[i].id;
           memberType.memberCategoryName = hcMemberTypeList[i].memberTypeName;
           memberType.price = hcMemberTypeList[i].memberPrice;
           memberType.memberSign = app.globalData.url + '/common/file/showPicture.do?id=' + hcMemberTypeList[i].memberSign;

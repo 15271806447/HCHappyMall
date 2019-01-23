@@ -165,6 +165,7 @@ Page({
       console.log(productInfo);
       var goodsList = [1];
       var product = {
+        id:"",
         productTitle: "",
         oldprice: "",
         originalPrice: "",
@@ -172,6 +173,7 @@ Page({
         count: 1,
         price: 0
       };
+      product.id = productInfo.id;
       product.productTitle = productInfo.memberCategoryName;
       product.oldprice = productInfo.price;
       product.productCovermap = productInfo.coverPath;
