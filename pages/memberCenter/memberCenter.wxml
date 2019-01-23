@@ -6,7 +6,7 @@
     <text class='memberSectionTitle'>专属会员</text>
     <view class='more center' bindtap='more'>
       <text>更多</text>
-      <image class='downArrow' mode="scaleToFill" src='http://47.107.183.112/img/downArrow.png'></image>
+      <image class='downArrow' mode="scaleToFill" src='{{imageUrl}}downArrow.png'></image>
     </view>
   </view>
   <view class="{{first_click?'show':'hide'}} {{state?'open':'close'}}" id='telescopicBox'>

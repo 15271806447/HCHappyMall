@@ -144,7 +144,7 @@ Page({
     })
   },
   buyNow: function() {
-    app.globalData.goodsInfo = this.data.goods
+    app.globalData.goodsInfo = this.data.goods;
     wx: wx.navigateTo({
       url: '../confirm/confirm?type=goods',
     })

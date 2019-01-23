@@ -44,7 +44,7 @@
     </view>
     <view class='item'>
       <text>优惠券</text>
-      <image class='dis_pic' src='http://47.107.183.112/img/downArrow.png'></image>
+      <image class='dis_pic' src='{{imageUrl}}downArrow.png'></image>
     </view>
     <view id='box'>
       <view class='discount' wx:for="{{coupon}}">
@@ -53,14 +53,14 @@
           <text>{{item.dikou}}</text>
         </view>
         <view>
-          <text>幸福学院{{item.name}}优惠券</text>
+          <text class='manjian'>幸福学院{{item.name}}优惠券</text>
           <text>{{item.manjian}}</text>
         </view>
         <view bindtap='chooseCoupon' data-index='{{index}}'>{{item.use}}</view>
       </view>
     </view>
     <view class='item'>
-      <text>会员</text>
+      <text>会员/商品折扣</text>
       <text>{{delivery.discount}}折</text>
     </view>
     <view class='count'>

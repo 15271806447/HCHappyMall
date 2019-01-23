@@ -4,7 +4,7 @@ const app = getApp()
 Page({
   data: {
     memberInformation: {
-      memberCartImage: "http://47.107.183.112/img/membercart.jpg"
+      memberCartImage: app.globalData.imageUrl+"membercart.jpg"
     },
     memberCategory: [{
       memberCategoryName: "健康专属会员",
@@ -30,7 +30,8 @@ Page({
     }],
     thisindex: 0,
     state: false,
-    first_click: true
+    first_click: true,
+    imageUrl: app.globalData.imageUrl
   },
   convertHtmlToText: function(inputText) {
     var returnText = "" + inputText;
