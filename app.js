@@ -84,11 +84,12 @@ App({
    * 支付
    * body: 商品描述
    * orderid: 订单号
-   * spbill_create_ip: 用户终端ip
    * money:总金额
-   * callback:回调
+   * success:成功的回调
+   * fail:失败的回调
+   * callback:完成的回调(不论失败还是成功)
    */
-  pay: function(body, orderid, money,callback) {
+  pay: function (body, orderid, money, success, fail, callback) {
     var app = getApp();
     console.log(app);
     var object = {
@@ -113,8 +114,6 @@ App({
       success: function(res) {
         console.log(res);
         var result = res;
-        // var sign = md5.hexMD5('appId=wx167f9676d1d7c380&nonceStr=' + result.data.data.nonce_str + '&package=prepay_id=' + result.data.data.prepay_id + '&signType=MD5&timeStamp=' + time + '& key=70bcafecff934c55bf6d6d90d75bce6c').toUpperCase();
-        // console.log('sign加密前' + 'appId=wx167f9676d1d7c380&nonceStr=' + result.data.data.nonce_str + '&package=prepay_id=' + result.data.data.prepay_id + '&signType=MD5&timeStamp=' + time + '& key=70bcafecff934c55bf6d6d90d75bce6c');
         wx.requestPayment({
           timeStamp: result.data.data.timeStamp,
           nonceStr: result.data.data.nonceStr,
@@ -123,11 +122,13 @@ App({
           paySign: result.data.data.paySign,
           success(res) {
             console.log(res);
-            console.log('支付成功')
+            console.log('支付成功');
+            success();
           },
           fail(res) {
             console.log('支付失败');
             console.log(res);
+            fail();
           },
           complete(res){
             console.log('完成');
