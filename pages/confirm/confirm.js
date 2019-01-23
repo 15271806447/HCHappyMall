@@ -47,7 +47,7 @@ Page({
     TotalCount: 0,
     IsLoad: false,
     options: false,
-    isMemberPay:false
+    isMemberPay: false
   },
   pay: function() {
     //判断是否实名注册
@@ -155,7 +155,7 @@ Page({
       goodsList[0] = product;
       that.setData({
         'goodsList': goodsList,
-        'isMemberPay':true
+        'isMemberPay': true
       })
     } else if (options.type == 'address') {
       this.setData({
@@ -167,7 +167,7 @@ Page({
       console.log(productInfo);
       var goodsList = [1];
       var product = {
-        id:"",
+        id: "",
         productTitle: "",
         oldprice: "",
         originalPrice: "",
@@ -236,7 +236,7 @@ Page({
         count: item.count, //数量
       }
     })
-    return data; 
+    return data;
   },
   onShow(options) {
     if (this.data.IsLoad == true) {
@@ -250,7 +250,7 @@ Page({
         that.setData({
           'goodsList': goodsList
         })
-      } else if (options.type == 'good') {
+      } else if (options.type == 'activit') { //参加线下活动订单
         var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
         console.log(productInfo);
         var goodsList = [1];
@@ -260,7 +260,9 @@ Page({
           originalPrice: "",
           productCovermap: "",
           count: 1,
-          price: 0
+          price: 0,
+          productInfo: '',
+          options: ''
         };
         product.productTitle = productInfo.productTitle;
         product.oldprice = productInfo.price;
@@ -269,7 +271,37 @@ Page({
         product.originalPrice = productInfo.price;
         goodsList[0] = product;
         that.setData({
+          'goodsList': goodsList,
+          'isMemberPay': true
+        })
+      } else if (options.type == 'address') {
+        this.setData({
+          options: true
+        })
+        //这个地方不做逻辑，逻辑要写在下面，否则会被覆盖
+      } else if (options.type == 'member') { //充值会员的订单
+        var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
+        console.log(productInfo);
+        var goodsList = [1];
+        var product = {
+          id: "",
+          productTitle: "",
+          oldprice: "",
+          originalPrice: "",
+          productCovermap: "",
+          count: 1,
+          price: 0
+        };
+        product.id = productInfo.id;
+        product.productTitle = productInfo.memberCategoryName;
+        product.oldprice = productInfo.price;
+        product.productCovermap = productInfo.coverPath;
+        product.price = productInfo.price;
+        product.originalPrice = productInfo.price;
+        goodsList[0] = product;
+        that.setData({
           'goodsList': goodsList
+
         })
       } else { //拿到订单数据
         that.setData({
@@ -280,7 +312,7 @@ Page({
       this.showCoupon();
       this.getAddress();
       this.getWallet();
-    } 
+    }
   },
 
   /**

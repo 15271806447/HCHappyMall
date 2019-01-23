@@ -30,7 +30,8 @@ Page({
     }],
     thisindex: 0,
     state: false,
-    first_click: true
+    first_click: true,
+    ismember:false
   },
   convertHtmlToText: function(inputText) {
     var returnText = "" + inputText;
@@ -111,7 +112,34 @@ Page({
       url: '../confirm/confirm?type=' + 'member' + '&productInfo=' + encodeURIComponent(JSON.stringify(this.data.memberCategory[index])),
     })
   },
+  //检查是否是会员
+  cheakMember: function () {
+    console.log(app.globalData.uid);
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/api/personalCenter/getUserMember?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success(res) {
+        var memberTypeId = res.data.data.hcUserMember.memberTypeId;
+        if (memberTypeId == null || memberTypeId == "") {
+          that.setData({
+            ismember:false
+          })
+        } else {
+          that.setData({
+            ismember: true
+          })
+        }
+        console.log("是否会员：");
+        console.log(that.data.ismember);
+      }
+    })
+  },
   onLoad: function (options) {
+    this.cheakMember();
     if (options.isPaySuccess == 'true') {
       var memberTypeId = options.memberTypeId;
       wx.request({
