@@ -83,6 +83,7 @@ Page({
 
   //检查是否是会员
 cheakMember : function(){
+  console.log(app.globalData.uid);
   var that = this;
   wx.request({
     url: app.globalData.url + '/api/personalCenter/getUserMember?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,

@@ -111,7 +111,33 @@ Page({
       url: '../confirm/confirm?type=' + 'member' + '&productInfo=' + encodeURIComponent(JSON.stringify(this.data.memberCategory[index])),
     })
   },
-  onLoad: function() {
+  onLoad: function (options) {
+    if (options.isPaySuccess == 'true') {
+      var memberTypeId = options.memberTypeId;
+      wx.request({
+        url: app.globalData.url + '/api/personalCenter/createUserMember?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid + "&memberTypeId=" + memberTypeId,
+        method: "POST",
+        header: {
+          'X-Requested-With': 'APP'
+        },
+        success(res) {
+          if(res.data.success){
+            wx.showModal({
+              title: '提示',
+              content: '会员充值成功',
+              success(res) {
+                if (res.confirm) {
+                  console.log('用户点击确定');
+                  wx.switchTab({
+                    url: 'page/personalCenter/personalCenter'
+                  })
+                } 
+              }
+            })
+          }
+        }
+      })
+    }
     this.getMemberType();
   },
   /**
