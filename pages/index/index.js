@@ -13,79 +13,79 @@ Page({
     ],
     //商品集合：实体商品
     BookItem: [{
-      content: "成为母亲", //标题
-      buyNumber: "332", //购买人数
-      price: "66.00", //价格
+      content: "", //标题
+      buyNumber: "...", //购买人数
+      price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/product_img.jpg", //图片URL
       ProductId: "542asfd314sa" //产品ID，传参用
     }, {
-      content: "成为母亲", //标题
-      buyNumber: "332", //购买人数
-      price: "66.00", //价格
+      content: "", //标题
+        buyNumber: "...", //购买人数
+        price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/product_img.jpg", //图片URL
       ProductId: "" //产品ID，传参用
     }, {
-      content: "成为母亲", //标题
-      buyNumber: "332", //购买人数
-      price: "66.00", //价格
+      content: "", //标题
+        buyNumber: "...", //购买人数
+        price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/product_img.jpg", //图片URL
       ProductId: "" //产品ID，传参用
     }, {
-      content: "成为母亲", //标题
-      buyNumber: "332", //购买人数
-      price: "66.00", //价格
+      content: "", //标题
+        buyNumber: "...", //购买人数
+        price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/product_img.jpg", //图片URL
       ProductId: "" //产品ID，传参用
     }],
     //商品集合：音频商品
     AudioItem: [{
-      content: "王东岳的中西哲学启蒙课", //标题
-      buyNumber: "332", //购买人数
-      price: "66.00", //价格
+      content: "", //标题
+      buyNumber: "...", //购买人数
+      price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/audio.jpg", //图片URL
       ProductId: "" //产品ID，传参用
     }, {
-      content: "王东岳的中西哲学启蒙课", //标题
-      buyNumber: "332", //购买人数
-      price: "66.00", //价格
+      content: "", //标题
+        buyNumber: "...", //购买人数
+        price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/audio.jpg", //图片URL
       ProductId: "" //产品ID，传参用
     }, {
-      content: "王东岳的中西哲学启蒙课", //标题
-      buyNumber: "332", //购买人数
-      price: "66.00", //价格
+      content: "", //标题
+        buyNumber: "...", //购买人数
+        price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/audio.jpg", //图片URL
       ProductId: "" //产品ID，传参用
     }, {
-      content: "王东岳的中西哲学启蒙课", //标题
-      buyNumber: "332", //购买人数
-      price: "66.00", //价格
+      content: "", //标题
+        buyNumber: "...", //购买人数
+        price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/audio.jpg", //图片URL
       ProductId: "" //产品ID，传参用
     }],
     //商品集合：视频商品
     VideoItem: [{
-      content: "西方经济学（微观）", //标题
-      buyNumber: "332", //购买人数
-      price: "66.00", //价格
+      content: "", //标题
+      buyNumber: "...", //购买人数
+      price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/video.png", //图片URL
       ProductId: "" //产品ID，传参用
     }, {
-      content: "西方经济学（微观）", //标题
-      buyNumber: "332", //购买人数
-      price: "66.00", //价格
+      content: "", //标题
+      buyNumber: "...", //购买人数
+        price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/video.png", //图片URL
       ProductId: "" //产品ID，传参用
     }, {
-      content: "西方经济学（微观）", //标题
-      buyNumber: "332", //购买人数
-      price: "66.00", //价格
+      content: "", //标题
+        buyNumber: "...", //购买人数
+        price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/video.png", //图片URL
       ProductId: "" //产品ID，传参用
     }, {
-      content: "西方经济学（微观）", //标题
-      buyNumber: "332", //购买人数
-      price: "66.00", //价格
+      content: "", //标题
+        buyNumber: "...", //购买人数
+      price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/video.png", //图片URL
       ProductId: "" //产品ID，传参用
     }],

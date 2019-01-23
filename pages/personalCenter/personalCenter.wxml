@@ -75,7 +75,7 @@
       <image src='{{imageUrl}}myIntegral.png' mode='scaleToFill'></image>
       <text>我的积分</text>
     </navigator>
-    <navigator class='moduleli third' url='../favourable/favourable'>
+    <navigator class='moduleli third' url='../favourable/favourable?type=2'>
       <image src='{{imageUrl}}myCoupon.png' mode='scaleToFill'></image>
       <text>我的优惠券</text>
     </navigator>

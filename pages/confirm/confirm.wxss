@@ -7,101 +7,119 @@ page {
   justify-content: space-between;
   align-items: center;
 }
+
 .log-list {
   display: flex;
   flex-direction: column;
-  padding:20rpx 80rpx;
+  padding: 20rpx 80rpx;
   font-size: 28rpx;
   box-shadow: 4rpx 30rpx 4rpx #e0e0e0;
 }
-.userInfo{
+
+.userInfo {
   display: flex;
   flex-direction: column;
   padding-bottom: 20rpx;
 }
-.name{
+
+.name {
   display: flex;
   flex-direction: row;
-  justify-content:space-between;
+  justify-content: space-between;
   font-size: 34rpx;
 }
-.address{
+
+.address {
   padding: 20rpx 20rpx;
   position: relative;
 }
-.map{
+
+.map {
   width: 18px;
   height: 18px;
   position: absolute;
   left: -40rpx;
   top: 20rpx;
 }
-.edit{
+
+.edit {
   width: 18px;
   height: 18px;
   position: absolute;
   right: -40rpx;
   top: 20rpx;
 }
-.no-actived{
+
+.no-actived {
   line-height: 36rpx;
   color: orange;
 }
+
 /* 商品订单区 */
+
 .goodsList {
   margin: 30rpx 0;
   background-color: #fff;
 }
-.goodsInfo{
+
+.goodsInfo {
   display: flex;
   flex-direction: column;
   /* justify-content: flex-start; */
   padding: 20rpx 16rpx;
   position: relative;
 }
-.goodstitle{
+
+.goodstitle {
   /* font-weight: bold; */
   font-size: 40rpx;
   line-height: 2;
 }
-.goods{
+
+.goods {
   width: 100%;
   min-height: 400rpx;
   padding: 20rpx 40rpx 20rpx 260rpx;
-  background-color: #EEE;
+  background-color: #eee;
   box-sizing: border-box;
   position: relative;
   margin-bottom: 10rpx;
 }
-.goods view{
+
+.goods view {
   margin-top: 40rpx;
   display: flex;
   justify-content: space-between;
 }
-.goodsPic{
-  width:200rpx;
+
+.goodsPic {
+  width: 200rpx;
   height: 260rpx;
   position: absolute;
   left: 36rpx;
   top: 40rpx;
   z-index: 2;
 }
-.dis_pic{
-  width: 50rpx;
-  height: 50rpx;
+
+.dis_pic {
+  width: 40rpx;
+  height: 40rpx;
 }
-.goodsprice{
+
+.goodsprice {
   line-height: 3;
   font-size: 36rpx;
 }
-.goodsnumber{
+
+.goodsnumber {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   color: red;
   font-size: 36rpx;
 }
-.goodsBtn{
+
+.goodsBtn {
   width: 160rpx;
   color: red;
   border: 1px solid red;
@@ -112,7 +130,8 @@ page {
   justify-content: center;
   margin-top: 40rpx;
 }
-.sends{
+
+.sends {
   display: flex;
   /* flex-direction: row; */
   justify-content: space-between;
@@ -120,25 +139,29 @@ page {
   bottom: 72rpx;
   padding: 0 40rpx;
 }
-.sendsPic{
+
+.sendsPic {
   width: 18px;
   height: 18px;
   position: absolute;
   right: -2rpx;
   top: 8rpx;
 }
-.delivery{
+
+.delivery {
   min-height: 600rpx;
   padding: 20rpx 20rpx;
   position: relative;
 }
 
 /* 优惠券 */
-.row{
+
+.row {
   padding: 20rpx 0;
   background-color: #f0f0f0;
 }
-.discount{
+
+.discount {
   width: 99%;
   box-sizing: border-box;
   padding: 20rpx;
@@ -150,15 +173,18 @@ page {
   border: 2rpx solid #999;
   background-color: #fff;
 }
-.discount view{
+
+.discount view {
   display: flex;
   line-height: 2;
   flex-direction: column;
 }
-.discount view:nth-child(1){
+
+.discount view:nth-child(1) {
   color: red;
 }
-.discount view:nth-child(3){
+
+.discount view:nth-child(3) {
   margin-top: 20rpx;
   padding: 10rpx 26px;
   height: 64rpx;
@@ -168,44 +194,58 @@ page {
   border-radius: 42rpx;
 }
 
-/* 会员 */
-.item{
-   display: flex;
-   justify-content: space-between;
-   height: 60rpx;
-   line-height: 60rpx;
-   border-bottom: 2rpx solid lightgray;
-   padding: 20rpx 40rpx 20rpx 10rpx;
+.discount .manjian {
+  width: 290rpx;
+  word-wrap: break-word;
 }
-.item .sendsPic{
+
+/* 会员 */
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-bottom: 2rpx solid lightgray;
+  padding: 20rpx 40rpx 20rpx 10rpx;
+}
+
+.item .sendsPic {
   position: position;
   right: 18rpx;
   top: 46rpx;
 }
-.item .sendsPic{
+
+.item .sendsPic {
   position: position;
   right: 18rpx;
   top: 48rpx;
 }
+
 /* .item text:nth-child(2){
   font-size: 26rpx;
 } */
-.item input{
+
+.item input {
   color: #999;
 }
-.item:nth-child(3) text:nth-child(2){
+
+.item:nth-child(3) text:nth-child(2) {
   color: red;
 }
-.count{
+
+.count {
   padding: 20rpx;
   display: flex;
   margin-top: 80rpx;
   justify-content: flex-end;
 }
-.count text:nth-child(2){
+
+.count text:nth-child(2) {
   color: red;
 }
-.submit{
+
+.submit {
   height: 100rpx;
   width: 100%;
   margin: 0 auto;
@@ -215,18 +255,20 @@ page {
   justify-content: space-between;
   line-height: 100rpx;
 }
-.submit text{
+
+.submit text {
   color: red;
 }
-button{
+
+button {
   margin: 0;
   border-radius: 0;
 }
-.pay{
+
+.pay {
   background-color: red;
   color: white;
   margin-right: 40rpx;
   padding: 0 20rpx;
   border-radius: 20rpx;
 }
-

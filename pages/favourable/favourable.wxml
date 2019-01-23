@@ -8,6 +8,6 @@
       <text>{{item.name}}</text>
       <text>满{{item.prepaymentAmount}}可用</text>
     </view>
-    <view>立即使用</view>
+    <view bindtap='getCoupon' data-index='{{index}}'>{{flagType[index]}}</view>
   </view>
 </view>

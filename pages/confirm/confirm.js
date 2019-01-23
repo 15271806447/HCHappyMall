@@ -47,7 +47,9 @@ Page({
     TotalCount: 0,
     IsLoad: false,
     options: false,
-    isMemberPay: false
+
+    imageUrl: app.globalData.imageUrl,
+    isMemberPay:false
   },
   pay: function() {
     //判断是否实名注册
@@ -123,7 +125,7 @@ Page({
   onLoad: function(options) {
     var that = this;
     if (options.type == 'goods') {
-      var productInfo = JSON.parse(options.productInfo);
+      var productInfo = app.globalData.goodsInfo;
       console.log(productInfo);
       productInfo.count = 1;
       productInfo.productCovermap = app.globalData.url + '/common/file/showPicture.do?id=' + productInfo.productCovermap;
