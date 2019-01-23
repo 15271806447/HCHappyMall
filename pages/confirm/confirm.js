@@ -47,6 +47,7 @@ Page({
     TotalCount: 0,
     IsLoad: false,
     options: false,
+
     imageUrl: app.globalData.imageUrl,
     isMemberPay:false
   },
@@ -165,7 +166,7 @@ Page({
       goodsList[0] = product;
       that.setData({
         'goodsList': goodsList,
-        'isMemberPay':true
+        'isMemberPay': true
       })
     } else if (options.type == 'address') {
       this.setData({
@@ -177,7 +178,7 @@ Page({
       console.log(productInfo);
       var goodsList = [1];
       var product = {
-        id:"",
+        id: "",
         productTitle: "",
         oldprice: "",
         originalPrice: "",
@@ -247,7 +248,7 @@ Page({
         count: item.count, //数量
       }
     })
-    return data; 
+    return data;
   },
   /**
    * 获取积分总额

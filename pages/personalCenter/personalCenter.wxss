@@ -209,3 +209,6 @@ page {
   width:50rpx;
 }
 
+.footer2{
+background-color: #D7D8DC;
+}
