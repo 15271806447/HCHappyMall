@@ -52,9 +52,6 @@ Page({
     isMemberPay: false
   },
   pay: function() {
-    //判断是否实名注册
-
-    //TODO 支付
     var that = this
     wx.request({
       url: app.globalData.url + '/api/personalCenter/checkAuthentication?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
@@ -135,7 +132,19 @@ Page({
       that.setData({
         'goodsList': goodsList
       })
-    } else if (options.type == 'activit') { //参加线下活动订单
+    } if (options.type == 'virtualGoods') {//虚拟课程
+      var productInfo = app.globalData.goodsInfo;
+      console.log(productInfo);
+      productInfo.count = 1;
+      productInfo.productCovermap = app.globalData.url + '/common/file/showPicture.do?id=' + productInfo.productCovermap;
+      productInfo = JSON.parse(JSON.stringify(productInfo).replace(/price/g, "originalPrice"));
+      var goodsList = [1];
+      goodsList[0] = productInfo;
+      console.log(goodsList);
+      that.setData({
+        'goodsList': goodsList
+      })
+    }else if (options.type == 'activit') { //参加线下活动订单
       var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
       console.log(productInfo);
       var goodsList = [1];
@@ -188,7 +197,8 @@ Page({
         'goodsList': goodsList
 
       })
-    } else { //拿到订单数据
+    } 
+    else { //拿到订单数据
       var data = this.change(app.globalData.productCartList);
       that.setData({
         'goodsList': data

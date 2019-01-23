@@ -67,7 +67,8 @@ Page({
     vritualCourse.courseIntroduce = json.courseIntroduce;
 
     this.setData({
-      'vritualCourse': vritualCourse
+      'vritualCourse': vritualCourse,
+      goods: this.data.vritualCourse
     })
    
     this.getCourseInfo();
@@ -79,8 +80,9 @@ Page({
    * 跳转购买
    */
   addBuy:function(){
+    app.globalData.goodsInfo = this.data.goods;
     wx.navigateTo({
-      url: '../confirm/confirm?productInfo=' + JSON.stringify(this.data.json)+'&type=goods',
+      url: '../confirm/confirm?type=virtualGoods',
     })
   },
   change: function(e) {
