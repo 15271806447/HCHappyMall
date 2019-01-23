@@ -47,7 +47,8 @@ Page({
     TotalCount: 0,
     IsLoad: false,
     options: false,
-    imageUrl: app.globalData.imageUrl
+    imageUrl: app.globalData.imageUrl,
+    isMemberPay:false
   },
   pay: function() {
     //判断是否实名注册
@@ -154,7 +155,8 @@ Page({
       product.originalPrice = productInfo.price;
       goodsList[0] = product;
       that.setData({
-        'goodsList': goodsList
+        'goodsList': goodsList,
+        'isMemberPay':true
       })
     } else if (options.type == 'address') {
       this.setData({
@@ -166,6 +168,7 @@ Page({
       console.log(productInfo);
       var goodsList = [1];
       var product = {
+        id:"",
         productTitle: "",
         oldprice: "",
         originalPrice: "",
@@ -173,6 +176,7 @@ Page({
         count: 1,
         price: 0
       };
+      product.id = productInfo.id;
       product.productTitle = productInfo.memberCategoryName;
       product.oldprice = productInfo.price;
       product.productCovermap = productInfo.coverPath;
@@ -181,9 +185,8 @@ Page({
       goodsList[0] = product;
       that.setData({
         'goodsList': goodsList
+
       })
-      console.log("会员数据：");
-      console.log(that.data.goodsList);
     } else { //拿到订单数据
       var data = this.change(app.globalData.productCartList);
       that.setData({
@@ -471,7 +474,7 @@ Page({
           productName += goodsList[i].productTitle + ',';
         }
         wx.navigateTo({
-          url: '../pay/pay?TotalPrice=' + that.data.TotalPrice + '&orderId=' + res.data.data.orderId + '&product=' + productName,
+          url: '../pay/pay?TotalPrice=' + that.data.TotalPrice + '&orderId=' + res.data.data.orderId + '&product=' + productName + '&isMemberPay=' + that.data.isMemberPay + "&memberTypeId=" + that.data.goodsList[0].id,
         })
       }
     })

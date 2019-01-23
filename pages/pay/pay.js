@@ -12,6 +12,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    this.setData({
+      isMemberPay: options.isMemberPay
+    });
+    this.setData({
+      memberTypeId: options.memberTypeId
+    });
     //如果是从detail页跳转
     if (options.type == 'details') {
       var orderItemVOList = options.orderItemVOList;
@@ -31,12 +37,20 @@ Page({
   },
   pay: function() {
     var that = this;
-    console.log('money:' + this.data.TotalPrice);
-    getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function() {
-      wx.navigateTo({
-        url: '../orderdetail/orderdetail?orderDetail='+JSON.stringify(that.data.orderDetail)+'&type=pay',
-      })
-    });
+    if (that.data.isMemberPay) {
+      getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function () {
+        wx.navigateTo({
+          url: '../memberCenter/memberCenter?isPaySuccess=' + 'true' + '&memberTypeId=' + that.data.memberTypeId,
+        })
+      });
+    } else {
+      console.log('money:' + this.data.TotalPrice);
+      getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function() {
+        wx.navigateTo({
+          url: '../orderdetail/orderdetail?orderDetail=' + JSON.stringify(that.data.orderDetail) + '&type=pay',
+        })
+      });
+    }
   },
   // 查询订单
   getOrderByOrderId: function() {
