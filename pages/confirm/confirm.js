@@ -132,7 +132,7 @@ Page({
       that.setData({
         'goodsList': goodsList
       })
-    } else if (options.type == 'virtualGoods') {//虚拟课程
+    } else if (options.type == 'virtualGoods') { //虚拟课程
       var productInfo = app.globalData.goodsInfo;
       console.log(productInfo);
       productInfo.count = 1;
@@ -144,7 +144,7 @@ Page({
       that.setData({
         'goodsList': goodsList
       })
-    }else if (options.type == 'activit') { //参加线下活动订单
+    } else if (options.type == 'activit') { //参加线下活动订单
       var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
       console.log(productInfo);
       var goodsList = [1];
@@ -197,8 +197,7 @@ Page({
         'goodsList': goodsList
 
       })
-    } 
-    else { //拿到订单数据
+    } else { //拿到订单数据
       var data = this.change(app.globalData.productCartList);
       that.setData({
         'goodsList': data
@@ -252,7 +251,7 @@ Page({
   },
   onShow(options) {
     if (this.data.IsLoad == true) {
-      
+
       if (options.type == 'goods') {
         console.log("type=goods");
         var productInfo = JSON.parse(options.productInfo);
