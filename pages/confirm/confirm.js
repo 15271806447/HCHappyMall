@@ -47,7 +47,6 @@ Page({
     TotalCount: 0,
     IsLoad: false,
     options: false,
-
     imageUrl: app.globalData.imageUrl,
     isMemberPay: false
   },
@@ -121,6 +120,7 @@ Page({
   },
   onLoad: function(options) {
     var that = this;
+    console.log("从商品页跳转");
     if (options.type == 'goods') {
       var productInfo = app.globalData.goodsInfo;
       console.log(productInfo);
@@ -132,7 +132,7 @@ Page({
       that.setData({
         'goodsList': goodsList
       })
-    } if (options.type == 'virtualGoods') {//虚拟课程
+    } else if (options.type == 'virtualGoods') {//虚拟课程
       var productInfo = app.globalData.goodsInfo;
       console.log(productInfo);
       productInfo.count = 1;
@@ -252,16 +252,18 @@ Page({
   },
   onShow(options) {
     if (this.data.IsLoad == true) {
-      var that = this;
+      
       if (options.type == 'goods') {
         console.log("type=goods");
         var productInfo = JSON.parse(options.productInfo);
         var goodsList = [1];
         goodsList[0] = productInfo;
         console.log(goodsList);
-        that.setData({
+        this.setData({
           'goodsList': goodsList
         })
+        console.log('=============');
+        console.log(this.data.goodsList);
       } else if (options.type == 'activit') { //参加线下活动订单
         var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
         console.log(productInfo);
