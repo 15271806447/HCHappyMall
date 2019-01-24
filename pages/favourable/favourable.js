@@ -4,7 +4,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    flagType: []
+    flagType: [],
+    couponType: [],
+    couponVOS: []
     // discount:[
     //   {
     //     money:"￥40",
@@ -42,6 +44,8 @@ Page({
     if (type == 1) {
       this.flagGet();
     }
+
+    that.flagCouponType();
   },
   setType: function(type) {
     this.setData({
@@ -62,8 +66,10 @@ Page({
           for (var j = 0; j < res.data.data.couponVOS.length; j++) {
             if (res.data.data.couponVOS[j].id == that.data.couponVOS[i].id) {
               var flagType = 'flagType[' + i + ']';
+              var bgColor = 'bgColor' + '[' + i + ']';
               that.setData({
                 [flagType]: "已领取",
+                [bgColor]: "#ccc"
               })
             }
           }
@@ -84,10 +90,15 @@ Page({
         success: function(res) {
           for (var i = 0; i < res.data.data.hcCouponInfoList.length; i++) {
             var flagType = 'flagType[' + i + ']';
+            var bgColor = 'bgColor' + '[' + i + ']';
             that.setData({
               [flagType]: "领取",
+              [flagType]: "立即领取",
+              [bgColor]: "#ea8b99"
             })
           }
+
+          that.flagCouponType(res.data.data.hcCouponInfoList);
           that.setData({
             'couponVOS': res.data.data.hcCouponInfoList,
           })
@@ -108,6 +119,8 @@ Page({
               [flagType]: "立即使用",
             })
           }
+
+          that.flagCouponType(res.data.data.couponVOS);
           that.setData({
             'couponVOS': res.data.data.couponVOS,
           })
@@ -123,7 +136,7 @@ Page({
     var flagType = this.data.flagType[index];
     var id = this.data.couponVOS[index].id;
     if (type == 1) {
-      if (flagType == '领取') {
+      if (flagType == '立即领取') {
         wx.request({
           url: app.globalData.url + '/api/coupon/receiveCoupon?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid + '&couponId=' + id,
           method: "POST",
@@ -134,7 +147,8 @@ Page({
             var flagType = 'flagType' + '[' + index + ']';
             var bgColor = 'bgColor' + '[' + index + ']';
             that.setData({
-              [flagType]: "已领取"
+              [flagType]: "已领取",
+              [bgColor]: "#ccc"
             })
           }
         })
@@ -151,6 +165,24 @@ Page({
     }
 
   },
+
+  //判断优惠券类型
+  flagCouponType: function (couponVOS) {
+    var that = this;
+    var tempyArr = new Array();
+    for (var i = 0; i < couponVOS.length; i++) {
+      if (couponVOS[i].couponsTypes == 2) {
+        tempyArr[i] = "优惠券";
+      } else if (couponVOS[i].couponsTypes == 1) {
+        tempyArr[i] = "折扣券";
+      }
+    }
+    console.log(tempyArr);
+    that.setData({
+      couponType: tempyArr
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成
