@@ -4,6 +4,7 @@
     "pages/index/index",
     "pages/videoPlay/videoPlay",
     "pages/addcard/addcard",
+    "pages/Management/Management",
     "pages/bindbankcards/bindbankcards",
     "pages/shoppingCart/shoppingCart",
     "pages/goods/goods",
