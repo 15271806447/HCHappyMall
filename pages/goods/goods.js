@@ -52,12 +52,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    if (options.type == "collection") {
+    if (options.type == "collection" || options.type == "search" || options.type == "shoppingCart") {
       //TODO
       this.setData({
         'goods': app.globalData.goodsInfo
       })
-    } else {
+    }else {
       var productInfo = JSON.parse(options.productInfo);
       console.log(productInfo);
       this.setData({

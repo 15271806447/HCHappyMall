@@ -15,7 +15,7 @@ Page({
     //获取用户购物车内容
     this.getAllProductFirstClassify();
   },
-  onShow: function(){
+  onShow: function() {
     //切到改页就加载一次
     this.getAllProductFirstClassify();
   },
@@ -35,7 +35,7 @@ Page({
         'X-Requested-With': 'APP'
       },
       success: function(res) {
-        console.log(res); 
+        console.log(res);
         var productCartVOList = res.data.data.productCartVOList;
         var productList = new Array(productCartVOList.length);
         var x = 0;
@@ -54,7 +54,7 @@ Page({
           }
           product.productName = productCartVOList[i].productTitle;
           product.productId = productCartVOList[i].productId;
-          product.productImage = app.globalData.url + '/common/file/showPicture.do?id=' + productCartVOList[i].productCovermap; 
+          product.productImage = app.globalData.url + '/common/file/showPicture.do?id=' + productCartVOList[i].productCovermap;
           product.discount = productCartVOList[i].productDiscount;
           product.count = productCartVOList[i].productNumber;
           product.oldprice = productCartVOList[i].memberPrice;
@@ -66,6 +66,7 @@ Page({
         console.log(productList);
         that.setData({
           'productList': productList,
+          'TotalProductCartVOList': res.data.data.productCartVOList
         })
         //计算总金额
         that.calculateTotal();
@@ -74,7 +75,18 @@ Page({
     })
   },
 
-
+  /**
+   * 商品详情跳转
+   */
+  ToGoods: function(e) {
+    console.log(e);
+    // 获取索引
+    var index = e.currentTarget.dataset.index;
+    app.globalData.goodsInfo = this.data.TotalProductCartVOList[index];
+    wx.navigateTo({
+      url: '../goods/goods?type=shoppingCart'
+    })
+  },
 
   /**
    * 结算订单
@@ -92,7 +104,7 @@ Page({
       var x = 0;
       var ToproductList = [];
       for (var i = 0; i < productList.length; i++) {
-        if(productList[i].checked == true){
+        if (productList[i].checked == true) {
           var product = productList[i];
           ToproductList.push(product);
         }
@@ -180,10 +192,10 @@ Page({
   /**
    * 
    */
-  time: function(id,num) {
+  time: function(id, num) {
     var that = this;
     var second = 0;
-    
+
     if (that.data.timeSetAdd != null) {
       clearInterval(that.data.timeSetAdd);
     }
@@ -192,7 +204,7 @@ Page({
 
       if (++second >= 3) {
         console.log('send');
-        that.sendShopppingCart(id,num);
+        that.sendShopppingCart(id, num);
         //成了以后清除定时器
         clearInterval(that.data.timeSetAdd);
         // 重新赋值
@@ -206,15 +218,15 @@ Page({
    * id: 商品id
    * num: 商品数量
    */
-  sendShopppingCart:function(id,num){
-    console.log('num:' +num);
+  sendShopppingCart: function(id, num) {
+    console.log('num:' + num);
     wx.request({
-      url: app.globalData.url + '/api/productCart/updateProductCart?sid=' + app.globalData.sid + "&productCartId=" + id+ '&num=' + num,
+      url: app.globalData.url + '/api/productCart/updateProductCart?sid=' + app.globalData.sid + "&productCartId=" + id + '&num=' + num,
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
       },
-      success: function (res) {
+      success: function(res) {
         console.log(res);
       }
     })
@@ -227,7 +239,7 @@ Page({
     var checkboxItems = this.data.productList;
     //获取对应的ID
     var values = e.detail.value;
-    console.log('values:'+values);
+    console.log('values:' + values);
     console.log('选取了ID为' + e.detail.value + '的商品');
     for (var i = 0; i < checkboxItems.length; ++i) {
       checkboxItems[i].checked = false;

@@ -170,6 +170,7 @@ Page({
       'categoryList': categoryList,
       'fisrtCategory': "active"
     })
+    this.searchProduct();
   },
   /*
   / 清空搜索内容

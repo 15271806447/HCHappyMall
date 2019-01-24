@@ -5,7 +5,7 @@
 </view>
 
 <checkbox-group bindchange="checkboxChange">
-  <view class="productList" wx:for="{{productList}}" wx:key="*this">
+  <view class="productList" wx:for="{{productList}}" wx:key="*this" catchtap='ToGoods' data-index='{{index}}'>
     <!-- 多选框 -->
     <checkbox class='productListCheckbox' value="{{item.productId}}" checked="{{item.checked}}"></checkbox>
     <!-- 商品主图 -->
