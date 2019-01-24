@@ -44,7 +44,7 @@
   </view>
 </view>
  <view class='footer2' wx:if="{{ismember}}">
-      <button >已充值</button>
+      <button >已是会员</button>
     </view>
     <view  wx:else>
       <button class='footer' data-indext_num='{{thisindex}}' bindtap='recharge'>立即充值</button>
