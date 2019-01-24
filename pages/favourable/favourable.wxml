@@ -1,4 +1,4 @@
-<view class='row'>
+<!-- <view class='row'>
    <view class='discount'wx:for="{{couponVOS}}" wx:for-item="item">
     <view>
       <text>{{item.preferentialAmount}}</text>
@@ -9,5 +9,20 @@
       <text>满{{item.prepaymentAmount}}可用</text>
     </view>
     <view bindtap='getCoupon' data-index='{{index}}'>{{flagType[index]}}</view>
+  </view>
+</view> -->
+
+<!-- <image class="coupon-img" src="../img/couponBg.jpg"></image> -->
+<view class='coupon' wx:for="{{couponVOS}}" wx:for-item="item">
+  <view class='coupon-left'>
+    <view class='coupon-money'><text>{{item.preferentialAmount*10}}</text></view>
+    <view class='coupon-detail' data-index='{{index}}'>
+      <view class='detail-top'>{{item.name}}</view>
+      <view class='detail-bottom'>{{couponType[index]}}</view>
+    </view>
+  </view>
+  <view class='coupon-right' bindtap='getCoupon' data-index='{{index}}' style='background-color:{{bgColor[index]}}'>
+    <view class='right-top'>{{flagType[index]}}</view>
+    <view class='right-bottom'>满{{item.prepaymentAmount}}可用</view>
   </view>
 </view>
