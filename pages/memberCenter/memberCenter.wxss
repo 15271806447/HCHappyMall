@@ -77,8 +77,9 @@ page {
 }
 
 .downArrow {
-  width: 40rpx;
-  height: 40rpx;
+  width: 30rpx;
+  height: 35rpx;
+  margin-left: 15rpx;
 }
 
 #active {
