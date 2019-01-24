@@ -12,3 +12,12 @@ $RECYCLE.BIN/
 
 # Node.js
 node_modules/
+pages/mylession/mylession.json
+pages/addcard/addcard.json
+pages/bindbankcards/bindbankcards.json
+pages/collection/collection.json
+pages/secfan/secfan.json
+project.config.json
+pages/memberCenter/memberCenter.js
+pages/mylession/mylession.json
+pages/memberCenter/memberCenter.wxml
