@@ -6,6 +6,7 @@ Page({
    */
   data: {
     isMemberPay:false,
+    isPaySuccess:false,
     TotalPrice: 0
   },
 
@@ -44,9 +45,17 @@ Page({
   pay: function() {
     var that = this;
     if (that.data.isMemberPay==true) {
-      getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function () {}, function () {},function () {
+      getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function () {
+        that.setData({
+          isPaySuccess:true
+        })
+      }, function () {
+        that.setData({
+          isPaySuccess: false
+        })
+      },function () {
         wx.redirectTo({
-          url: '../memberCenter/memberCenter?isPaySuccess=' + 'true' + '&memberTypeId=' + that.data.memberTypeId,
+          url: '../memberCenter/memberCenter?isPaySuccess=' + that.data.isPaySuccess + '&memberTypeId=' + that.data.memberTypeId,
         })
       });
     } else {
