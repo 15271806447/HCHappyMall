@@ -132,7 +132,8 @@ Page({
       that.setData({
         'goodsList': goodsList
       })
-    } if (options.type == 'virtualGoods') {//虚拟课程
+    }
+    if (options.type == 'virtualGoods') { //虚拟课程
       var productInfo = app.globalData.goodsInfo;
       console.log(productInfo);
       productInfo.count = 1;
@@ -144,7 +145,7 @@ Page({
       that.setData({
         'goodsList': goodsList
       })
-    }else if (options.type == 'activit') { //参加线下活动订单
+    } else if (options.type == 'activit') { //参加线下活动订单
       var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
       console.log(productInfo);
       var goodsList = [1];
@@ -166,7 +167,6 @@ Page({
       goodsList[0] = product;
       that.setData({
         'goodsList': goodsList,
-        'isMemberPay': true
       })
     } else if (options.type == 'address') {
       this.setData({
@@ -194,11 +194,10 @@ Page({
       product.originalPrice = productInfo.price;
       goodsList[0] = product;
       that.setData({
-        'goodsList': goodsList
-
+        'goodsList': goodsList,
+        'isMemberPay': true
       })
-    } 
-    else { //拿到订单数据
+    } else { //拿到订单数据
       var data = this.change(app.globalData.productCartList);
       that.setData({
         'goodsList': data
@@ -291,6 +290,8 @@ Page({
         })
         //这个地方不做逻辑，逻辑要写在下面，否则会被覆盖
       } else if (options.type == 'member') { //充值会员的订单
+        console("执行了1：");
+        console(options.type);
         var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
         console.log(productInfo);
         var goodsList = [1];
@@ -315,6 +316,7 @@ Page({
           'isMemberPay': true
         })
       } else { //拿到订单数据
+        console("执行了2：");
         that.setData({
           'goodsList': app.globalData.productCartList
         })

@@ -104,9 +104,6 @@ Page({
         that.setData({
           memberCategory: memberCategory
         })
-        console.log("会员类型数据：");
-        console.log(memberCategory);
-        console.log(that.data.memberCategory);
       }
     })
   },
@@ -147,7 +144,7 @@ Page({
     if (options.isPaySuccess != null && options.isPaySuccess != "") {
       console.log("会员中心充值成功：");
       console.log(options.isPaySuccess);
-      if (options.isPaySuccess) {
+      if (options.isPaySuccess == 'true') {
         var memberTypeId = options.memberTypeId;
         wx.request({
           url: app.globalData.url + '/api/personalCenter/createUserMember?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid + "&memberTypeId=" + memberTypeId,

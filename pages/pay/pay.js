@@ -44,7 +44,7 @@ Page({
   },
   pay: function() {
     var that = this;
-    if (that.data.isMemberPay==true) {
+    if (that.data.isMemberPay) {
       getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function () {
         that.setData({
           isPaySuccess:true
