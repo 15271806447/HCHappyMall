@@ -44,14 +44,14 @@ Page({
   pay: function() {
     var that = this;
     if (that.data.isMemberPay==true) {
-      getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function () {
+      getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function () {}, function () {},function () {
         wx.redirectTo({
           url: '../memberCenter/memberCenter?isPaySuccess=' + 'true' + '&memberTypeId=' + that.data.memberTypeId,
         })
       });
     } else {
       console.log('money:' + this.data.TotalPrice);
-      getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function() {
+      getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function () {}, function () {},function() {
         wx.redirectTo({
           url: '../orderdetail/orderdetail?orderDetail=' + JSON.stringify(that.data.orderDetail) + '&type=pay',
         })
