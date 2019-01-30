@@ -80,11 +80,11 @@
   top: 50rpx;
 }
 .delete{
-  display: block;
-  margin-left:613rpx;
-  margin-top: -30rpx;
-  position: absolute;
-  color: #F53F2C;
+  width: 60rpx;
+  height: 50rpx;
+ position: absolute;
+ margin-left: 115rpx;
+ margin-top: -15rpx;
 }
 
 
