@@ -1,6 +1,8 @@
 var app = getApp();
 Page({
   data: {
+    showCouponCount: 2,
+    showCouponFlag:true,
     address: {
       username: "",
       telephone: "",
@@ -26,22 +28,13 @@ Page({
     },
     inputValue: "",
     coupon: [{
-        money: "40",
-        dikou: "抵用券",
-        name: "通用",
-        manjian: "290",
-        use: "立即选择",
-        check: false
-      },
-      {
-        money: "40",
-        dikou: "抵用券",
-        name: "通用",
-        manjian: "290",
-        use: "立即选择",
-        check: false
-      }
-    ],
+      money: "",
+      dikou: "",
+      name: "",
+      manjian: "",
+      use: "",
+      check: false
+    }],
     integral: 0,
     TotalPrice: 0,
     TotalCount: 0,
@@ -62,7 +55,7 @@ Page({
       success: function(res) {
         console.log(res);
         console.log("**********************************************");
-        console.log(res.data.data.isAuthentication)
+        //console.log(res.data.data.isAuthentication)
         console.log("**********************************************");
         if (!res.data.data.isAuthentication) {
           wx.showModal({
@@ -84,26 +77,39 @@ Page({
         }
       }
     })
-
-
   },
+
+  
   /**
    * 选择优惠券
    */
   chooseCoupon: function(e) {
+    var that = this;
     //拿选择的索引
     var index = e.currentTarget.dataset.index;
     //拿到优惠券
     var coupon = this.data.coupon;
 
-
     if (!coupon[index].check) {
-      if (this.data.TotalPrice >= coupon.manjian) {
-        for (let i; i < coupon.length; i++) {
-          coupon[index].check = false;
+      console.log(this.data.TotalPrice);
+      console.log(coupon[index].prepaymentAmount);
+      if (this.data.TotalPrice >= coupon[index].prepaymentAmount) {
+        for (let i = 0; i < coupon.length; i++) {
+          coupon[i].check = false;
+          coupon[i].flagType = '立即选择';
+          coupon[i].bgColor = "#ea8b99"
         }
-        coupon[index].check = true;
-        coupon[index].use = '已选择';
+        if (that.data.flagCouponType[index] == true){
+          coupon[index].check = true;
+          coupon[index].flagType = '已选择';
+          coupon[index].bgColor = "#ccc"
+        } else{
+          wx.showToast({
+            title: '优惠券类型不匹配',
+            icon: 'none',
+            duration: 2000
+          })
+        }
       } else {
         wx.showToast({
           title: '未达到满足条件',
@@ -113,14 +119,19 @@ Page({
       }
     } else {
       coupon[index].check = false;
-      coupon[index].use = '立即选择';
+      coupon[index].flagType = '立即选择';
+      coupon[index].bgColor = "#ea8b99"
     }
+
+    that.TotalPrice();
     this.setData({
       'coupon': coupon
     })
   },
+
   onLoad: function(options) {
     var that = this;
+   
     if (options.type == 'goods') {
       var productInfo = app.globalData.goodsInfo;
       console.log(productInfo);
@@ -132,7 +143,8 @@ Page({
       that.setData({
         'goodsList': goodsList
       })
-    } if (options.type == 'virtualGoods') {//虚拟课程
+    }
+    if (options.type == 'virtualGoods') { //虚拟课程
       var productInfo = app.globalData.goodsInfo;
       console.log(productInfo);
       productInfo.count = 1;
@@ -144,7 +156,7 @@ Page({
       that.setData({
         'goodsList': goodsList
       })
-    }else if (options.type == 'activit') { //参加线下活动订单
+    } else if (options.type == 'activit') { //参加线下活动订单
       var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
       console.log(productInfo);
       var goodsList = [1];
@@ -197,8 +209,7 @@ Page({
         'goodsList': goodsList
 
       })
-    } 
-    else { //拿到订单数据
+    } else { //拿到订单数据
       var data = this.change(app.globalData.productCartList);
       that.setData({
         'goodsList': data
@@ -338,6 +349,7 @@ Page({
         'X-Requested-With': 'APP'
       },
       success: function(res) {
+        console.log('res');
         console.log(res);
         var integral = 0;
         if (res.data.data.hcWallet.integral) {
@@ -375,43 +387,96 @@ Page({
         var couponList = [];
         for (let i = 0; i < couponVOS.length; i++) {
           var coupon = {
-            money: "40",
-            dikou: "抵用券",
-            name: "通用",
-            manjian: "满300减20",
-            use: "立即选择",
+            preferentialAmount: "",
+            name: "",
+            prepaymentAmount: "",
+            couponType: "",
+            flagType: "立即选择",
             check: false,
-            couponId: ""
+            couponId: "",
+            bgColor:"#ea8b99",
+            shouDiscount:1,
+            type:''
           };
-          coupon.money = couponVOS[i].preferentialAmount;
+          coupon.preferentialAmount = couponVOS[i].preferentialAmount;
           coupon.couponId = couponVOS[i].id;
+          coupon.name = couponVOS[i].name;
+          // coupon.type = couponVOS[i].usableRange;
           switch (couponVOS[i].usableRange) {
             case 0:
-              coupon.name = "通用";
+              coupon.type = "通用";
               break;
             case 1:
-              coupon.name = "实体商品 ";
+              coupon.type = "书籍";
               break;
             case 2:
-              coupon.name = "声音课程";
+              coupon.type = "声音课程";
               break;
             case 3:
-              coupon.name = "视频课程";
+              coupon.type = "视频课程";
               break;
             case 4:
-              coupon.name = "活动";
+              coupon.type = "线下活动";
               break;
           }
+          coupon.prepaymentAmount = couponVOS[i].prepaymentAmount;
           if (couponVOS[i].couponsTypes == 2) {
-            coupon.dikou = "折扣";
+            coupon.couponType = "优惠券";
+            coupon.shouDiscount = coupon.preferentialAmount * 10;
+          } else if (couponVOS[i].couponsTypes == 1) {
+            coupon.couponType = "折扣券";
+            coupon.shouDiscount = coupon.preferentialAmount ;
           }
           coupon.manjian = couponVOS[i].name;
           couponList[i] = coupon;
         }
+        that.flagCouponType(couponList);
         that.setData({
           'coupon': couponList
         })
 
+      }
+    })
+  },
+  //判断优惠券类型是否匹配
+  flagCouponType: function (coupon) {
+    var that = this;
+    var flag = new Array();
+    var goodId = app.globalData.goodsInfo.id;
+    var firstClassifyList = app.globalData.firstClassifyList;
+    wx.request({
+      url: app.globalData.url + '/api/product/getSecondClassifyFromProductId?sid=' + app.globalData.sid + '&productId=' + goodId,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function (res) {
+        var firstClassifyId = res.data.data.hcProductSecondClassifyList[0].firstClassifyId;
+        var firstName;
+        console.log('firstClassifyList');
+        console.log(firstClassifyList);
+        for (var x = 0; x < firstClassifyList.length; x++) {
+          if (firstClassifyList[x].id == firstClassifyId) {
+            firstName = firstClassifyList[x].firstClassName;
+            break;
+          }
+        }
+        console.log('firstName');
+        console.log(firstName);
+        
+        for (var i = 0; i < coupon.length; i++) {
+          if (firstName == coupon[i].type || coupon[i].type == '通用') {
+            flag[i] = true;
+          } else {
+            flag[i] = false;
+          }
+        }
+        console.log('flag');
+        
+        console.log(flag);
+        that.setData({
+          'flagCouponType': flag,
+        })
       }
     })
   },
@@ -433,13 +498,16 @@ Page({
     console.log("1:" + TotalPrice);
     for (let i = 0; i < coupon.length; i++) {
       if (coupon[i].check == true) {
-        couponMoney = parseFloat(coupon[i].money);
+        // 先算优惠券，再算积分，再算折扣
+        TotalPrice -= (this.data.integral / 1000)
+        if (coupon[i].couponType == "折扣券") {
+          TotalPrice -= parseFloat(coupon[i].preferentialAmount);
+        } else if (coupon[i].couponType == "优惠券") {
+          TotalPrice *= coupon[i].preferentialAmount;
+        }
       }
     }
-    // 先算优惠券，再算积分，再算折扣
-    TotalPrice -= couponMoney;
-    TotalPrice -= (this.data.integral / 1000)
-    TotalPrice *= this.data.delivery.discount;
+
 
     this.setData({
       'TotalPrice': TotalPrice.toFixed(2),
@@ -580,7 +648,21 @@ Page({
     wx.reLaunch({
       url: '../address/address?type=goods'
     })
+  },
+
+  //优惠券显示更多按钮
+  showCouponCount:function(){
+    var showCouponFlag = this.data.showCouponFlag
+    if (showCouponFlag == true){
+      this.setData({
+        showCouponFlag : false,
+        showCouponCount : this.data.coupon.length
+      })
+    } else if (showCouponFlag == false) {
+      this.setData({
+        showCouponFlag : true,
+        showCouponCount : 2,
+      })   
+    }
   }
-
-
 })
