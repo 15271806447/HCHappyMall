@@ -20,20 +20,20 @@ Page({
       ProductId: "542asfd314sa" //产品ID，传参用
     }, {
       content: "", //标题
-        buyNumber: "...", //购买人数
-        price: "0.00", //价格
+      buyNumber: "...", //购买人数
+      price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/product_img.jpg", //图片URL
       ProductId: "" //产品ID，传参用
     }, {
       content: "", //标题
-        buyNumber: "...", //购买人数
-        price: "0.00", //价格
+      buyNumber: "...", //购买人数
+      price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/product_img.jpg", //图片URL
       ProductId: "" //产品ID，传参用
     }, {
       content: "", //标题
-        buyNumber: "...", //购买人数
-        price: "0.00", //价格
+      buyNumber: "...", //购买人数
+      price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/product_img.jpg", //图片URL
       ProductId: "" //产品ID，传参用
     }],
@@ -46,20 +46,20 @@ Page({
       ProductId: "" //产品ID，传参用
     }, {
       content: "", //标题
-        buyNumber: "...", //购买人数
-        price: "0.00", //价格
+      buyNumber: "...", //购买人数
+      price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/audio.jpg", //图片URL
       ProductId: "" //产品ID，传参用
     }, {
       content: "", //标题
-        buyNumber: "...", //购买人数
-        price: "0.00", //价格
+      buyNumber: "...", //购买人数
+      price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/audio.jpg", //图片URL
       ProductId: "" //产品ID，传参用
     }, {
       content: "", //标题
-        buyNumber: "...", //购买人数
-        price: "0.00", //价格
+      buyNumber: "...", //购买人数
+      price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/audio.jpg", //图片URL
       ProductId: "" //产品ID，传参用
     }],
@@ -73,18 +73,18 @@ Page({
     }, {
       content: "", //标题
       buyNumber: "...", //购买人数
-        price: "0.00", //价格
+      price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/video.png", //图片URL
       ProductId: "" //产品ID，传参用
     }, {
       content: "", //标题
-        buyNumber: "...", //购买人数
-        price: "0.00", //价格
+      buyNumber: "...", //购买人数
+      price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/video.png", //图片URL
       ProductId: "" //产品ID，传参用
     }, {
       content: "", //标题
-        buyNumber: "...", //购买人数
+      buyNumber: "...", //购买人数
       price: "0.00", //价格
       ProductImgUrl: "http://47.107.183.112/img/video.png", //图片URL
       ProductId: "" //产品ID，传参用
@@ -415,19 +415,19 @@ Page({
     }
     console.log('TotalIndex:' + TotalIndex);
   },
-  health:function(){
+  health: function() {
     app.globalData.findIndex = 1;
     wx.switchTab({
       url: '../find/find',
     })
   },
-  life: function () {
+  life: function() {
     app.globalData.findIndex = 2;
     wx.switchTab({
       url: '../find/find',
     })
   },
-  education: function () {
+  education: function() {
     app.globalData.findIndex = 0;
     wx.switchTab({
       url: '../find/find',
@@ -436,11 +436,35 @@ Page({
   /**
    * 领积分页面跳转
    */
-  integral: function(){
+  integral: function() {
     wx.showModal({
       title: '消息',
       content: '该模块暂未开通!!!',
       showCancel: false
     })
+  },
+  ToMall: function(e) {
+    console.log('TO商城');
+    var index = e.currentTarget.dataset.index;
+    console.log(index);
+    wx.navigateTo({
+      url: '../searchPage/searchPage?type=' + index,
+    });
+    if(index ==0){
+        wx.navigateTo({
+          url: '../searchPage/searchPage?type=' + index,
+        });
+    } else if (index == 1) {
+      wx.navigateTo({
+        url: '../searchPage/searchPage?type=' + index,
+      });
+    } else if (index == 2) {
+      wx.navigateTo({
+        url: '../searchPage/searchPage?type=' + index,
+      });
+    }
+       
+      
+    
   }
 })

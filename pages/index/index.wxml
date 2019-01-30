@@ -60,7 +60,7 @@
 <!-- 书城 -->
 <view class='selection'>
   <!-- 商城标题 -->
-  <view class='header'>
+  <view class='header' catchtap='ToMall' data-index='0'>
     <text>—— 精品书城 ——</text>
   </view>
   <!-- 商城内容 -->
@@ -79,7 +79,7 @@
 <!-- 随心听课 -->
 <view class='selection'>
   <!-- 商城标题 -->
-  <view class='header audioheader'>
+  <view class='header audioheader' catchtap='ToMall' data-index='1'>
     <text>—— 随心听课 ——</text>
   </view>
   <!-- 商城内容 -->
@@ -97,7 +97,7 @@
 <!-- 优质慕课 -->
 <view class='selection'>
   <!-- 商城标题 -->
-  <view class='header videoheader '>
+  <view class='header videoheader' catchtap='ToMall' data-index='2'>
     <text>—— 优质慕课 ——</text>
   </view>
   <!-- 商城内容 -->

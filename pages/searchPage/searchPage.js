@@ -21,20 +21,17 @@ Page({
       productCovermap: 'http://47.107.183.112/img/tourism.png',
       productTitle: '厦门+鼓浪屿6日5晚半自助游(5钻)·双旦狂欢 9人小团 ',
       originalPrice: 0,
-      productSales
-: "9999" //收藏人数
+      productSales: "9999" //收藏人数
     }, {
       productCovermap: 'http://47.107.183.112/img/tourism.png',
       productTitle: '厦门+鼓浪屿6日5晚半自助游(5钻)·双旦狂欢 9人小团 ',
       originalPrice: 0,
-        productSales
-: "9999" //收藏人数
+      productSales: "9999" //收藏人数
     }, {
       productCovermap: 'http://47.107.183.112/img/tourism.png',
       productTitle: '厦门+鼓浪屿6日5晚半自助游(5钻)·双旦狂欢 9人小团 ',
       originalPrice: 0,
-        productSales
-: "9999" //收藏人数
+      productSales: "9999" //收藏人数
     }],
     category: [{
       categoryName: "管理",
@@ -62,15 +59,22 @@ Page({
     //获取首页来的搜索词
     var keyword = options.key;
     console.log(keyword);
+    var typesBtnActive = this.data.typesBtnActive;
     this.setData({
       'searchinput': keyword
     })
+    if (options.type != null) {
+      typesBtnActive[options.type] = "btnActive";
+    }
+    this.setData({
+      'typesBtnActive': typesBtnActive
+    })
     this.getSecondClassify();
     this.searchProduct();
+
     // TODO正则验证价格区间是否为正整数 若不是则弹框
     // var myreg = /^[1 - 9]\d*$/;
     // console.log(myreg.test('aasd'));
-    // TODO综合，销量，价格筛选，调整商品数组顺序
   },
   /**
    * 拿二级分类
@@ -146,8 +150,12 @@ Page({
     }
     var minStr = that.data.priceFilter[0];
     var maxStr = that.data.priceFilter[1];
+    var keyword = "";
+    if (that.data.searchinput){
+      keyword = that.data.searchinput;
+    }
     wx.request({
-      url: app.globalData.url + '/api/product/searchProduct?sid=' + app.globalData.sid + "&firstClassifyId=" + firstClassifyId + "&secondClassifyId=" + categoryId + "&keyword=" + that.data.searchinput + "&minStr=" + minStr + "&maxStr=" + maxStr + "&page=1&size=12",
+      url: app.globalData.url + '/api/product/searchProduct?sid=' + app.globalData.sid + "&firstClassifyId=" + firstClassifyId + "&secondClassifyId=" + categoryId + "&keyword=" + keyword + "&minStr=" + minStr + "&maxStr=" + maxStr + "&page=1&size=12",
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
@@ -157,8 +165,8 @@ Page({
         console.log('=================');
         console.log(app.globalData.url + '/api/product/searchProduct?sid=' + app.globalData.sid + "&firstClassifyId=" + firstClassifyId + "&secondClassifyId=" + categoryId + "&keyword=" + that.data.searchinput + "&minStr=" + minStr + "&maxStr=" + maxStr + "&page=1&size=12");
         var hcProductInfoList = res.data.data.hcProductInfoList;
-        for (let i = 0; i < hcProductInfoList.length; i++){
-          hcProductInfoList[i].productCovermap = app.globalData.url + ':80/common/file/showPicture.do?id=' + hcProductInfoList[i].productCovermap; 
+        for (let i = 0; i < hcProductInfoList.length; i++) {
+          hcProductInfoList[i].productCovermap = app.globalData.url + '/common/file/showPicture.do?id=' + hcProductInfoList[i].productCovermap;
         }
         that.setData({
           'product': hcProductInfoList
@@ -338,19 +346,31 @@ Page({
   /**
    * 输入完成
    */
-  query:function(e){
+  query: function(e) {
     console.log('key:' + e.detail.value);
     this.setData({
-      'searchinput':e.detail.value
+      'searchinput': e.detail.value
     })
     this.searchProduct();
   },
   /**
    * 输入中
    */
-  inputBind:function(e){
+  inputBind: function(e) {
     this.setData({
       'searchinput': e.detail.value
+    })
+  },
+  /**
+   * 商品详情跳转
+   */
+  ToGoods: function(e){
+    console.log(e);
+    // 获取索引
+    var index = e.currentTarget.dataset.index;
+    app.globalData.goodsInfo = this.data.product[index];
+    wx.navigateTo({
+      url: '../goods/goods?type=search'
     })
   }
 })

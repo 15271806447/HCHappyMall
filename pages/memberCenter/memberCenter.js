@@ -31,7 +31,8 @@ Page({
     thisindex: 0,
     state: false,
     first_click: true,
-    ismember: false
+    ismember: false,
+    imageUrl: app.globalData.imageUrl
   },
   convertHtmlToText: function (inputText) {
     var returnText = "" + inputText;
