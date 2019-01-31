@@ -74,16 +74,16 @@
   display: flex;
   justify-content: space-between;
 }
-.item checkbox{
+.item checkbox{       
   position: absolute;
   right: 0;
   top: 50rpx;
 }
 .delete{
-  width: 60rpx;
-  height: 50rpx;
+width: 60rpx;
+height: 50rpx;
  position: absolute;
- margin-left: 115rpx;
+ margin-left: 600rpx;
  margin-top: -15rpx;
 }
 
