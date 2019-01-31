@@ -10,7 +10,8 @@ Page({
     interval: 2000,
     videoList: [],
     audioList: [],
-    productType: []
+    productType: [],
+    imageUrl: app.globalData.imageUrl
   },
   onloadmylesson: function() {
     var that = this;

@@ -6,7 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    qrtext: ''
+    qrtext: '',
+    imageUrl: app.globalData.imageUrl
   },
   //生成分享二维码
   createQRcode: function () {

@@ -15,7 +15,7 @@
   <view class='ee10'></view>
   <view class='fadrimg'>
     <view class='f1'>
-      <image src='../img/address.png'></image>
+      <image src='{{imageUrl}}myaddress.png'></image>
     </view>
     <view class='peradress'>
       收货地址：{{addr}}
@@ -35,16 +35,7 @@
     </view>
   </view>
 </block>
-<!-- 商品2 -->
-<!-- <view class='goodsitem'>
-  <image src='../../img/goodsimg.jpg' class='f2'></image>
-  <view class='f4 goodstil'>
-    <view class='goodstitle'>棉袄</view>
-    <text class='pricegoods'>￥34</text>
-    <text class='numgoods'>x1</text>
-    <view class='notbuy'>7天退货</view>
-  </view>
-</view> -->
+
 <view class='oderzeng'>
   <image src='../img/zeng.png'></image>
   <text class='roadmon'>运费</text>
@@ -58,10 +49,6 @@
   <text>商品总额：</text>
   <text class='ordrresu'>￥{{orderData.allPayment}}</text>
 </view>
-<!-- <view class='odermon'>
-  <text>优惠券抵扣：</text>
-  <text class='ordrresu'>{{coupon==null?"无":"-￥"+preferentialAmount}}</text>
-</view> -->
 <view class='odernumb'>
   <text>实际金额：</text>
   <text class='ordrresu'>￥{{orderData.actualPayment}}</text>
