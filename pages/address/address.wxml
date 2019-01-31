@@ -29,10 +29,8 @@
            <text>{{item.userName}} {{item.userPhone}}</text>
            <!-- <text>{{item.userPhone}}</text> -->
            </view>
-           <text>{{item.userAddress}}</text>
-           <!-- <text class='delete' data-index='{{index}}'  bindtap='deletes'>删除 -->
-           <image  class='delete' data-index='{{index}}'  bindtap='deletes' src='../../images/delete.png'></image>
-           <!-- </text> -->
+               <image  class='delete' data-index='{{index}}'  bindtap='deletes' src='../../images/delete.png'></image>
+                <text>{{item.userAddress}}</text>
          </view>
        </view>
     </view>

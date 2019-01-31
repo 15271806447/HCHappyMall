@@ -48,7 +48,6 @@
       <input placeholder='请输入详细地址' name="detilAddress"></input>
     </view>
       <view class='detail id_number'>
-      <text class='asterisk'>*</text>
       <text>是否设为默认地址</text>
 
 <checkbox-group bindtap="isSelection">
