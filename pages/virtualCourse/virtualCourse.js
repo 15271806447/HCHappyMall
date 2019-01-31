@@ -85,6 +85,7 @@ Page({
       url: '../confirm/confirm?type=virtualGoods',
     })
   },
+  
   change: function(e) {
     if (this.data.isFolded) {
       this.setData({
