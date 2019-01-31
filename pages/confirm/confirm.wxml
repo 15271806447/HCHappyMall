@@ -47,17 +47,20 @@
         <text>优惠券</text>
         <image class='dis_pic' src='{{imageUrl}}downArrow.png' bindtap='showCouponCount'></image>
       </view>
-      <view class='coupon' wx:for="{{coupon}}" wx:for-item="item" wx:if="{{index < showCouponCount}}" >
+      <view class='coupon' wx:for="{{coupon}}" wx:for-item="item" wx:if="{{index < showCouponCount}}">
         <view class='coupon-left'>
           <view class='coupon-money'>
             <text>{{item.shouDiscount}}</text>
           </view>
           <view class='coupon-detail' data-index='{{index}}'>
             <view class='detail-top'>{{item.name}}</view>
-            <view class='detail-bottom'>{{item.couponType}}</view>
+            <view class='detail-bottom'>
+              <text class='detail-couponType'>{{item.couponType}}</text>
+              <text class="detail-endTime">{{item.endTime}} 到期</text>
+            </view>
           </view>
         </view>
-        <view class='coupon-right' bindtap='chooseCoupon' data-index='{{index}}'  style='background-color:{{item.bgColor}}'>
+        <view class='coupon-right' bindtap='chooseCoupon' data-index='{{index}}' style='background-color:{{item.bgColor}}'>
           <view class='right-top'>{{item.flagType}}</view>
           <view class='right-bottom'>满{{item.prepaymentAmount}}可用</view>
         </view>
