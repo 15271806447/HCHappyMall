@@ -1,4 +1,5 @@
 var app = getApp();
+var util = require('../../utils/util.js')
 Page({
   data: {
     showCouponCount: 2,
@@ -90,15 +91,32 @@ Page({
     var coupon = this.data.coupon;
 
     if (!coupon[index].check) {
-      console.log(this.data.TotalPrice);
-      console.log(coupon[index].prepaymentAmount);
+      
       if (this.data.TotalPrice >= coupon[index].prepaymentAmount) {
         for (let i = 0; i < coupon.length; i++) {
-          coupon[i].check = false;
-          coupon[i].flagType = '立即选择';
-          coupon[i].bgColor = "#ea8b99"
+          if (coupon[i].isExpired == true && coupon[i].isUse == true) {
+            coupon[i].check = false;
+            coupon[i].flagType = '立即选择';
+            coupon[i].bgColor = "#ea8b99"
+          }
         }
-        if (that.data.flagCouponType[index] == true){
+
+        if (coupon[index].isUse == false) {
+          //判断优惠券是否到达使用日期
+          wx.showToast({
+            title: '优惠券未到达使用日期',
+            icon: 'none',
+            duration: 2000
+          })
+        }else if (coupon[index].isExpired == false) {
+          //判断优惠券是否过期
+          wx.showToast({
+            title: '优惠券已过期',
+            icon: 'none',
+            duration: 2000
+          })
+        }else if (that.data.flagCouponType[index] == true){
+          //判断优惠券类型是否匹配
           coupon[index].check = true;
           coupon[index].flagType = '已选择';
           coupon[index].bgColor = "#ccc"
@@ -396,7 +414,11 @@ Page({
             couponId: "",
             bgColor:"#ea8b99",
             shouDiscount:1,
-            type:''
+            type:'',
+            isExpired: '',
+            endTime:'',
+            isUse:'',
+            startTime:''
           };
           coupon.preferentialAmount = couponVOS[i].preferentialAmount;
           coupon.couponId = couponVOS[i].id;
@@ -421,16 +443,32 @@ Page({
           }
           coupon.prepaymentAmount = couponVOS[i].prepaymentAmount;
           if (couponVOS[i].couponsTypes == 2) {
-            coupon.couponType = "优惠券";
+            coupon.couponType = "折扣券";
             coupon.shouDiscount = coupon.preferentialAmount * 10;
           } else if (couponVOS[i].couponsTypes == 1) {
-            coupon.couponType = "折扣券";
+            coupon.couponType = "优惠券";
             coupon.shouDiscount = coupon.preferentialAmount ;
           }
           coupon.manjian = couponVOS[i].name;
+
+          coupon.endTime = couponVOS[i].expirationTime.split(' ')[0];
+          coupon.isExpired = that.flagData(couponVOS[i].expirationTime,'end');
+          if (coupon.isExpired == false) {
+            coupon.flagType = '已过期';
+            coupon.bgColor = '#B0C4DE';
+          }
+
+          coupon.startTime = couponVOS[i].effectiveTime.split(' ')[0];
+          coupon.isUse = that.flagData(couponVOS[i].effectiveTime,'start');
+          if (coupon.isUse == false) {
+            coupon.flagType = '无法使用';
+            coupon.bgColor = '#B0C4DE';
+          }
+
           couponList[i] = coupon;
         }
         that.flagCouponType(couponList);
+        
         that.setData({
           'coupon': couponList
         })
@@ -438,6 +476,38 @@ Page({
       }
     })
   },
+
+  //判断优惠券日期
+  flagData: function (time,flag) {
+    var tempTime = time.split(' ')[0].split('-');
+    var nowTime = util.formatTime(new Date).split(' ')[0].split('/');
+    
+    if(flag == 'start'){
+      if (nowTime[0] < tempTime[0]) {
+        return false;
+      } else if (parseInt(nowTime[1]) < parseInt(tempTime[1])) {
+        return false;
+      } else if (parseInt(nowTime[2]) < parseInt(tempTime[2])) {
+        return false;
+      } else {
+        return true;
+      }
+    }else if(flag == 'end'){
+      if (nowTime[0] < tempTime[0]) {
+        return true;
+      } else if (parseInt(nowTime[1]) < parseInt(tempTime[1])) {
+        return true;
+      } else if (parseInt(nowTime[2]) < parseInt(tempTime[2])) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    
+    
+  },
+  
+
   //判断优惠券类型是否匹配
   flagCouponType: function (coupon) {
     var that = this;

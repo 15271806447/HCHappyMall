@@ -3,16 +3,12 @@ page {
   background-color: #fff;
 }
 
-.coupon-img {
-  width: 100%;
-  height: 165px;
-}
 
 .coupon {
   display: flex;
   flex-direction: row;
   height: 70px;
-  width: 95%;
+  width: 97%;
   margin: auto;
   box-shadow: -1px 3px 3px 1px #ccc;
   margin-bottom: 10px;
@@ -28,9 +24,10 @@ page {
 
 .coupon-money {
   float: left;
-  width: 30%;
+  width: 28%;
   color: #f18695;
   font-weight: 700;
+  margin-top: 10rpx;
 }
 
 .coupon-money text {
@@ -44,7 +41,7 @@ page {
   float: left;
   color: #3ad8ca;
   margin-top: 10rpx;
-  margin-left: 10rpx;
+  /* margin-left: 10rpx; */
 }
 
 .detail-top {
@@ -53,8 +50,23 @@ page {
 }
 
 .detail-bottom {
+  flex-direction: row;
+}
+
+.detail-couponType{
   font-size: 45rpx;
   font-weight: 500;
+  display:inline-block;
+  vertical-align:bottom;
+}
+
+.detail-endTime{
+  font-size: 24rpx;
+  margin-left: 10rpx;
+  display:inline-block;
+  vertical-align:bottom;
+  color: red;
+  font-weight: 700;
 }
 
 .coupon-right {

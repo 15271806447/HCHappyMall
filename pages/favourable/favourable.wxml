@@ -1,9 +1,14 @@
 <view class='coupon' wx:for="{{couponVOS}}" wx:for-item="item">
   <view class='coupon-left'>
-    <view class='coupon-money'><text>{{item.shouDiscount}}</text></view>
+    <view class='coupon-money'>
+      <text>{{item.shouDiscount}}</text>
+    </view>
     <view class='coupon-detail' data-index='{{index}}'>
       <view class='detail-top'>{{item.name}}</view>
-      <view class='detail-bottom'>{{item.couponType}}</view>
+      <view class='detail-bottom'>
+        <text class='detail-couponType'>{{item.couponType}}</text>
+        <text class="detail-endTime">{{item.endTime}} 到期</text>
+      </view>
     </view>
   </view>
   <view class='coupon-right' bindtap='getCoupon' data-index='{{index}}' style='background-color:{{item.bgColor}}'>

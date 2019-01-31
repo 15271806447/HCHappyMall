@@ -1,11 +1,10 @@
 var app = getApp();
+var util = require('../../utils/util.js')
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    flagType: [],
-    couponType: [],
     couponVOS: []
     // discount:[
     //   {
@@ -37,15 +36,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+
     var that = this;
     var type = options.type;
     this.setType(type);
-    
+
     this.flagGet();
     this.favdata(type);
 
-    // that.flagCouponType();
+
   },
+
   setType: function(type) {
     this.setData({
       'type': type,
@@ -67,6 +68,7 @@ Page({
       }
     })
   },
+
   favdata: function(type) {
     var that = this;
     if (type == 1) {
@@ -112,7 +114,9 @@ Page({
         bgColor: "#ea8b99",
         type: '',
         shouDiscount: 1,
-        id: ''
+        id: '',
+        isExpired: '',
+        endTime:''
       };
       coupon.id = couponVOS[i].id;
       coupon.preferentialAmount = couponVOS[i].preferentialAmount;
@@ -120,24 +124,29 @@ Page({
       coupon.name = couponVOS[i].name;
       coupon.prepaymentAmount = couponVOS[i].prepaymentAmount;
       if (couponVOS[i].couponsTypes == 2) {
-        coupon.couponType = "优惠券";
+        coupon.couponType = "折扣券";
         coupon.shouDiscount = coupon.preferentialAmount * 10;
       } else if (couponVOS[i].couponsTypes == 1) {
-        coupon.couponType = "折扣券";
+        coupon.couponType = "优惠券";
         coupon.shouDiscount = coupon.preferentialAmount;
       }
+      
       if (type == 1) {
         //判断是否已经领取
         var couponRes = that.data.couponRes;
-        console.log('couponRes');
-        console.log(couponRes);
         for (var j = 0; j < couponRes.length; j++) {
           if (couponRes[j].id == coupon.id) {
             coupon.flagType = '已领取';
             coupon.bgColor = '#ccc';
           }
-
         }
+      }
+      
+      coupon.endTime = couponVOS[i].expirationTime.split(' ')[0];
+      coupon.isExpired = that.flagData(couponVOS[i].expirationTime);
+      if (coupon.isExpired == false){
+        coupon.flagType = '已过期';
+        coupon.bgColor = '#B0C4DE';
       }
 
       couponList[i] = coupon;
@@ -183,25 +192,26 @@ Page({
         url: '../index/index',
       })
     }
-
   },
 
-  //判断优惠券类型
-  // flagCouponType: function(couponVOS) {
-  //   var that = this;
-  //   var tempyArr = new Array();
-  //   for (var i = 0; i < couponVOS.length; i++) {
-  //     if (couponVOS[i].couponsTypes == 2) {
-  //       tempyArr[i] = "优惠券";
-  //     } else if (couponVOS[i].couponsTypes == 1) {
-  //       tempyArr[i] = "折扣券";
-  //     }
-  //   }
-  //   console.log(tempyArr);
-  //   that.setData({
-  //     couponType: tempyArr
-  //   })
-  // },
+  //判断是否到期
+  flagData: function(time) {
+    var tempTime = time.split(' ')[0].split('-');
+    var nowTime = util.formatTime(new Date).split(' ')[0].split('/');
+    // 优惠券 2018-11-11 现在 2019-1-31
+    console.log("月")
+    console.log(parseInt(nowTime[1]))
+    console.log(parseInt(tempTime[1]))
+    if (nowTime[0] < tempTime[0]) {
+      return true;
+    } else if (parseInt(nowTime[1]) < parseInt(tempTime[1])) {
+      return true;
+    } else if (parseInt(nowTime[2]) < parseInt(tempTime[2])) {
+      return true;
+    } else {
+      return false;
+    }
+  },
 
 
   /**
