@@ -119,7 +119,7 @@ Page({
           //判断优惠券类型是否匹配
           coupon[index].check = true;
           coupon[index].flagType = '已选择';
-          coupon[index].bgColor = "#ccc"
+          coupon[index].bgColor = "#B0C4DE"
         } else{
           wx.showToast({
             title: '优惠券类型不匹配',
@@ -455,14 +455,14 @@ Page({
           coupon.isExpired = that.flagData(couponVOS[i].expirationTime,'end');
           if (coupon.isExpired == false) {
             coupon.flagType = '已过期';
-            coupon.bgColor = '#B0C4DE';
+            coupon.bgColor = '#ccc';
           }
 
           coupon.startTime = couponVOS[i].effectiveTime.split(' ')[0];
           coupon.isUse = that.flagData(couponVOS[i].effectiveTime,'start');
           if (coupon.isUse == false) {
             coupon.flagType = '无法使用';
-            coupon.bgColor = '#B0C4DE';
+            coupon.bgColor = '#ccc';
           }
 
           couponList[i] = coupon;

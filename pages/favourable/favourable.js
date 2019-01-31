@@ -137,7 +137,7 @@ Page({
         for (var j = 0; j < couponRes.length; j++) {
           if (couponRes[j].id == coupon.id) {
             coupon.flagType = '已领取';
-            coupon.bgColor = '#ccc';
+            coupon.bgColor = '#B0C4DE';
           }
         }
       }
@@ -146,7 +146,7 @@ Page({
       coupon.isExpired = that.flagData(couponVOS[i].expirationTime);
       if (coupon.isExpired == false){
         coupon.flagType = '已过期';
-        coupon.bgColor = '#B0C4DE';
+        coupon.bgColor = '#ccc';
       }
 
       couponList[i] = coupon;
@@ -177,7 +177,7 @@ Page({
             var bgColor = 'couponVOS' + '[' + index + '].bgColor';
             that.setData({
               [flagType]: "已领取",
-              [bgColor]: "#ccc"
+              [bgColor]: "#B0C4DE"
             })
           }
         })
