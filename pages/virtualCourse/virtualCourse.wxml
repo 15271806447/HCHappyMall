@@ -3,7 +3,7 @@
   <view class='module'>
     <!-- 图片 -->
     <view class="detail-images">
-      <image src='{{vritualCourse.coverPath}}'width="355px" height="340px"></image>
+      <image src='{{vritualCourse.coverPath}}' width="355px" height="340px"></image>
     </view>
     <!-- 描述 -->
     <view class="detail">
@@ -49,21 +49,21 @@
       </view>
     </view>
 
-    <!-- <view class='playing-time'>
-                       <text>视频：7:56</text>
-            </view> -->
+    <view class='playing-time'>
+      <text>时长：7:56</text>
+    </view>
 
     <!-- 图标 -->
     <view wx:if="{{isCharge}}">
-      <!-- <视频> -->
+      <!-- 视频 -->
       <view class='playing-img'>
-        <image src='http://47.107.94.80/play.png'></image>
+        <image src='../../images/play.png'></image>
       </view>
     </view>
     <view wx:else>
       <!-- 音频 -->
       <view class='playing-img'>
-        <image src='http://47.107.94.80/voice.png'></image>
+        <image src='../../images/voice.png'></image>
       </view>
     </view>
 
@@ -71,7 +71,7 @@
     <view wx:if="{{item.isCharge}}">
       <!-- 锁图标 -->
       <view class='unfree'>
-        <image src='http://47.107.94.80/block.png'></image>
+        <image src='../../images/voice.png'></image>
       </view>
 
     </view>
@@ -93,9 +93,11 @@
 <view class='foot'>
   <!-- 收藏 -->
   <view bindtap="addCollection" class='collection'>
-    <text wx:if="{{isClick}}" class='yellow'>★</text>
-    <text wx:else>☆</text>
-    <text class="collection-text">{{isClick?'已收藏':'收藏'}}</text>
+    <image wx:if="{{isClick}}" src='../../images/star2.png'></image>
+    <image wx:else src='../../images/star1.png'></image>
+  </view>
+  <view class='collection-text'>
+    <text>{{isClick?'已收藏':'收藏'}}</text>
   </view>
   <view bindtap="addCar" class="address-collection">
     <text>加入购物车</text>

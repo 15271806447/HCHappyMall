@@ -85,7 +85,9 @@ Page({
       url: '../confirm/confirm?type=virtualGoods',
     })
   },
-  
+  /**
+   * 简介展示
+   */
   change: function(e) {
     if (this.data.isFolded) {
       this.setData({
@@ -105,15 +107,15 @@ Page({
       this.setData({
         show: false
       })
-      console.log(this.data.show)
     } else {
       this.setData({
         show: true
       })
-      console.log(this.data.show)
     }
   },
-
+/**
+ * 点击收藏
+ */
   addCollection: function() {
     if (!this.data.isClick == true) {
       wx.showToast({
@@ -252,8 +254,6 @@ Page({
     }
     
   },
-
-
 
   /**判断视屏与音频交互*/
   flagVideoAndAudio: function (options){

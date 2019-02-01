@@ -11,18 +11,20 @@ Page({
     },
     imageUrl: app.globalData.imageUrl
   },
-  //扫码开始-------------------------------------------------------------------
-  //扫码开始-------------------------------------------------------------------
+  //--------------------------------扫码开始----------------------------------------
   click: function () {
     var that = this;
-    var show;
     wx.scanCode({
       success: (res) => {
         //获得扫码返回的值，推荐用户ID
-        this.show = res.result;
-        console.log(this.show)
+        this.userId = res.result;
+        console.log("userId:" + this.userId)
+        //粉丝id，也就是当前扫码用户id
+        this.refereesId = app.globalData.uid;
+        console.log("refereesId:"+this.refereesId)
         that.setData({
-          show: this.show
+          userId: this.userId,
+          refereesId: this.refereesId
         })
         wx.showToast({
           title: '成功',
@@ -52,34 +54,36 @@ Page({
       url: app.globalData.url + '/apis/becomeFans?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
       data: {
         //被推荐
-        userId: app.globalData.uid,
+        userId: this.data.refereesId,
         //推荐人
-        refereesId: that.data.show,
+        refereesId: this.data.userId,
       },
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
       },
       success: function (res) {
-        console.log(res)
+        console.log("res:"+res)
       }
     })
   },
   modalcnt: function () {
+    var that = this
     wx.showModal({
       title: '关注',
       content: '是否关注该推荐人',
       success: function (res) {
         if (res.confirm) {
           console.log('用户点击确定')
-          this.getFans()
+          console.log("扫码分享。。。。。。。。。")
+          that.getFans()
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
       }
     })
   },
-  //扫码结束
+  //---------------------------------扫码结束------------------------------------------
 
   //检查是否是会员
 cheakMember : function(){

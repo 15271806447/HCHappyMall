@@ -16,6 +16,8 @@ Page({
       //将用户id写到二维码
       qrtext: app.globalData.uid
     })
+    //打印uid
+    console.log("uid:"+app.globalData.uid)
     this.QR.clear();
     this.QR.makeCode(this.data.qrtext);
   },
