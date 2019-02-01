@@ -6,14 +6,13 @@
   <!-- <view class='integral-value'>积分值：3456</view> -->
 </view>
 <view class='scan-img'>
-  <!-- <image src='../img/scan.jpg'></image> -->
   <canvas canvas-id='qrcode' style='background:#AAA;'></canvas>
 </view>
 <view class='scanbrif'>
   扫一扫加我粉丝
 </view>
 <view class='recomendimg'>
-  <image src='../img/recomd.png'></image>
+  <image src='{{imageUrl}}recomd.png'></image>
 </view>
 <view class='pl5'>
   <view> 说明：</view>
@@ -30,7 +29,7 @@
 </view>
 <view class='directfan' bindtap='secfan'>
   <text>我的直属粉丝</text>
-  <image src='../img/dreri.png'></image>
+  <image src='{{imageUrl}}dreri.png'></image>
 </view>
 <!-- <view class='secfan'>
   <text>我的二级粉丝</text>

@@ -2,12 +2,12 @@
 <view>
   <view class='vmimg'>
     <view class='lf1' bindtap='videoles' style="background-color:{{backcolor}}">
-      <image src='../img/video.png'></image>
+      <image src='{{imageUrl}}myvideo.png'></image>
       <text class='videole'>视频课程</text>
     </view>
  
     <view class='ri1' bindtap='musicles' style="background-color:{{backcolorff}}">
-      <image src='../img/music.png'></image>
+      <image src='{{imageUrl}}mymusic.png'></image>
       <text class='soundle'>声音课程</text>
     </view>
   </view>
@@ -18,13 +18,13 @@
  <block wx:for="{{videoList}}" wx:for-item="item">
   <view class='video-list' bindtap='toVideoPlay' data-index='{{index}}'>
     <view class='video-img-left'>
-      <image src='../img/true.jpg'></image>
+      <image src='{{imageUrl}}true.jpg'></image>
     </view>
     <view class='video-decribe-mid'>
       <view class='book-name'>{{item.productTitle}}</view>
       <view class='video-tea'>{{item.productAuthor}}</view>
       <view class='person-num'>
-        <image src='../img/person.png'></image>
+        <image src='{{imageUrl}}myperson.png'></image>
         <text>{{item.productSales}}</text>
       </view>
     </view>
@@ -37,13 +37,13 @@
 <view class='video-class' hidden="{{musicles}}">
   <view class='video-list' wx:for="{{audioList}}" wx:for-item="item" bindtap='ToAudioPlay' data-index='{{index}}'>
     <view class='video-img-left'>
-      <image src='../img/true.jpg'></image>
+      <image src='.{{imageUrl}}true.jpg'></image>
     </view>
     <view class='video-decribe-mid'>
       <view class='book-name'>{{item.productTitle}}</view>
       <view class='video-tea'>{{item.productAuthor}}</view>
       <view class='person-num'>
-        <image src='../img/person.png'></image>
+        <image src='{{imageUrl}}myperson.png'></image>
         <text>{{item.productSales}}</text>
       </view>
     </view>
