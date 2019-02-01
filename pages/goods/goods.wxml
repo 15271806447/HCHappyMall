@@ -14,9 +14,9 @@
     </view> -->
     <view>
       <view class="price">
-        <text>￥{{goods.memberPrice}}</text>
+        <text>会员价:￥{{goods.memberPrice}}</text>
       </view>
-      <view>价格
+      <view space="nbsp">原   价:
         <text>￥{{goods.originalPrice}}</text>
       </view>
       <view class='sale'>

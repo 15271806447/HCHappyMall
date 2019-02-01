@@ -3,7 +3,7 @@ var util = require('../../utils/util.js')
 Page({
   data: {
     showCouponCount: 2,
-    showCouponFlag:true,
+    showCouponFlag: true,
     address: {
       username: "",
       telephone: "",
@@ -44,6 +44,8 @@ Page({
     imageUrl: app.globalData.imageUrl,
     isMemberPay: false
   },
+
+
   pay: function() {
     var that = this
     wx.request({
@@ -74,12 +76,18 @@ Page({
         } else {
           //支付成功存储订单
           that.createOrder();
+          //增加销量
+
         }
       }
     })
   },
 
-  
+  // //增加销量
+  // increaseSales: function() {
+
+  // },
+
   /**
    * 选择优惠券
    */
@@ -91,7 +99,7 @@ Page({
     var coupon = this.data.coupon;
 
     if (!coupon[index].check) {
-      
+
       if (this.data.TotalPrice >= coupon[index].prepaymentAmount) {
         for (let i = 0; i < coupon.length; i++) {
           if (coupon[i].isExpired == true && coupon[i].isUse == true) {
@@ -108,19 +116,19 @@ Page({
             icon: 'none',
             duration: 2000
           })
-        }else if (coupon[index].isExpired == false) {
+        } else if (coupon[index].isExpired == false) {
           //判断优惠券是否过期
           wx.showToast({
             title: '优惠券已过期',
             icon: 'none',
             duration: 2000
           })
-        }else if (that.data.flagCouponType[index] == true){
+        } else if (that.data.flagCouponType[index] == true) {
           //判断优惠券类型是否匹配
           coupon[index].check = true;
           coupon[index].flagType = '已选择';
           coupon[index].bgColor = "#B0C4DE"
-        } else{
+        } else {
           wx.showToast({
             title: '优惠券类型不匹配',
             icon: 'none',
@@ -412,13 +420,13 @@ Page({
             flagType: "立即选择",
             check: false,
             couponId: "",
-            bgColor:"#ea8b99",
-            shouDiscount:1,
-            type:'',
+            bgColor: "#ea8b99",
+            shouDiscount: 1,
+            type: '',
             isExpired: '',
-            endTime:'',
-            isUse:'',
-            startTime:''
+            endTime: '',
+            isUse: '',
+            startTime: ''
           };
           coupon.preferentialAmount = couponVOS[i].preferentialAmount;
           coupon.couponId = couponVOS[i].id;
@@ -447,19 +455,19 @@ Page({
             coupon.shouDiscount = coupon.preferentialAmount * 10;
           } else if (couponVOS[i].couponsTypes == 1) {
             coupon.couponType = "优惠券";
-            coupon.shouDiscount = coupon.preferentialAmount ;
+            coupon.shouDiscount = coupon.preferentialAmount;
           }
           coupon.manjian = couponVOS[i].name;
 
           coupon.endTime = couponVOS[i].expirationTime.split(' ')[0];
-          coupon.isExpired = that.flagData(couponVOS[i].expirationTime,'end');
+          coupon.isExpired = that.flagData(couponVOS[i].expirationTime, 'end');
           if (coupon.isExpired == false) {
             coupon.flagType = '已过期';
             coupon.bgColor = '#ccc';
           }
 
           coupon.startTime = couponVOS[i].effectiveTime.split(' ')[0];
-          coupon.isUse = that.flagData(couponVOS[i].effectiveTime,'start');
+          coupon.isUse = that.flagData(couponVOS[i].effectiveTime, 'start');
           if (coupon.isUse == false) {
             coupon.flagType = '无法使用';
             coupon.bgColor = '#ccc';
@@ -468,7 +476,7 @@ Page({
           couponList[i] = coupon;
         }
         that.flagCouponType(couponList);
-        
+
         that.setData({
           'coupon': couponList
         })
@@ -478,21 +486,21 @@ Page({
   },
 
   //判断优惠券日期
-  flagData: function (time,flag) {
+  flagData: function(time, flag) {
     var tempTime = time.split(' ')[0].split('-');
     var nowTime = util.formatTime(new Date).split(' ')[0].split('/');
-    
-    if(flag == 'start'){
-      if (nowTime[0] < tempTime[0]) {
-        return false;
-      } else if (parseInt(nowTime[1]) < parseInt(tempTime[1])) {
-        return false;
-      } else if (parseInt(nowTime[2]) < parseInt(tempTime[2])) {
-        return false;
-      } else {
+
+    if (flag == 'start') {
+      if (nowTime[0] > tempTime[0]) {
         return true;
+      } else if (parseInt(nowTime[1]) > parseInt(tempTime[1])) {
+        return true;
+      } else if (parseInt(nowTime[2]) > parseInt(tempTime[2])) {
+        return true;
+      } else {
+        return false;
       }
-    }else if(flag == 'end'){
+    } else if (flag == 'end') {
       if (nowTime[0] < tempTime[0]) {
         return true;
       } else if (parseInt(nowTime[1]) < parseInt(tempTime[1])) {
@@ -503,13 +511,13 @@ Page({
         return false;
       }
     }
-    
-    
+
+
   },
-  
+
 
   //判断优惠券类型是否匹配
-  flagCouponType: function (coupon) {
+  flagCouponType: function(coupon) {
     var that = this;
     var flag = new Array();
     var goodId = app.globalData.goodsInfo.id;
@@ -520,20 +528,19 @@ Page({
       header: {
         'X-Requested-With': 'APP'
       },
-      success: function (res) {
-        var firstClassifyId = res.data.data.hcProductSecondClassifyList[0].firstClassifyId;
-        var firstName;
+      success: function(res) {
         console.log('firstClassifyList');
         console.log(firstClassifyList);
+        var firstClassifyId = res.data.data.hcProductSecondClassifyList[0].firstClassifyId;
+        var firstName;
+        
         for (var x = 0; x < firstClassifyList.length; x++) {
           if (firstClassifyList[x].id == firstClassifyId) {
             firstName = firstClassifyList[x].firstClassName;
             break;
           }
         }
-        console.log('firstName');
-        console.log(firstName);
-        
+
         for (var i = 0; i < coupon.length; i++) {
           if (firstName == coupon[i].type || coupon[i].type == '通用') {
             flag[i] = true;
@@ -541,9 +548,6 @@ Page({
             flag[i] = false;
           }
         }
-        console.log('flag');
-        
-        console.log(flag);
         that.setData({
           'flagCouponType': flag,
         })
@@ -721,18 +725,18 @@ Page({
   },
 
   //优惠券显示更多按钮
-  showCouponCount:function(){
+  showCouponCount: function() {
     var showCouponFlag = this.data.showCouponFlag
-    if (showCouponFlag == true){
+    if (showCouponFlag == true) {
       this.setData({
-        showCouponFlag : false,
-        showCouponCount : this.data.coupon.length
+        showCouponFlag: false,
+        showCouponCount: this.data.coupon.length
       })
     } else if (showCouponFlag == false) {
       this.setData({
-        showCouponFlag : true,
-        showCouponCount : 2,
-      })   
+        showCouponFlag: true,
+        showCouponCount: 2,
+      })
     }
   }
 })

@@ -42,7 +42,7 @@ Page({
     isClick: false,
     addCar: false,
     show: false,
-    rows: 5,
+    rows: 4,
   },
 
   /**

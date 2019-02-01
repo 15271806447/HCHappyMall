@@ -34,18 +34,19 @@ margin: 20rpx 0 0 30rpx;
   color: gray;
 }
 .detail-money  {
-  width: 40rpx;
+  width: 210px;
   height: 100%;
   color:#999;
-  font-size: 34rpx;
   position: absolute;
-  margin-left: 540rpx;
-  margin-top: -180rpx;
+  margin-left: 440rpx;
+  margin-top: -83rpx;
+  font-size: 30rpx;
+   font-weight: bold;
 }
 .original-price{
   text-decoration:line-through;
   top: 37rpx;
-  position: absolute;
+  position: absolute; 
 }
 .sale{
   display: flex;
@@ -61,11 +62,10 @@ margin: 20rpx 0 0 30rpx;
 
 .membership-price{
  position: absolute;
- font-size: 40rpx;
  color: red;
  margin-right: 30rpx;
  top: 75rpx;
- font-weight: bold;
+
 }
 
 

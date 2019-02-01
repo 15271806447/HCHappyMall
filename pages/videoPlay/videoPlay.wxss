@@ -118,7 +118,7 @@ input {
 .description {
   width: 96%;
   font-size: 14px;
-  height: 200rpx;
+  height: auto;
   color: #a8a8a8;
   padding: 2%
 }
@@ -129,13 +129,13 @@ input {
   }
 
   to {
-    height: 200rpx;
+    height: auto;
   }
 }
 
 @keyframes slideup {
   from {
-    height: 200rpx;
+    height: auto; 
   }
 
   to {

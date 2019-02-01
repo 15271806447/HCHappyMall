@@ -17,8 +17,8 @@
         <text>已更新{{vritualCourse.nowNum}}/{{vritualCourse.totalNum}}节</text>
       </view>
       <view class='detail-money'>
-        <text class='original-price'>￥{{vritualCourse.price}}\n</text>
-        <text class='membership-price'>￥{{vritualCourse.memberPrice}}</text>
+        <text class='original-price' space="nbsp">原   价:￥{{vritualCourse.price}}\n</text>
+        <text class='membership-price'>会员价:￥{{vritualCourse.memberPrice}}</text>
       </view>
     </view>
   </view>

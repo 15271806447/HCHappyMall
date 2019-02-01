@@ -72,11 +72,13 @@ Page({
     }
     if (list_state) {
       this.setData({
-        state: false
+        state: false,
+        rows:0
       });
     } else {
       this.setData({
-        state: true
+        state: true,
+        rows: 5000
       });
     }
   },
