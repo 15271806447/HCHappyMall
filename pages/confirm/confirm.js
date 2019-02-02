@@ -76,17 +76,10 @@ Page({
         } else {
           //支付成功存储订单
           that.createOrder();
-          //增加销量
-
         }
       }
     })
   },
-
-  // //增加销量
-  // increaseSales: function() {
-
-  // },
 
   /**
    * 选择优惠券
@@ -154,8 +147,33 @@ Page({
     })
   },
 
+  //判断是否是会员
+  flagMember: function () {
+    var that = this;
+    wx: wx.request({
+      url: app.globalData.url + '/api/personalCenter/getUserMember?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function (res) {
+        if (res.data.data.hcUserMember.length > 0 || res.data.data.hcUserMember != null) {
+          that.setData({
+            'isMember': true
+          })
+        } else {
+          that.setData({
+            'isMember': false
+          })
+        }
+      }
+    })
+  },
+
   onLoad: function(options) {
     var that = this;
+    that.flagMember();    //判断是否是会员
+    console.log(that.data.isMember);
     console.log("从商品页跳转");
     if (options.type == 'goods') {
       var productInfo = app.globalData.goodsInfo;
@@ -311,13 +329,15 @@ Page({
           count: 1,
           price: 0,
           productInfo: '',
-          options: ''
+          options: '',
+          memberPrice: ''
         };
         product.productTitle = productInfo.productTitle;
         product.oldprice = productInfo.price;
         product.productCovermap = productInfo.coverPath;
         product.price = productInfo.price;
         product.originalPrice = productInfo.price;
+        product.memberPrice = productInfo.memberPrice;
         goodsList[0] = product;
         that.setData({
           'goodsList': goodsList,
@@ -533,7 +553,7 @@ Page({
         console.log(firstClassifyList);
         var firstClassifyId = res.data.data.hcProductSecondClassifyList[0].firstClassifyId;
         var firstName;
-        
+
         for (var x = 0; x < firstClassifyList.length; x++) {
           if (firstClassifyList[x].id == firstClassifyId) {
             firstName = firstClassifyList[x].firstClassName;
@@ -563,7 +583,7 @@ Page({
     var TotalCount = 0;
     var coupon = this.data.coupon;
     for (let i = 0; i < goodsList.length; i++) {
-      TotalPrice += goodsList[i].count * goodsList[i].originalPrice;
+      TotalPrice += goodsList[i].count * (this.data.isMember ? goodsList[i].memberPrice: goodsList[i].originalPrice);
       console.log('goodsList[i].count:' + goodsList[i].count);
       console.log('goodsList[i].originalPrice:' + goodsList[i].originalPrice);
       TotalCount += goodsList[i].count

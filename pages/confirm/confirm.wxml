@@ -22,7 +22,7 @@
       <image class='goodsPic' src='{{item.productCovermap}}'></image>
       <text class='goodsname'>{{item.productTitle}}</text>
       <view class='space-bewteen'>
-        <text class='goodsprice'>￥{{item.originalPrice}}</text>
+        <text class='goodsprice'>￥{{isMember?item.memberPrice:item.originalPrice}}</text>
         <text class='goodsnumber'>x{{item.count}}</text>
       </view>
       <text class='goodsBtn'>七天退换</text >
