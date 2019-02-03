@@ -50,7 +50,7 @@
     </view>
 
     <view class='playing-time'>
-      <text>时长：7:56</text>
+      <text>时长：{{time[index]}}</text>
     </view>
 
     <!-- 图标 -->

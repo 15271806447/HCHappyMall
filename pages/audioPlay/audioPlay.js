@@ -271,12 +271,12 @@ Page({
           var audiochapter = {
             audioName: "",
             audiosrc: "",
-            audioTime: '加载中...',
+            //audioTime: '加载中...',
           };
           var hcFSectionInfo = courseVO.hcFSectionInfoList[i];
           audiochapter.audioName = hcFSectionInfo.chapterName;
           audiochapter.audiosrc = that.getAudioPaht(hcFSectionInfo.fileAddr);
-          that.getAudioTime(audiochapter.audiosrc,i);
+          //that.getAudioTime(audiochapter.audiosrc,i);
           fileId.push(hcFSectionInfo.fileAddr);
           audio.push(audiochapter);
         }
@@ -289,79 +289,21 @@ Page({
 
     });
   },
+  
   getAudioPaht:function(id){
     return app.globalData.url + '/common/file/showPicture.do?id=' + id;
   },
-  /**
-   * 获得视频
-   */
-  getAudioTime: function (videoPath,i) {
-    var that = this;
-    var audioTime = "audiolist" + "[" + i + "]" + ".audioTime";
-    const innerAudioContext = wx.createInnerAudioContext()  //初始化createInnerAudioContext接口
-    //设置播放地址
-    innerAudioContext.src = videoPath;
 
-    //音频进入可以播放状态，但不保证后面可以流畅播放
-    innerAudioContext.onCanplay(() => {
-      innerAudioContext.duration //类似初始化-必须触发-不触发此函数延时也获取不到
-      setTimeout(function () {
-        //在这里就可以获取到大家梦寐以求的时长了
-        console.log(innerAudioContext.duration); //延时获取长度 单位：秒
-        var time = that.toTime(innerAudioContext.duration);
-        that.setData({
-          [audioTime]: time
-        })
-      },1000)  //这里设置延时1秒获取
-    })
-  },
-  toTime: function (s) {
-    var day = Math.floor(s / (24 * 3600)); // Math.floor()向下取整 
-    var hour = Math.floor((s - day * 24 * 3600) / 3600);
-    var minute = Math.floor((s - day * 24 * 3600 - hour * 3600) / 60);
-    var second = Math.floor(s - day * 24 * 3600 - hour * 3600 - minute * 60);
-    var time = '00:00';
-    if (hour > 0 && minute < 10) {
-      time = hour + ":0" + minute + ":" + second;
-    } else if (hour > 0 && minute > 10) {
-      time = hour + ":" + minute + ":" + second;
-    } else if (hour <= 0 && minute < 10) {
-      time = "0" + minute + ":" + second;
-    } else if (hour <= 0 && minute > 10) {
-      time = minute + ":" + second;
-    } else if (hour <= 0 && minute <= 0) {
-      time = "00:" + second;
-    }
-    return time;
-  },
-
-  //获取文件路径
-  getFilePath: function(fileId, index) {
-    var that = this;
-    var myArray = new Array();
-    var audiosrc = "audiolist" + "[" + index + "]" + ".audiosrc";
-    wx.request({
-      url: app.globalData.url + '/api/common/file/get?id=' + fileId,
-      method: 'GET',
-      success: function(res) {
-        console.log(res);
-        var index = res.data.data.storageId.indexOf("upload");
-        var filePath = app.globalData.url + "/" + res.data.data.storageId.substring(index);
-        console.log(filePath);
-        that.setData({
-          [audiosrc]: filePath
-        })
-        var fileName = res.data.data.fileName.split(".")[0];
-        console.log(fileName);
-        myArray[0] = filePath;
-        myArray[1] = fileName;
-        return myArray;
-      }
+  setTime: function (options) {
+    console.log(JSON.parse(options.time))
+    this.setData({
+      time: JSON.parse(options.time)
     })
   },
 
   onLoad: function(e) {
     var that = this;
+    this.setTime(e);
     var audioDetail = JSON.parse(decodeURIComponent(e.audioDetail));
     console.log('audioDetail');
     console.log(audioDetail);

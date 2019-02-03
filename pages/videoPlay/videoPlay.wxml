@@ -40,7 +40,7 @@
     <view class='index center'>{{index+1}}</view>
     <view class='colum'>
       <view>{{item.videoName}}</view>
-      <view class='time'>视频 {{item.videoTime}}</view>
+      <view class='time'>视频 {{time[index]}}</view>
     </view>
   </view>
 </view>
