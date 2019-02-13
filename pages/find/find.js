@@ -59,13 +59,14 @@ Page({
       mask: true
     })
     wx.request({
-      url: app.globalData.url + '/api/product/getSecondClassify?sid=' + app.globalData.sid + "&firstClassifyId=" + app.globalData.firstClassifyList[3].id,
+      url: app.globalData.url + '/api/product/getSecondClassify?sid=' + app.globalData.sid + "&firstClassifyId=" + app.globalData.firstClassifyList[4].id,
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
       },
       success: function(res) {
         console.log(res);
+
         var SecondClassifyList = res.data.data.hcProductSecondClassifyList;
         var categoryList = [];
         for (let i = 0; i < SecondClassifyList.length; i++) {
@@ -103,7 +104,7 @@ Page({
    */
   searchProduct: function() {
     var that = this;
-    var firstClassifyId = app.globalData.firstClassifyList[3].id;
+    var firstClassifyId = app.globalData.firstClassifyList[4].id;
     var categoryList = this.data.categoryList;
     var categoryId = "";
     for (let i = 0; i < categoryList.length; i++) {

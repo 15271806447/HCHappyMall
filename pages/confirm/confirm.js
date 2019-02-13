@@ -1,6 +1,9 @@
 var app = getApp();
+var util = require('../../utils/util.js')
 Page({
   data: {
+    showCouponCount: 2,
+    showCouponFlag: true,
     address: {
       username: "",
       telephone: "",
@@ -26,22 +29,13 @@ Page({
     },
     inputValue: "",
     coupon: [{
-        money: "40",
-        dikou: "抵用券",
-        name: "通用",
-        manjian: "290",
-        use: "立即选择",
-        check: false
-      },
-      {
-        money: "40",
-        dikou: "抵用券",
-        name: "通用",
-        manjian: "290",
-        use: "立即选择",
-        check: false
-      }
-    ],
+      money: "",
+      dikou: "",
+      name: "",
+      manjian: "",
+      use: "",
+      check: false
+    }],
     integral: 0,
     TotalPrice: 0,
     TotalCount: 0,
@@ -50,6 +44,8 @@ Page({
     imageUrl: app.globalData.imageUrl,
     isMemberPay: false
   },
+
+
   pay: function() {
     var that = this
     wx.request({
@@ -61,7 +57,7 @@ Page({
       success: function(res) {
         console.log(res);
         console.log("**********************************************");
-        console.log(res.data.data.isAuthentication)
+        //console.log(res.data.data.isAuthentication)
         console.log("**********************************************");
         if (!res.data.data.isAuthentication) {
           wx.showModal({
@@ -83,26 +79,55 @@ Page({
         }
       }
     })
-
-
   },
+
   /**
    * 选择优惠券
    */
   chooseCoupon: function(e) {
+    var that = this;
     //拿选择的索引
     var index = e.currentTarget.dataset.index;
     //拿到优惠券
     var coupon = this.data.coupon;
 
-
     if (!coupon[index].check) {
-      if (this.data.TotalPrice >= coupon.manjian) {
-        for (let i; i < coupon.length; i++) {
-          coupon[index].check = false;
+
+      if (this.data.TotalPrice >= coupon[index].prepaymentAmount) {
+        for (let i = 0; i < coupon.length; i++) {
+          if (coupon[i].isExpired == true && coupon[i].isUse == true) {
+            coupon[i].check = false;
+            coupon[i].flagType = '立即选择';
+            coupon[i].bgColor = "#ea8b99"
+          }
         }
-        coupon[index].check = true;
-        coupon[index].use = '已选择';
+
+        if (coupon[index].isUse == false) {
+          //判断优惠券是否到达使用日期
+          wx.showToast({
+            title: '优惠券未到达使用日期',
+            icon: 'none',
+            duration: 2000
+          })
+        } else if (coupon[index].isExpired == false) {
+          //判断优惠券是否过期
+          wx.showToast({
+            title: '优惠券已过期',
+            icon: 'none',
+            duration: 2000
+          })
+        } else if (that.data.flagCouponType[index] == true) {
+          //判断优惠券类型是否匹配
+          coupon[index].check = true;
+          coupon[index].flagType = '已选择';
+          coupon[index].bgColor = "#B0C4DE"
+        } else {
+          wx.showToast({
+            title: '优惠券类型不匹配',
+            icon: 'none',
+            duration: 2000
+          })
+        }
       } else {
         wx.showToast({
           title: '未达到满足条件',
@@ -112,14 +137,43 @@ Page({
       }
     } else {
       coupon[index].check = false;
-      coupon[index].use = '立即选择';
+      coupon[index].flagType = '立即选择';
+      coupon[index].bgColor = "#ea8b99"
     }
+
+    that.TotalPrice();
     this.setData({
       'coupon': coupon
     })
   },
+
+  //判断是否是会员
+  flagMember: function () {
+    var that = this;
+    wx: wx.request({
+      url: app.globalData.url + '/api/personalCenter/getUserMember?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function (res) {
+        if (res.data.data.hcUserMember.length > 0 || res.data.data.hcUserMember != null) {
+          that.setData({
+            'isMember': true
+          })
+        } else {
+          that.setData({
+            'isMember': false
+          })
+        }
+      }
+    })
+  },
+
   onLoad: function(options) {
     var that = this;
+    that.flagMember();    //判断是否是会员
+    console.log(that.data.isMember);
     console.log("从商品页跳转");
     if (options.type == 'goods') {
       var productInfo = app.globalData.goodsInfo;
@@ -275,13 +329,15 @@ Page({
           count: 1,
           price: 0,
           productInfo: '',
-          options: ''
+          options: '',
+          memberPrice: ''
         };
         product.productTitle = productInfo.productTitle;
         product.oldprice = productInfo.price;
         product.productCovermap = productInfo.coverPath;
         product.price = productInfo.price;
         product.originalPrice = productInfo.price;
+        product.memberPrice = productInfo.memberPrice;
         goodsList[0] = product;
         that.setData({
           'goodsList': goodsList,
@@ -339,6 +395,7 @@ Page({
         'X-Requested-With': 'APP'
       },
       success: function(res) {
+        console.log('res');
         console.log(res);
         var integral = 0;
         if (res.data.data.hcWallet.integral) {
@@ -376,43 +433,144 @@ Page({
         var couponList = [];
         for (let i = 0; i < couponVOS.length; i++) {
           var coupon = {
-            money: "40",
-            dikou: "抵用券",
-            name: "通用",
-            manjian: "满300减20",
-            use: "立即选择",
+            preferentialAmount: "",
+            name: "",
+            prepaymentAmount: "",
+            couponType: "",
+            flagType: "立即选择",
             check: false,
-            couponId: ""
+            couponId: "",
+            bgColor: "#ea8b99",
+            shouDiscount: 1,
+            type: '',
+            isExpired: '',
+            endTime: '',
+            isUse: '',
+            startTime: ''
           };
-          coupon.money = couponVOS[i].preferentialAmount;
+          coupon.preferentialAmount = couponVOS[i].preferentialAmount;
           coupon.couponId = couponVOS[i].id;
+          coupon.name = couponVOS[i].name;
+          // coupon.type = couponVOS[i].usableRange;
           switch (couponVOS[i].usableRange) {
             case 0:
-              coupon.name = "通用";
+              coupon.type = "通用";
               break;
             case 1:
-              coupon.name = "实体商品 ";
+              coupon.type = "书籍";
               break;
             case 2:
-              coupon.name = "声音课程";
+              coupon.type = "声音课程";
               break;
             case 3:
-              coupon.name = "视频课程";
+              coupon.type = "视频课程";
               break;
             case 4:
-              coupon.name = "活动";
+              coupon.type = "线下活动";
               break;
           }
+          coupon.prepaymentAmount = couponVOS[i].prepaymentAmount;
           if (couponVOS[i].couponsTypes == 2) {
-            coupon.dikou = "折扣";
+            coupon.couponType = "折扣券";
+            coupon.shouDiscount = coupon.preferentialAmount * 10;
+          } else if (couponVOS[i].couponsTypes == 1) {
+            coupon.couponType = "优惠券";
+            coupon.shouDiscount = coupon.preferentialAmount;
           }
           coupon.manjian = couponVOS[i].name;
+
+          coupon.endTime = couponVOS[i].expirationTime.split(' ')[0];
+          coupon.isExpired = that.flagData(couponVOS[i].expirationTime, 'end');
+          if (coupon.isExpired == false) {
+            coupon.flagType = '已过期';
+            coupon.bgColor = '#ccc';
+          }
+
+          coupon.startTime = couponVOS[i].effectiveTime.split(' ')[0];
+          coupon.isUse = that.flagData(couponVOS[i].effectiveTime, 'start');
+          if (coupon.isUse == false) {
+            coupon.flagType = '无法使用';
+            coupon.bgColor = '#ccc';
+          }
+
           couponList[i] = coupon;
         }
+        that.flagCouponType(couponList);
+
         that.setData({
           'coupon': couponList
         })
 
+      }
+    })
+  },
+
+  //判断优惠券日期
+  flagData: function(time, flag) {
+    var tempTime = time.split(' ')[0].split('-');
+    var nowTime = util.formatTime(new Date).split(' ')[0].split('/');
+
+    if (flag == 'start') {
+      if (nowTime[0] > tempTime[0]) {
+        return true;
+      } else if (parseInt(nowTime[1]) > parseInt(tempTime[1])) {
+        return true;
+      } else if (parseInt(nowTime[2]) > parseInt(tempTime[2])) {
+        return true;
+      } else {
+        return false;
+      }
+    } else if (flag == 'end') {
+      if (nowTime[0] < tempTime[0]) {
+        return true;
+      } else if (parseInt(nowTime[1]) < parseInt(tempTime[1])) {
+        return true;
+      } else if (parseInt(nowTime[2]) < parseInt(tempTime[2])) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+
+  },
+
+
+  //判断优惠券类型是否匹配
+  flagCouponType: function(coupon) {
+    var that = this;
+    var flag = new Array();
+    var goodId = app.globalData.goodsInfo.id;
+    var firstClassifyList = app.globalData.firstClassifyList;
+    wx.request({
+      url: app.globalData.url + '/api/product/getSecondClassifyFromProductId?sid=' + app.globalData.sid + '&productId=' + goodId,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function(res) {
+        console.log('firstClassifyList');
+        console.log(firstClassifyList);
+        var firstClassifyId = res.data.data.hcProductSecondClassifyList[0].firstClassifyId;
+        var firstName;
+
+        for (var x = 0; x < firstClassifyList.length; x++) {
+          if (firstClassifyList[x].id == firstClassifyId) {
+            firstName = firstClassifyList[x].firstClassName;
+            break;
+          }
+        }
+
+        for (var i = 0; i < coupon.length; i++) {
+          if (firstName == coupon[i].type || coupon[i].type == '通用') {
+            flag[i] = true;
+          } else {
+            flag[i] = false;
+          }
+        }
+        that.setData({
+          'flagCouponType': flag,
+        })
       }
     })
   },
@@ -425,7 +583,7 @@ Page({
     var TotalCount = 0;
     var coupon = this.data.coupon;
     for (let i = 0; i < goodsList.length; i++) {
-      TotalPrice += goodsList[i].count * goodsList[i].originalPrice;
+      TotalPrice += goodsList[i].count * (this.data.isMember ? goodsList[i].memberPrice: goodsList[i].originalPrice);
       console.log('goodsList[i].count:' + goodsList[i].count);
       console.log('goodsList[i].originalPrice:' + goodsList[i].originalPrice);
       TotalCount += goodsList[i].count
@@ -434,13 +592,16 @@ Page({
     console.log("1:" + TotalPrice);
     for (let i = 0; i < coupon.length; i++) {
       if (coupon[i].check == true) {
-        couponMoney = parseFloat(coupon[i].money);
+        // 先算优惠券，再算积分，再算折扣
+        TotalPrice -= (this.data.integral / 1000)
+        if (coupon[i].couponType == "折扣券") {
+          TotalPrice -= parseFloat(coupon[i].preferentialAmount);
+        } else if (coupon[i].couponType == "优惠券") {
+          TotalPrice *= coupon[i].preferentialAmount;
+        }
       }
     }
-    // 先算优惠券，再算积分，再算折扣
-    TotalPrice -= couponMoney;
-    TotalPrice -= (this.data.integral / 1000)
-    TotalPrice *= this.data.delivery.discount;
+
 
     this.setData({
       'TotalPrice': TotalPrice.toFixed(2),
@@ -581,7 +742,21 @@ Page({
     wx.reLaunch({
       url: '../address/address?type=goods'
     })
+  },
+
+  //优惠券显示更多按钮
+  showCouponCount: function() {
+    var showCouponFlag = this.data.showCouponFlag
+    if (showCouponFlag == true) {
+      this.setData({
+        showCouponFlag: false,
+        showCouponCount: this.data.coupon.length
+      })
+    } else if (showCouponFlag == false) {
+      this.setData({
+        showCouponFlag: true,
+        showCouponCount: 2,
+      })
+    }
   }
-
-
 })

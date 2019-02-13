@@ -6,6 +6,7 @@ Page({
    */
   data: {
     imgHeader: app.globalData.url + '/common/file/showPicture.do?id=',
+    imageUrl: app.globalData.imageUrl
   },
 
 

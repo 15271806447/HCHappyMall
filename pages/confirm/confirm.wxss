@@ -156,47 +156,91 @@ page {
 
 /* 优惠券 */
 
-.row {
-  padding: 20rpx 0;
-  background-color: #f0f0f0;
-}
-
-.discount {
-  width: 99%;
-  box-sizing: border-box;
-  padding: 20rpx;
-  font-size: 32rpx;
+.coupon {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 40rpx;
-  border: 2rpx solid #999;
-  background-color: #fff;
+  height: 70px;
+  width: 97%;
+  margin: auto;
+  box-shadow: -1px 3px 3px 1px #ccc;
+  margin-bottom: 10px;
+  margin-top: 10rpx;
 }
 
-.discount view {
-  display: flex;
-  line-height: 2;
+.coupon-left {
+  width: 70%;
+  background-color: #f5ecdb;
   flex-direction: column;
+  padding-top: 5px;
+  padding-left: 2px;
 }
 
-.discount view:nth-child(1) {
+.coupon-money {
+  float: left;
+  width: 28%;
+  color: #f18695;
+  font-weight: 700;
+  margin-top: 10rpx;
+}
+
+.coupon-money text {
+  font-size: 75rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coupon-detail {
+  float: left;
+  color: #3ad8ca;
+  margin-top: 10rpx;
+  /* margin-left: 10rpx; */
+}
+
+.detail-top {
+  font-size: 35rpx;
+  font-weight: 700;
+}
+
+.detail-bottom {
+  flex-direction: row;
+}
+
+.detail-couponType{
+  font-size: 45rpx;
+  font-weight: 500;
+  display:inline-block;
+  vertical-align:bottom;
+}
+
+.detail-endTime{
+  font-size: 24rpx;
+  margin-left: 10rpx;
+  display:inline-block;
+  vertical-align:bottom;
   color: red;
+  font-weight: 700;
 }
 
-.discount view:nth-child(3) {
-  margin-top: 20rpx;
-  padding: 10rpx 26px;
-  height: 64rpx;
-  line-height: 64rpx;
-  background-color: red;
+.coupon-right {
+  float: right;
+  width: 30%;
+  height: 100%;
+  flex-direction: column;
+  background-color: #ea8b99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-top {
+  font-size: 44rpx;
+  color: #ffd700;
+}
+
+.right-bottom {
+  font-size: 32rpx;
   color: #fff;
-  border-radius: 42rpx;
-}
-
-.discount .manjian {
-  width: 290rpx;
-  word-wrap: break-word;
 }
 
 /* 会员 */

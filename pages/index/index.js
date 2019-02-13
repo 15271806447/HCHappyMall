@@ -262,7 +262,7 @@ Page({
             AudioItem[y].ProductImgUrl = app.globalData.url + '/common/file/showPicture.do?id=' + TotalList[i].productCovermap;
             AudioItem[y++].ProductId = TotalList[i].id;
           }
-          if (TotalList[i].firstClassifyId == firstClassifyList[2]) {
+          if (TotalList[i].firstClassifyId == firstClassifyList[3]) {
             VideoItem[z].content = TotalList[i].productTitle;
             VideoItem[z].buyNumber = TotalList[i].productSales;
             VideoItem[z].price = TotalList[i].originalPrice;
@@ -270,6 +270,8 @@ Page({
             VideoItem[z++].ProductId = TotalList[i].id;
           }
         }
+        console.log('VideoItem');
+        console.log(VideoItem);
         that.setData({
           'BookItem': BookItem,
           'AudioItem': AudioItem,

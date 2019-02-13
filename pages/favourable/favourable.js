@@ -1,11 +1,10 @@
 var app = getApp();
+var util = require('../../utils/util.js')
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    flagType: [],
-    couponType: [],
     couponVOS: []
     // discount:[
     //   {
@@ -37,16 +36,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+
     var that = this;
     var type = options.type;
     this.setType(type);
-    this.favdata(type);
-    if (type == 1) {
-      this.flagGet();
-    }
 
-    that.flagCouponType();
+    this.flagGet();
+    this.favdata(type);
+
+
   },
+
   setType: function(type) {
     this.setData({
       'type': type,
@@ -62,21 +62,13 @@ Page({
         'X-Requested-With': 'APP'
       },
       success: function(res) {
-        for (var i = 0; i < that.data.couponVOS.length; i++) {
-          for (var j = 0; j < res.data.data.couponVOS.length; j++) {
-            if (res.data.data.couponVOS[j].id == that.data.couponVOS[i].id) {
-              var flagType = 'flagType[' + i + ']';
-              var bgColor = 'bgColor' + '[' + i + ']';
-              that.setData({
-                [flagType]: "已领取",
-                [bgColor]: "#ccc"
-              })
-            }
-          }
-        }
+        that.setData({
+          'couponRes': res.data.data.couponVOS
+        })
       }
     })
   },
+
   favdata: function(type) {
     var that = this;
     if (type == 1) {
@@ -88,20 +80,7 @@ Page({
           'X-Requested-With': 'APP'
         },
         success: function(res) {
-          for (var i = 0; i < res.data.data.hcCouponInfoList.length; i++) {
-            var flagType = 'flagType[' + i + ']';
-            var bgColor = 'bgColor' + '[' + i + ']';
-            that.setData({
-              [flagType]: "领取",
-              [flagType]: "立即领取",
-              [bgColor]: "#ea8b99"
-            })
-          }
-
-          that.flagCouponType(res.data.data.hcCouponInfoList);
-          that.setData({
-            'couponVOS': res.data.data.hcCouponInfoList,
-          })
+          that.setCouponData(res.data.data.hcCouponInfoList, '立即领取', type);
         }
       })
     } else if (type == 2) {
@@ -113,27 +92,77 @@ Page({
           'X-Requested-With': 'APP'
         },
         success: function(res) {
-          for (var i = 0; i < res.data.data.couponVOS.length; i++) {
-            var flagType = 'flagType' + '[' + i + ']';
-            that.setData({
-              [flagType]: "立即使用",
-            })
-          }
-
-          that.flagCouponType(res.data.data.couponVOS);
-          that.setData({
-            'couponVOS': res.data.data.couponVOS,
-          })
+          that.setCouponData(res.data.data.couponVOS, '立即使用', type);
         }
       })
     }
   },
+
+  setCouponData: function(couponVOS, flagType, type) {
+    var that = this;
+    console.log(that);
+    var couponList = new Array();
+    for (var i = 0; i < couponVOS.length; i++) {
+      var coupon = {
+        preferentialAmount: "",
+        name: "",
+        prepaymentAmount: "",
+        couponType: "",
+        flagType: flagType,
+        check: false,
+        couponId: "",
+        bgColor: "#ea8b99",
+        type: '',
+        shouDiscount: 1,
+        id: '',
+        isExpired: '',
+        endTime:''
+      };
+      coupon.id = couponVOS[i].id;
+      coupon.preferentialAmount = couponVOS[i].preferentialAmount;
+      coupon.couponId = couponVOS[i].id;
+      coupon.name = couponVOS[i].name;
+      coupon.prepaymentAmount = couponVOS[i].prepaymentAmount;
+      if (couponVOS[i].couponsTypes == 2) {
+        coupon.couponType = "折扣券";
+        coupon.shouDiscount = coupon.preferentialAmount * 10;
+      } else if (couponVOS[i].couponsTypes == 1) {
+        coupon.couponType = "优惠券";
+        coupon.shouDiscount = coupon.preferentialAmount;
+      }
+      
+      if (type == 1) {
+        //判断是否已经领取
+        var couponRes = that.data.couponRes;
+        for (var j = 0; j < couponRes.length; j++) {
+          if (couponRes[j].id == coupon.id) {
+            coupon.flagType = '已领取';
+            coupon.bgColor = '#B0C4DE';
+          }
+        }
+      }
+      
+      coupon.endTime = couponVOS[i].expirationTime.split(' ')[0];
+      coupon.isExpired = that.flagData(couponVOS[i].expirationTime);
+      if (coupon.isExpired == false){
+        coupon.flagType = '已过期';
+        coupon.bgColor = '#ccc';
+      }
+
+      couponList[i] = coupon;
+    }
+
+    that.setData({
+      'couponVOS': couponList,
+    })
+  },
+
   //领取优惠券
   getCoupon: function(e) {
     var type = this.data.type;
     var that = this;
     var index = JSON.stringify(e.currentTarget.dataset.index);
-    var flagType = this.data.flagType[index];
+    var flagType = this.data.couponVOS[index].flagType;
     var id = this.data.couponVOS[index].id;
     if (type == 1) {
       if (flagType == '立即领取') {
@@ -144,11 +173,11 @@ Page({
             'X-Requested-With': 'APP'
           },
           success: function(res) {
-            var flagType = 'flagType' + '[' + index + ']';
-            var bgColor = 'bgColor' + '[' + index + ']';
+            var flagType = 'couponVOS' + '[' + index + '].flagType';
+            var bgColor = 'couponVOS' + '[' + index + '].bgColor';
             that.setData({
               [flagType]: "已领取",
-              [bgColor]: "#ccc"
+              [bgColor]: "#B0C4DE"
             })
           }
         })
@@ -163,24 +192,25 @@ Page({
         url: '../index/index',
       })
     }
-
   },
 
-  //判断优惠券类型
-  flagCouponType: function (couponVOS) {
-    var that = this;
-    var tempyArr = new Array();
-    for (var i = 0; i < couponVOS.length; i++) {
-      if (couponVOS[i].couponsTypes == 2) {
-        tempyArr[i] = "优惠券";
-      } else if (couponVOS[i].couponsTypes == 1) {
-        tempyArr[i] = "折扣券";
-      }
+  //判断是否到期
+  flagData: function(time) {
+    var tempTime = time.split(' ')[0].split('-');
+    var nowTime = util.formatTime(new Date).split(' ')[0].split('/');
+    // 优惠券 2018-11-11 现在 2019-1-31
+    console.log("月")
+    console.log(parseInt(nowTime[1]))
+    console.log(parseInt(tempTime[1]))
+    if (nowTime[0] < tempTime[0]) {
+      return true;
+    } else if (parseInt(nowTime[1]) < parseInt(tempTime[1])) {
+      return true;
+    } else if (parseInt(nowTime[2]) < parseInt(tempTime[2])) {
+      return true;
+    } else {
+      return false;
     }
-    console.log(tempyArr);
-    that.setData({
-      couponType: tempyArr
-    })
   },
 
 

@@ -15,12 +15,12 @@ Page({
     },
     showMessage:[
     {
-      imgPath: "../img/integral-mony.png",
+        imgPath: app.globalData.imageUrl+"integral-mony.png",
       title:"购物得积分",
       message:"指买家通过付款购买商品交易成功后所获得的促销活动费用，买家可按本规则在下次商品交易中使用该积分付款，买家的积分情况以会“我的积分”记录为准"
     },
     ],
-    isShow:false,
+    isShow:false
   },
 
   getIntegralList: function(){
