@@ -1,309 +1,192 @@
-page{
-  height: 100%;
+/* 顶部菜单切换 */
+.navbar{  
+  display: flex;  
+  background: #fff;  
+}  
+.none_tab{
+  position: relative;
+  top: 20rpx;
+  color: #999;
+  font-size: 32rpx;
 }
-.swiper-tab {
+/* 默认选中菜单 */
+.navbar .item{  
+  position: relative;  
+  flex: auto;  
+  font-size: 27rpx;
+  width: 100rpx;
+  text-align: center;  
+  line-height: 80rpx;  
+  color:  #333;
+    border-bottom: 6rpx solid #ddd;
+}  
+/* 选中菜单样式 */
+.navbar .item.active{  
+  color: #333333;  
+  border-bottom: 6rpx solid #D66058;
+  
+}  
+/* 字体 */
+.navbar .item.active:after{  
+  content: "";  
+  display: block;  
+  position: absolute;  
+  bottom: 0;  
+  left: 0;  
+  right: 0;  
+  height: 4rpx;  
+}  
+ 
+ 
+/* 全部 */
+.cont_count{
+  padding-top: 6rpx;
+  position: relative;
   width: 100%;
-  border-bottom: 2rpx solid #777;
   text-align: center;
-  line-height: 80rpx;
+  /* height: 620rpx; */
+/* border-bottom: 6rpx solid #ddd; */
+margin-bottom: 6rpx;
+  background-color:#fff;
 }
-
-.swiper-tab-list {
-  font-size: 30rpx;
+/* 编号 */
+.seria{
+  position: relative;
   display: inline-block;
-  width: 25%;
-  color: #777;
+  width: 90%;
+  height: 70rpx;
+  line-height: 70rpx;
+  /* background-color: yellow; */
+  border-bottom: 1rpx solid #D4D4D4;
 }
-
-.on {
-  color: #da7c0c;
-  border-bottom: 5rpx solid #da7c0c;
+/* 订单lab */
+.seriac_name{
+  position: absolute;
+  font-size: 28rpx;
+  color: #333;
+  left: 0rpx;
 }
-
-.swiper-box {
-  display: block;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
+.seriac_name text{
+margin-left: 15rpx;
 }
-
-.obligation {
-  /* height: 217px; */
-  border: 1px solid #eee;
-  padding-left: 5px;
+/* 订单状态 */
+.seriac_start{
+  position: absolute;
+  right:0rpx;
+  color: #999;
+  font-size: 28rpx;
 }
-
-.order-number-unpaid {
-  border-bottom: 1px solid #eee;
-  height: 35px;
-  vertical-align: middle;
-  font-size: 12px;
-  /* line-height: 35px */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* border-radius: 50%; */
-}
-
-checkbox .wx-checkbox-input {
-  border-radius: 50%; /* 圆角 */
-  width: 40rpx; /* 背景的宽 */
-  height: 40rpx; /* 背景的高 */
-  margin: 0 20rpx;
-}
-
-/* 选中后的全选框样式*/
-
-checkbox .wx-checkbox-input.wx-checkbox-input-checked {
-  background: #f53f2c;
-  border-color: #f53f2c;
-}
-
-checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
-  border-radius: 50%;
-  width: 46rpx;
-  height: 46rpx;
-  line-height: 46rpx;
-  text-align: center;
-  font-size: 28rpx; /* 对勾大小 28rpx */
-  color: #fff; /* 对勾颜色 白色 */
-  background: transparent;
-  transform: translate(-50%, -50%) scale(1);
-  -webkit-transform: translate(-50%, -50%) scale(1);
-}
-
-.select-circle {
-  width: 20px;
-  height: 20px;
+ 
+/* 列表 */
+.list{
+  position: relative;
+  width: 90%;
   display: inline-block;
-  margin-right: 5px;
-  border-radius: 10px;
-  background-color: red;
+  padding-bottom: 10rpx;
+  height: 200rpx;
 }
-
-.unpaid {
-  margin-left: 130px;
-  font-size: 13px;
-  color: red;
-  line-height: 35px;
-  font-weight: 600;
+/* 列表图片 */
+.list_img{
+  position: absolute;
+  width:144rpx;
+  height: 144rpx;
+  left: 0rpx;
+  top: 30rpx; 
 }
-
-/* 待支付商品信息 */
-
-.video-list {
-  display: flex;
-  height: 90px;
+/* 列表标题 */
+.list_name{
+position: absolute;
+   text-align: left;
+   top: 30rpx;
+   left: 180rpx;
+   color: #333333;
+   width: 350rpx;
+   font-size: 30rpx;
+   display: -webkit-box;    
+-webkit-box-orient: vertical;    
+-webkit-line-clamp: 2;    
+overflow: hidden;
+ 
+}
+/* 列表价格 */
+.list_money{
+  position: absolute;
+  font-size: 32rpx;
+  right: 0rpx;
+  bottom: 30rpx;
+}
+ 
+ 
+ 
+/* 总和 */
+.count_eg{
+  position: relative;
   width: 100%;
-  padding: 5px;
-  /* border-bottom: 1px solid #eee; */
-  margin-bottom: 5px;
-}
-
-.video-img-left {
-  flex-grow: 1;
+  height: 90rpx;
+  line-height: 90rpx;
+  border-bottom: 2rpx solid #EBEBEB;
   /* background-color: red; */
 }
-
-.video-decribe-mid {
-  font-size: 12px;
-  flex-grow: 2;
-  height: 90px;
-}
-
-.video-img-left image {
-  width: 80px;
-  height: 80px;
-}
-
-.person-num {
-  line-height: 33x;
-  vertical-align: middle;
-}
-
-.person-num image {
-  width: 20px;
-  height: 20px;
-  vertical-align: middle;
-}
-
-.video-price {
-  color: gray;
-}
-
-.book-name, .video-tea {
-  font-weight: bold;
-  line-height: 33px;
-}
-
-.book-name {
-  font-size: 16px;
-}
-
-.video-tea {
-  font-size: 13px;
-}
-
-.buy-num {
-  margin-left: 145px;
-  color: gray;
-}
-
-/* 合计付款 */
-
-.summ {
-  padding: 5x;
-  font-size: 11px;
-  padding-top: 10px;
-  padding-left:10px;
-}
-
-.sum-price {
-  margin-left: 5px;
-  color: red;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.cancel-order, .buy-order, .returnSale {
-  width: 60px;
-  height: 25px;
-  border: 1px solid #777;
-  text-align: center;
+/* 总和居中 */
+.count_cent{
+  position: relative;
+  width: 90%;
   display: inline-block;
-  line-height: 25px;
-  border-radius: 5px;
-  margin-bottom: 5px;
-  /* background:#F53F2c;
-  color: #fff; */
+  height: 90rpx;
+  line-height: 90rpx;
 }
-
-.cancel-order {
-  margin-left: 132px;
+/* 商品数量 */
+.cont_cent_name{
+  position: relative;
+  font-size: 28rpx;
+float: right;
 }
-
-.buy-order {
-  margin-left: 10px;
+.cont_ce_mon{
+  font-size: 28rpx;
 }
-
-.buyer-message {
-  display: flex;
-  padding-left: 5px;
-  font-size: 13px;
-  height: 30px;
-  justify-content: center;
-  align-items: center;
-  border-bottom: 1px solid #eee;
+/* 总计金额 */
+.cont_cen_money{
+  position: relative;
+   font-size: 28rpx;
+   margin-right: 15rpx;
+   float: right;
 }
-
-.buyer-message1-input {
-  border: 1px solid #fff;
-  width: 240px;
-  display: inline-block;
-  padding-top: 0px;
-}
-
-.mb50 {
-  height: 90px;
-  display: block;
-}
-
-.returnSale {
-  float: right;
-  margin-right: 10px;
-}
-
-#box {
+ 
+/* 标签功能 */
+.coent_list{
+  position: relative;
   width: 100%;
-  overflow: hidden;
-  height: 600px;
-  animation-fill-mode: forwards;
+  height: 150rpx;
+  line-height: 150rpx;
+  /* border-bottom: 6rpx solid #ddd; */
+  background-color:  #fff;
+}
+/* 删除 */
+.coent_del{
   position: absolute;
-  top: 235px;
-  left: 0;
-  z-index: 9999999;
+  top: 30%;
+  right: 270rpx;
+  display: inline-block;
+  width: 180rpx;
+    text-align: center;
+  height: 56rpx;
+  border: 1rpx solid #d3d3d3;
+font-size: 30rpx;
+line-height: 56rpx;
 }
-
-#item_list {
-  background-color: #f7eced;
-  width: 100%;
-}
-
-#item_list view {
-  overflow: auto;
-  white-space: nowrap;
-}
-
-@keyframes slidedown {
-  from {
-    height: 0;
-  }
-
-  to {
-    height: 700rpx;
-  }
-}
-
-@keyframes slideup {
-  from {
-    height: 700rpx;
-  }
-
-  to {
-    height: 0;
-  }
-}
-
-.open {
-  animation: slidedown 0.1s;
-}
-
-.close {
-  animation: slideup 0.1s;
-}
-
-.hide {
-  display: none;
-}
-
-.show {
-  display: block;
-}
-
-.writereason {
-  padding-top: 20px;
-  color: gray;
-  font-size: 13px;
-  /* z-index: 999999999; */
-}
-
-.subapplyret {
-  color: #fff;
-  width: 52px;
-  height: 27px;
-  background: #f53f2c;
+ 
+ 
+/* 取消 */
+.coent_log_base{
+    position: absolute;
+    top: 30%;
+    color: darkgoldenrod;
+    right: 40rpx;
+  display: inline-block;
+  width: 180rpx;
+  height: 56rpx;
   text-align: center;
-  line-height: 27px;
-  border-radius: 5px;
-  margin-left: 230px;
-  margin-bottom: 10px;
-  margin-top: 28px;
-}
-
-.returnmoney {
-  float: right;
-  margin-right: 30px;
-  margin-top: -31px;
-}
-
-.returnmon {
-  border-bottom: 1px solid #eee;
-  line-height: 53px;
-  height: 53px;
-  color: gray;
-}
-
-.checkinput {
-  height: 40px;
-  border-bottom: 1px solid #e7e0e1;
+  border: 1rpx solid  darkgoldenrod;
+font-size: 30rpx;
+line-height: 56rpx;
 }
