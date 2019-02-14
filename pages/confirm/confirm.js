@@ -240,7 +240,7 @@ Page({
         count: 1,
         price: 0
       };
-      product.id = productInfo.id;
+      product.id = productInfo.productId;
       product.productTitle = productInfo.memberCategoryName;
       product.oldprice = productInfo.price;
       product.productCovermap = productInfo.coverPath;

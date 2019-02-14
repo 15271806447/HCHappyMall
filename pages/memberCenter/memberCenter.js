@@ -72,13 +72,13 @@ Page({
   getMemberType: function () {
     var that = this;
     wx.request({
-      url: app.globalData.url + '/api/personalCenter/checkMemberType?sid=' + app.globalData.sid,
+      url: app.globalData.url + '/api/product/getAllMemberCards?sid=' + app.globalData.sid,
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
       },
       success(res) {
-        var hcMemberTypeList = res.data.data.hcMemberTypeList;
+        var hcMemberTypeList = res.data.data.memberCards;
         var memberCategory = new Array();
         for (var i = 0; i < hcMemberTypeList.length; i++) {
           var bool = false;
@@ -90,6 +90,7 @@ Page({
           var memberType = {
             id: "",
             memberCategoryName: "",
+            productId:"",
             price: "",
             memberSign: "",
             ischecked: bool,
@@ -97,6 +98,7 @@ Page({
           };
           memberType.id = hcMemberTypeList[i].id;
           memberType.memberCategoryName = hcMemberTypeList[i].memberTypeName;
+          memberType.productId = hcMemberTypeList[i].productId;
           memberType.price = hcMemberTypeList[i].memberPrice;
           memberType.memberSign = app.globalData.url + '/common/file/showPicture.do?id=' + hcMemberTypeList[i].memberSign;
           memberType.program = that.convertHtmlToText(hcMemberTypeList[i].memberDescribe);
