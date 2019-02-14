@@ -66,8 +66,8 @@ Page({
   getCode:function(e){
     var that = this;
     var SMS_CODE_SALT = "sljksdf@34#s51";
-    var currentTimeMillis = Date.now();
-    var key = SMS_CODE_SALT + this.data.phoneNumber + (currentTimeMillis/60000).toString();
+    var currentTimeMillis = new Date();
+    var key = SMS_CODE_SALT + this.data.phoneNumber + parseInt((currentTimeMillis.getTime() / 60000));
     var type = 0
     key = md5.hexMD5(key);
     if (that.data.phoneNumber==""){
