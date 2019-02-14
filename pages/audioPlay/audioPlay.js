@@ -155,6 +155,8 @@ Page({
    * 计时器每秒更新进度条进度
    */
   loadaudio() {
+
+
     var that = this;
     //设置一个计步器
     this.data.durationIntval = setInterval(function() {
@@ -209,6 +211,8 @@ Page({
   onUnload: function() {
     //卸载页面，清除计步器
     clearInterval(this.data.durationIntval);
+    innerAudioContext.stop();
+    console.log(777777777);
   },
 
   /*video
@@ -267,15 +271,16 @@ Page({
           [audioNowEpisodes]: courseVO.nowNum,
           [audioAllEpisodes]: courseVO.totalNum
         });
+        var audiochapter = {
+          audioName: "",
+          audiosrc: "",
+          //audioTime: '加载中...',
+        };
         for (var i = 0; i < courseVO.hcFSectionInfoList.length; i++) {
-          var audiochapter = {
-            audioName: "",
-            audiosrc: "",
-            //audioTime: '加载中...',
-          };
+
           var hcFSectionInfo = courseVO.hcFSectionInfoList[i];
           audiochapter.audioName = hcFSectionInfo.chapterName;
-          audiochapter.audiosrc = that.getAudioPaht(hcFSectionInfo.fileAddr);
+          audiochapter.audiosrc = that.getAudioPath(hcFSectionInfo.fileAddr);
           //that.getAudioTime(audiochapter.audiosrc,i);
           fileId.push(hcFSectionInfo.fileAddr);
           audio.push(audiochapter);
@@ -290,7 +295,7 @@ Page({
     });
   },
   
-  getAudioPaht:function(id){
+  getAudioPath:function(id){
     return app.globalData.url + '/common/file/showPicture.do?id=' + id;
   },
 
@@ -321,8 +326,8 @@ Page({
 
 
     that.getSecondClassifyName(audioDetail);
-    console.log('that');
-    console.log(that);
+
+    
   },
 
 
@@ -343,5 +348,8 @@ Page({
       }
     })
   },
+
+
+
 
 })
