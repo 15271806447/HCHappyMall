@@ -1,211 +1,298 @@
-<view class="swiper-tab">
-  <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">待付款</view>
-  <view class="swiper-tab-list {{currentTab==2 ? 'on' : ''}}" data-current="2" bindtap="swichNav">待发货</view>
-  <view class="swiper-tab-list {{currentTab==3 ? 'on' : ''}}" data-current="3" bindtap="swichNav">待收货</view>
-  <view class="swiper-tab-list {{currentTab==4 ? 'on' : ''}}" data-current="4" bindtap="swichNav">售后/退款</view>
+<!--导航条-->
+<view class="navbar">
+  <lable wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">
+    <text>{{item}}</text>
+  </lable>
+</view>
+<!--全部-->
+<view hidden="{{currentTab!==0}}" class='total' style='background-color: #EBEBEB;'>
+  <view wx:if="{{allOrderList.length>0}}">
+    <!-- 外层 -->
+    <view class='cont_count' wx:for="{{allOrderList}}" wx:key="key">
+      <!-- 编号 -->
+      <view class='seria'>
+        <label class='seriac_name'>
+          订单编号
+          <text>{{item.binahao}}</text>
+        </label>
+        <!-- 订单状态 -->
+        <label class='seriac_start'>
+          {{item.start}}</label>
+      </view>
+      <!-- 列表 -->
+      <view class='list' wx:for="{{item.orderItemVOList}}" wx:for-item="arr_item" wx:key="key">
+        <!-- 列表图片 -->
+        <image class='list_img' src='{{imgHeader+arr_item.productCovermap}}'></image>
+        <!-- 列表标题 -->
+        <label class='list_name'>
+          {{arr_item.productTitle}}
+        </label>
+        <!-- 列表价格 -->
+        <label class='list_money'>￥{{arr_item.originalPrice}}</label>
+      </view>
+       <!-- 计算 -->
+      <view class='count_eg'>
+        <!-- 居中 -->
+        <view class='count_cent'>
+          <!-- 共两件商品 -->
+          <!-- <label class='cont_cent_name'>
+            共{{item.cont_count}}件商品
+          </label> -->
+          <!-- 合计 -->
+          <lable class='cont_cen_money'>
+            <text class='cont_ce_mon'>合计:￥{{item.actualPayment}}</text>
+          </lable>
+        </view>
+      </view>
+ 
+    </view>
+ 
+  </view>
+  <!-- 否则 -->
+  <view wx:else>
+    <!-- 外层 -->
+    <view class='cont_count'>
+ 
+      <label class='none_tab'>亲,您还暂未下单哦~~</label>
+    </view>
+  </view>
+ 
+</view>
+ 
+<!--代付款-->
+<view hidden="{{currentTab!==1}}">
+  <view wx:if="{{pendingOrderList.length>0}}">
+    <!-- 外层 -->
+    <view class='cont_count' wx:for="{{pendingOrderList}}" wx:key="key">
+      <!-- 编号 -->
+      <view class='seria'>
+        <label class='seriac_name'>
+          订单编号
+          <text>{{item.orderNum}}</text>
+        </label>
+        <!-- 订单状态 -->
+        <label class='seriac_start'>
+          待付款</label>
+      </view>
+      <!-- 商品列表 -->
+      <view bindtap='toOrderdetail' data-state='{{item.state}}'data-orderNum='{{item.orderNum}}' class='list' wx:for="{{item.orderItemVOList}}" wx:for-item="arr_item" wx:key="key">
+        <!-- 列表图片 -->
+        <image class='list_img' src='{{imgHeader+arr_item.productCovermap}}'></image>
+        <!-- 列表标题 -->
+        <label class='list_name'>
+          {{arr_item.productTitle}}
+        </label>
+        <!-- 列表价格 -->
+        <label class='list_money'>￥{{arr_item.originalPrice}}</label>
+      </view>
+      <!-- 计算 -->
+      <view class='count_eg'>
+        <!-- 居中 -->
+        <view class='count_cent'>
+          <!-- 共两件商品 -->
+          <!-- <label class='cont_cent_name'>
+            共{{item.cont_count}}件商品
+          </label> -->
+          <!-- 合计 -->
+          <lable class='cont_cen_money'>
+            <text class='cont_ce_mon'>合计:￥{{item.actualPayment}}</text>
+          </lable>
+        </view>
+      </view>
+      <!-- 标签功能 -->
+      <view class='coent_list'>
+        <!-- 取消订单 -->
+        <label class='coent_del' data-index='{{index}}'>取消订单</label>
+        <!-- 付款 -->
+        <label class='coent_log_base' bindtap='toPay' data-index='{{index}}'>付款</label>
+      </view>
+ 
+    </view>
+ 
+  </view>
+  <!-- 否则 -->
+  <view wx:else>
+    <!-- 外层 -->
+    <view class='cont_count'>
+      <label class='none_tab'>亲,您暂没有相关单哦~~</label>
+    </view>
+  </view>
+ 
 </view>
 
-<swiper current="{{current}}" class="swiper-box" duration="300" bindchange="bindChange" style='height:100%'>
-  <!-- 待付款 -->
-  <swiper-item>
-    <block wx:for="{{pendingOrderList}}" wx:for-item="item">
-      <view class='obligation'>
-        <view class='order-number-unpaid'>
-          <text class='order-number'>订单编号:{{item.orderNum}}</text>
-          <text class='unpaid'>待付款</text>
+<!-- 待发货 -->
+<view hidden="{{currentTab!==2}}">
+ 
+<view wx:if="{{shippedOrderList.length>0}}">
+    <!-- 外层 -->
+    <view class='cont_count' wx:for="{{shippedOrderList}}" wx:key="key">
+      <!-- 编号 -->
+      <view class='seria'>
+        <label class='seriac_name'>
+          订单编号
+          <text>{{item.orderNum}}</text>
+        </label>
+        <!-- 订单状态 -->
+        <label class='seriac_start'>
+          待发货</label>
+      </view>
+      <!-- 商品列表 -->
+      <view class='list' wx:for="{{item.orderItemVOList}}" wx:for-item="arr_item" wx:key="key">
+        <!-- 列表图片 -->
+        <image class='list_img' src='{{imgHeader+arr_item.productCovermap}}'></image>
+        <!-- 列表标题 -->
+        <label class='list_name'>
+          {{arr_item.productTitle}}
+        </label>
+        <!-- 列表价格 -->
+        <label class='list_money'>￥{{arr_item.originalPrice}}</label>
+      </view>
+      <!-- 计算 -->
+      <view class='count_eg'>
+        <!-- 居中 -->
+        <view class='count_cent'>
+          <!-- 共两件商品 -->
+          <!-- <label class='cont_cent_name'>
+            共{{item.cont_count}}件商品
+          </label> -->
+          <!-- 合计 -->
+          <lable class='cont_cen_money'>
+            <text class='cont_ce_mon'>合计:￥{{item.actualPayment}}</text>
+          </lable>
         </view>
-        <block wx:for="{{item.orderItemVOList}}" wx:for-item="item1">
-          <view class='commodity-information'data-orderNum='{{item.orderNum}}'data-state='{{item.state}}'bindtap='toOrderdetail'>
-            <view class='video-list'>
-              <view class='video-img-left'>
-                <image src='{{imgHeader+item1.productCovermap}}'></image>
-              </view>
-              <view class='video-decribe-mid'>
-                <view class='book-name'>{{item1.productTitle}}</view>
-                <view class='video-tea'>{{item1.productAuthor}}</view>
-                <view class='person-num'>
-                  <text class='video-price'>￥{{item1.originalPrice}}</text>
-                  <text class='buy-num'>x{{item1.shopNumber}}</text>
-                </view>
-              </view>
-            </view>
-          </view>
-        </block>
       </view>
-      <!-- <view class='buyer-message'> -->
-      <!-- <text class='buyer-message1'>买家留言:</text>
-        <input placeholder='请备注' class='buyer-message1-input'></input> -->
-      <!-- </view> -->
-      <view class='summ'>
-        <text class='sum'>合计:</text>
-        <text class='sum-price'>￥{{item.actualPayment}}</text>
-        <text class='cancel-order' bindtap="cancelMenu">取消</text>
-        <text class='buy-order'data-num = '{{index}}' bindtap='toPay'>付款</text>
+      <!-- 标签功能 -->
+      <view class='coent_list'>
+        <!-- 取消订单 -->
+        <label class='coent_del' data-index='{{index}}'>取消订单</label>
+        <!-- 付款 -->
+        <label class='coent_log_base'  data-index='{{index}}'>确认收货</label>
       </view>
-    </block>
-  </swiper-item>
-
-  <!-- 待发货 -->
-  <swiper-item>
-    <view id="box" class="{{first_click?'show':'hide'}} {{state?'open':'close'}}">
-      <view id="item_list">
-        <view class='writereason'>请填写退货-理由：</view>
-        <input bindinput="check" value='{{inputvalue}}' bindconfirm='complete' class='checkinput'></input>
-        <view>
-          <view class='returnmon'> 退款金额</view>
-          <text class='returnmoney'>99元</text>
-        </view>
-        <view class='subapplyret' bindtap='toggle1'>提交</view>
-      </view>
+ 
     </view>
-    <block wx:for="{{shippedOrderList}}" wx:for-item="item">
-
-      <view class='obligation'>
-        <view class='order-number-unpaid'>
-          <text class='order-number'>订单编号:{{item.orderNum}}</text>
-          <text class='unpaid'>待发货</text>
-        </view>
-        <block wx:for="{{item.orderItemVOList}}" wx:for-item="item1">
-          <view class='commodity-information'data-state='{{item.state}}'data-orderNum='{{item.orderNum}}' bindtap='toOrderdetail'>
-            <view class='video-list'>
-              <view class='video-img-left'>
-                <image src='{{imgHeader+item1.productCovermap}}'></image>
-              </view>
-              <view class='video-decribe-mid'>
-                <view class='book-name'>{{item1.productTitle}}</view>
-                <view class='video-tea'>{{item1.productAuthor}}</view>
-                <view class='person-num'>
-                  <text class='video-price'>￥{{item1.originalPrice}}</text>
-                  <text class='buy-num'>x{{item1.shopNumber}}</text>
-                </view>
-              </view>
-            </view>
-
-
-          </view>
-        </block>
-
-      </view>
-      <!-- <view class='buyer-message'>
-        <text class='buyer-message1'>买家留言:</text>
-        <input placeholder='请备注' class='buyer-message1-input'></input>
-      </view> -->
-      <view class='summ'>
-        <text class='sum'>合计:</text>
-        <text class='sum-price'>￥{{item.actualPayment}}</text>
-        <text class='returnSale' bindtap="toggle" data-index="{{index}}">退货</text>
-      </view>
-    </block>
-  </swiper-item>
-
-
-
-
-  <!-- 待收货 -->
-  <swiper-item>
-    <view id="box" class="{{first_click?'show':'hide'}} {{state?'open':'close'}}">
-      <view id="item_list">
-        <view class='writereason'>请填写退货理由：</view>
-        <input bindinput="check" value='{{inputvalue}}' bindconfirm='complete' class='checkinput'></input>
-        <view>
-          <view class='returnmon'> 退款金额</view>
-          <text class='returnmoney'>99元</text>
-        </view>
-        <view class='subapplyret' bindtap='toggle1'>提交</view>
-      </view>
+ 
+  </view>
+  <!-- 否则 -->
+  <view wx:else>
+    <!-- 外层 -->
+    <view class='cont_count'>
+      <label class='none_tab'>亲,您暂没有相关单哦~~</label>
     </view>
-    <block wx:for="{{receivedOrderList}}" wx:for-item="item">
+  </view>
 
-      <view class='obligation'>
-        <view class='order-number-unpaid'>
-          <text class='order-number'>订单编号:{{item.orderNum}}</text>
-          <text class='unpaid'>待收货</text>
+</view>
+<!-- 待收货 -->
+<view hidden="{{currentTab!==3}}">
+
+<view wx:if="{{receivedOrderList.length>0}}">
+    <!-- 外层 -->
+    <view class='cont_count' wx:for="{{receivedOrderList}}" wx:key="key">
+      <!-- 编号 -->
+      <view class='seria'>
+        <label class='seriac_name'>
+          订单编号
+          <text>{{item.orderNum}}</text>
+        </label>
+        <!-- 订单状态 -->
+        <label class='seriac_start'>
+          待收货</label>
+      </view>
+      <!-- 商品列表 -->
+      <view class='list' wx:for="{{item.orderItemVOList}}" wx:for-item="arr_item" wx:key="key">
+        <!-- 列表图片 -->
+        <image class='list_img' src='{{imgHeader+arr_item.productCovermap}}'></image>
+        <!-- 列表标题 -->
+        <label class='list_name'>
+          {{arr_item.productTitle}}
+        </label>
+        <!-- 列表价格 -->
+        <label class='list_money'>￥{{arr_item.originalPrice}}</label>
+      </view>
+      <!-- 计算 -->
+      <view class='count_eg'>
+        <!-- 居中 -->
+        <view class='count_cent'>
+          <!-- 共两件商品 -->
+          <!-- <label class='cont_cent_name'>
+            共{{item.cont_count}}件商品
+          </label> -->
+          <!-- 合计 -->
+          <lable class='cont_cen_money'>
+            <text class='cont_ce_mon'>合计:￥{{item.actualPayment}}</text>
+          </lable>
         </view>
-        <block wx:for="{{item.orderItemVOList}}" wx:for-item="item1">
-          <view class='commodity-information'data-state='{{item.state}}'data-orderNum='{{item.orderNum}}' bindtap='toOrderdetail'>
-            <view class='video-list'>
-              <view class='video-img-left'>
-                <image src='{{imgHeader+item1.productCovermap}}'></image>
-              </view>
-              <view class='video-decribe-mid'>
-                <view class='book-name'>{{item1.productTitle}}</view>
-                <view class='video-tea'>{{item1.productAuthor}}</view>
-                <view class='person-num'>
-                  <text class='video-price'>￥{{item1.originalPrice}}</text>
-                  <text class='buy-num'>x{{item1.shopNumber}}</text>
-                </view>
-              </view>
-            </view>
-          </view>
-        </block>
-
       </view>
-      <!-- <view class='buyer-message'>
-        <text class='buyer-message1'>买家留言:</text>
-        <input placeholder='请备注' class='buyer-message1-input'></input>
-      </view> -->
-      <view class='summ'>
-        <text class='sum'>合计:</text>
-        <text class='sum-price'>￥{{item.actualPayment}}</text>
-        <text class='returnSale' bindtap="toggle" data-index="{{index}}">确认收货</text>
-
+      <!-- 标签功能 -->
+      <view class='coent_list'>
+        <!-- 取消订单 -->
+        <label class='coent_del' data-index='{{index}}'>取消订单</label>
+        <!-- 确认收货 -->
+        <label class='coent_log_base'  data-index='{{index}}'>确认收货</label>
       </view>
-    </block>
-  </swiper-item>
-
-
-  <!-- 售后退款 -->
-  <swiper-item>
-    <view id="box" class="{{first_click?'show':'hide'}} {{state?'open':'close'}}">
-      <view id="item_list">
-        <view class='writereason'>请填写退货理由：</view>
-        <input bindinput="check" value='{{inputvalue}}' bindconfirm='complete' class='checkinput'></input>
-        <view>
-          <view class='returnmon'> 退款金额</view>
-          <text class='returnmoney'>99元</text>
-        </view>
-        <view class='subapplyret' bindtap='toggle1'>提交</view>
-      </view>
+ 
     </view>
-    <block wx:for="{{successAndRefundOrderList}}" wx:for-item="item">
+ 
+  </view>
+  <!-- 否则 -->
+  <view wx:else>
+    <!-- 外层 -->
+    <view class='cont_count'>
+      <label class='none_tab'>亲,您暂没有相关单哦~~</label>
+    </view>
+  </view> 
 
-      <view class='obligation'>
-        <view class='order-number-unpaid'>
-          <text class='order-number'>订单编号:{{item.orderNum}}</text>
-          <text class='unpaid'>{{item.state == 4?"已完成":"已退货"}}</text>
+</view>
+<!-- 已完成 -->
+<view hidden="{{currentTab!==4}}">
+ 
+ <view wx:if="{{successAndRefundOrderList.length>0}}">
+    <!-- 外层 -->
+    <view class='cont_count' wx:for="{{successAndRefundOrderList}}" wx:key="key">
+      <!-- 编号 -->
+      <view class='seria'>
+        <label class='seriac_name'>
+          订单编号
+          <text>{{item.orderNum}}</text>
+        </label>
+        <!-- 订单状态 -->
+        <label class='seriac_start'>
+          待付款</label>
+      </view>
+      <!-- 商品列表 -->
+      <view class='list' wx:for="{{item.orderItemVOList}}" wx:for-item="arr_item" wx:key="key">
+        <!-- 列表图片 -->
+        <image class='list_img' src='{{imgHeader+arr_item.productCovermap}}'></image>
+        <!-- 列表标题 -->
+        <label class='list_name'>
+          {{arr_item.productTitle}}
+        </label>
+        <!-- 列表价格 -->
+        <label class='list_money'>￥{{arr_item.originalPrice}}</label>
+      </view>
+      <!-- 计算 -->
+      <view class='count_eg'>
+        <!-- 居中 -->
+        <view class='count_cent'>
+          <!-- 共两件商品 -->
+          <!-- <label class='cont_cent_name'>
+            共{{item.cont_count}}件商品
+          </label> -->
+          <!-- 合计 -->
+          <lable class='cont_cen_money'>
+            <text class='cont_ce_mon'>合计:￥{{item.actualPayment}}</text>
+          </lable>
         </view>
-        <block wx:for="{{item.orderItemVOList}}" wx:for-item="item1">
-          <view class='commodity-information'data-state='{{item.state}}' data-orderNum='{{item.orderNum}}' bindtap='toOrderdetail'>
-            <view class='video-list'>
-              <view class='video-img-left'>
-                <image src='{{imgHeader+item1.productCovermap}}'></image>
-              </view>
-              <view class='video-decribe-mid'>
-                <view class='book-name'>{{item1.productTitle}}</view>
-                <view class='video-tea'>{{item1.productAuthor}}</view>
-                <view class='person-num'>
-                  <text class='video-price'>￥{{item1.originalPrice}}</text>
-                  <text class='buy-num'>x{{item1.shopNumber}}</text>
-                </view>
-              </view>
-            </view>
-
-
-          </view>
-        </block>
-
       </view>
-      <!-- <view class='buyer-message'>
-        <text class='buyer-message1'>买家留言:</text>
-        <input placeholder='请备注' class='buyer-message1-input'></input>
-      </view> -->
-      <view class='summ'>
-        <text class='sum'>合计:</text>
-        <text class='sum-price'>￥{{item.actualPayment}}</text>
-        <!-- <text class='returnSale' bindtap="toggle" data-index="{{index}}">{{item.returngoods}}</text> -->
-
-      </view>
-    </block>
-  </swiper-item>
-
-</swiper>
+ 
+    </view>
+ 
+  </view>
+  <!-- 否则 -->
+  <view wx:else>
+    <!-- 外层 -->
+    <view class='cont_count'>
+      <label class='none_tab'>亲,您暂没有相关单哦~~</label>
+    </view>
+  </view>
+ 
+</view>
