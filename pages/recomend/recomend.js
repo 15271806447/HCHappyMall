@@ -70,8 +70,8 @@ Page({
     let qrcode = new QRCode('qrcode', {
       text: '',
       //获取手机屏幕的宽和长  进行比例换算
-      width: sysinfo.windowWidth * 660 / 750,
-      height: sysinfo.windowWidth * 660 / 750,
+      width: 130,
+      height:130,
       //二维码底色尽量为白色， 图案为深色
       colorDark: '#000000',
       colorLight: '#ffffff',
