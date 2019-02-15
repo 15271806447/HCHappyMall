@@ -14,6 +14,7 @@
     "pages/authentication/authentication",
     "pages/integral/integral",
     "pages/phoneBinding/phoneBinding",
+    "pages/phoneBinding/success/success",
     "pages/myActivities/myActivities",
     "pages/confirm/confirm",
     "pages/myOrderdetail/myOrderdetail",

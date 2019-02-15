@@ -10,7 +10,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    Img: []
+    Img: [],
+    phoneNum: "",
+    index: 1,
+    index1: 1
   },
 
   //事件处理函数
@@ -70,10 +73,12 @@ Page({
         if (res.data.data.hcPhoneBinding.phoneNumber!=null) {
           that.setData({
             'phoneNum': res.data.data.hcPhoneBinding.phoneNumber,
+            index1: 0
           });
         } else {
           that.setData({
             'phoneNum': "未绑定",
+            index1: 1
           });
         }
         if (res.data.data.isAuthentication) {
@@ -88,5 +93,30 @@ Page({
         console.log(res)
       }
     })
+  },
+  
+  jumpPhoneBinding: function (e) {
+    if (e.currentTarget.dataset.index == 0) {
+      wx.navigateTo({
+        url: '../phoneBinding/success/success?phoneNum=' + this.data.phoneNum,
+      })
+    } else if (e.currentTarget.dataset.index == 1) {
+      wx.navigateTo({
+        url: '../phoneBinding/phoneBinding',
+      })
+    }
+  },
+
+  jumpAuthentication: function (e) {
+    if (e.currentTarget.dataset.index == 0) {
+      wx.navigateTo({
+        url: '../authentication/success/success'
+      })
+    } else if (e.currentTarget.dataset.index == 1) {
+      wx.navigateTo({
+        url: '../authentication/authentication',
+      })
+    }
+
   }
 })

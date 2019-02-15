@@ -26,14 +26,14 @@
           </view>
         </view>
       </navigator>
-      <navigator url="../phoneBinding/phoneBinding" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" data-index='{{index1}}' bindtap='jumpPhoneBinding'>
         <view class="weui-cell__bd">
           <view class='weui-size'>手机绑定</view>
           <view class='weui-size-font'><text >{{phoneNum}}</text >
             <image src="img/icon-chev-right.png"></image>
           </view>
         </view>
-      </navigator>
+      </view>
       <navigator url="../authentication/authentication" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
         <view class="weui-cell__bd">
           <view class='weui-size'>实名认证</view>

@@ -1,0 +1,6 @@
+<view class='bindimg'>
+ <image src="../../../images/bindphone.png"></image>
+</view>
+<view class='bindphone'>你已绑定手机号</view>
+<view class='bindphonenum'>{{phoneNum}}</view>
+<navigator class='changenum' url="../../Management/Management">确定</navigator>
