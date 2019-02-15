@@ -1,68 +1,128 @@
-.bg{
-  background-color: #f0f0f0;
+page {
+  height: 100%; /*生效*/
 }
 
-.recharge{
-  display: flex;
-  justify-content: space-between;
-  color: #999;
-  font-size: 32rpx;
-  line-height: 2;
-  padding: 20rpx;
-  border-bottom: 2rpx solid #f0f0f0;
-  background-color: #fff;
+.Global {
+  height: 100%; /*生效*/
+  background-color: rgba(212, 215, 218, 0.521);
 }
-.recharge image{
-  position: relative;
-  top: 8rpx;
-}
-.money{
-  padding: 20rpx;
-  background-color: #fff;
-}
-.money text{
-  color: #999;
-}
-.money view{
-  display: flex;
-  flex-direction: row;
-  margin-top: 40rpx;
-  font-size: 40rpx;
-  line-height: 2;
-  border-bottom: 1px solid #f0f0f0;
-}
-.money view text{
-  color: #000;
-  font-weight: bold;
-  font-size: 80rpx;
-  position: relative;
-  top: -36rpx;
-}
-.money input{
-  height: 80rpx;
-  font-size: 60rpx;
-  margin-left: 20rpx;
-  line-height: 80rpx;
-}
-.place-holder{
-  color: #e0e0e0;
-}
-.remainder{
-  font-size: 32rpx;
-  padding: 20rpx;
-  display: flex;
-  justify-content: space-between;
-  background-color: #fff;
-}
-.remainder text{
-  color: #999;
-}
-.cash{
-  width: 99%;
-  line-height: 3;
-  margin-top: 20rpx;
+
+.header {
   color: #fff;
+  width: 100%;
+  padding: 40rpx 0;
   text-align: center;
-  border-radius: 20rpx;
-  background: rgba(255, 0, 0, 0.8);
+  min-height: 160rpx;
+  background-color: rgba(8, 127, 206, 0.877);
+}
+
+.balance {
+  display: flex;
+  flex-direction: column;
+  line-height: 2;
+}
+
+.balance text:nth-child(1) {
+  font-size: 30rpx;
+  font-family: STFangsong;
+  margin: 10rpx 0rpx 25rpx 15rpx;
+}
+
+.balance text:nth-child(2) {
+  font-size: 80rpx;
+  font-family: STFangsong;
+  font-weight: bold;
+}
+
+.recharge {
+  height: 85rpx;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(254, 254, 255);
+}
+
+.recharge .OnlineRecharge image{
+  width: 50rpx;
+  height: 60rpx;
+  margin-right: 20rpx;
+  margin-left: 20rpx;
+  position: relative;
+  top: 15rpx;
+}
+
+.recharge text {
+  font-size: 40rpx;
+  font-family: FangSong;
+  font-weight: normal;
+}
+
+.cashs {
+  height: 85rpx;
+  font-weight: 600;
+  margin-top: 3rpx;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(254, 254, 255);
+}
+
+.cashs .cash image{
+  width: 65rpx;
+  height: 60rpx;
+  margin-right: 12rpx;
+  margin-left: 12rpx;
+  position: relative;
+  top: 15rpx;
+}
+
+.cashs text {
+  font-size: 40rpx;
+  font-family: '仿宋';
+  font-weight: normal;
+}
+
+.integrals {
+  height: 80rpx;
+  font-weight: 600;
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(254, 254, 255);
+}
+
+.integrals .integral image {
+  width: 50rpx;
+  height: 50rpx;
+  margin-right: 16rpx;
+  margin-left: 18rpx;
+  position: relative;
+  top: 12rpx;
+}
+
+.integrals text {
+  font-size: 40rpx;
+  font-family: '仿宋';
+  font-weight: normal;
+  margin-top: 30rpx;
+}
+
+.Arrow {
+  width: 50rpx;
+  height: 50rpx;
+  position: relative;
+  margin-right: 15rpx;
+  top: 12rpx;
+}
+
+.footer{
+  width: 100%;
+  line-height: 2;
+  position: fixed;
+  bottom: 0;
+  font-size: 32rpx;
+  color: rgb(0, 162, 255);
+  text-align: center;
+  background-color: rgb(254, 254, 255);
+  font-family: '仿宋';
+  font-weight: normal;
 }

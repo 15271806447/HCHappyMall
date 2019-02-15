@@ -1,23 +1,30 @@
-<view class='bg'>
-   <view class='recharge'>
-      <text>充值方式</text>
-      <view>
-        <text>{{cash.card}}</text>
-        <image class='pic' src='{{cash.imagePath}}'></image>
-      </view>
-   </view>
-   <view class='money'>
-       <text>充值金额</text>
-       <view>
-       <text>￥</text>
-       <input bindinput="bindKeyInput" placeholder-class='place-holder' placeholder="请输入提现金额" />
-       </view>
-       
-   </view>
-   <view class='remainder'>
-        <text>该卡本次最多可充值￥10000</text>
-   </view>
-   <view class='cash'>
-        <text>确认充值</text>
-   </view>
+<view class='Global'>
+  <view class='header'>
+    <view class='balance'>
+      <text>余额账户(元)</text>
+      <text>{{wallet.money}}</text>
+    </view>
+  </view>
+  <view class='recharge' bindtap='recharge'>
+    <view class="OnlineRecharge">
+      <image src='img/OnlineRecharge.png'></image>
+      <text>充值</text>
+    </view>
+    <image src='img/Arrow.png' class='Arrow'></image>
+  </view>
+  <view class='cashs' bindtap='cash'>
+    <view class='cash'>
+      <image src='img/Cash.png'></image>
+      <text>提现</text>
+    </view>
+    <image src='img/Arrow.png' class='Arrow'></image>
+  </view>
+  <view class='integrals' bindtap='integral'>
+    <view class='integral'>
+      <image src='img/integral.png'></image>
+      <text>积分</text>
+    </view>
+    <image src='img/Arrow.png' class='Arrow'></image>
+  </view>
 </view>
+<view class='footer'><text class='question'>常见问题</text></view>
