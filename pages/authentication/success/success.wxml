@@ -20,8 +20,8 @@
       <text class='value'>{{user.IdNumber}}</text>
     </view>
   </view>
-  <view>
-    <button bindtap='checkId'>修改</button>
-  </view>
+  <navigator url='../../Management/Management'>
+    <button bindtap='checkId'>确定</button>
+  </navigator>
 
 </view>

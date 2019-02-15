@@ -84,17 +84,19 @@ Page({
         if (res.data.data.isAuthentication) {
           that.setData({
             'isRealName': "已实名",
+            index: 0
           });
         } else {
           that.setData({
             'isRealName': "未实名",
+            index: 1
           });
         }
         console.log(res)
       }
     })
   },
-  
+
   jumpPhoneBinding: function (e) {
     if (e.currentTarget.dataset.index == 0) {
       wx.navigateTo({

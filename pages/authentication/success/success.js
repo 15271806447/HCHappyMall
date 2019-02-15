@@ -1,9 +1,17 @@
+
+var app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    user:{
+      name:"",
+      sex:"",
+      IdType:"",
+      IdNumber:""
+    }
     
   },
 
@@ -11,9 +19,28 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.user);
-    this.setData({
-      user: JSON.parse(options.user),
+   var that = this;
+   var userName = "user.name";
+    var userSex = "user.sex";
+    var userIdType = "user.IdType";
+    var userIdNumber = "user.IdNumber";
+
+    wx.request({
+      url: app.globalData.url + '/api/personalCenter/checkBindingInfo?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          [userName]: res.data.data.HcPUnUserRealInfo.realName,
+          [userSex]: res.data.data.HcPUnUserRealInfo.sex,
+          [userIdType]: res.data.data.HcPUnUserRealInfo.documentType,
+          [userIdNumber]: res.data.data.HcPUnUserRealInfo.provinceCardNumber,
+        })
+
+      }
     })
   },
 

@@ -12,6 +12,7 @@
     "pages/ShareCode/ShareCode",
     "pages/personalCenter/personalCenter",
     "pages/authentication/authentication",
+    "pages/authentication/success/success",
     "pages/integral/integral",
     "pages/phoneBinding/phoneBinding",
     "pages/phoneBinding/success/success",
