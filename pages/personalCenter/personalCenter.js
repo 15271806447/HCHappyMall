@@ -12,19 +12,55 @@ Page({
     imageUrl: app.globalData.imageUrl
   },
   //--------------------------------扫码开始----------------------------------------
+  //扫码后推荐
+  getFans: function () {
+    var that = this;
+    console.log(that.data.refereesId)
+    console.log(that.data.userId)
+    wx.request({
+      url: app.globalData.url + '/api/fans/becomeFans?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
+      data: {
+        //被推荐
+        userId: that.data.refereesId,
+        //推荐人
+        refereesId: that.data.userId,
+      },
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function (res) {
+        console.log("res:" + res)
+      }
+    })
+  },
+  modalcnt: function () {
+    var that = this
+    wx.showModal({
+      title: '关注',
+      content: '是否关注该推荐人',
+      success: function (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          console.log("扫码分享。。。。。。。。。")
+          that.getFans()
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
   click: function () {
     var that = this;
     wx.scanCode({
       success: (res) => {
         //获得扫码返回的值，推荐用户ID
-        this.userId = res.result;
-        console.log("userId:" + this.userId)
+        console.log("userId:" + res.result)
         //粉丝id，也就是当前扫码用户id
-        this.refereesId = app.globalData.uid;
-        console.log("refereesId:"+this.refereesId)
+        console.log("refereesId:" + app.globalData.uid)
         that.setData({
-          userId: this.userId,
-          refereesId: this.refereesId
+          userId: res.result,
+          refereesId: app.globalData.uid
         })
         wx.showToast({
           title: '成功',
@@ -44,42 +80,6 @@ Page({
         })
       },
       complete: (res) => {
-      }
-    })
-  },
-  //扫码后推荐
-  getFans: function () {
-    var that = this;
-    wx.request({
-      url: app.globalData.url + '/api/fans/becomeFans?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
-      data: {
-        //被推荐
-        userId: this.data.refereesId,
-        //推荐人
-        refereesId: this.data.userId,
-      },
-      method: "POST",
-      header: {
-        'X-Requested-With': 'APP'
-      },
-      success: function (res) {
-        console.log("res:"+res)
-      }
-    })
-  },
-  modalcnt: function () {
-    var that = this
-    wx.showModal({
-      title: '关注',
-      content: '是否关注该推荐人',
-      success: function (res) {
-        if (res.confirm) {
-          console.log('用户点击确定')
-          console.log("扫码分享。。。。。。。。。")
-          that.getFans()
-        } else if (res.cancel) {
-          console.log('用户点击取消')
-        }
       }
     })
   },
