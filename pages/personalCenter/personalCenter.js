@@ -18,13 +18,7 @@ Page({
     console.log(that.data.refereesId)
     console.log(that.data.userId)
     wx.request({
-      url: app.globalData.url + '/api/fans/becomeFans?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
-      data: {
-        //被推荐
-        userId: that.data.refereesId,
-        //推荐人
-        refereesId: that.data.userId,
-      },
+      url: app.globalData.url + '/api/fans/becomeFans?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid + '&refereesId=' + that.data.userId,
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
