@@ -1,5 +1,9 @@
 <view class='Global'>
   <view class='header'>
+    <view class='detailed' bindtap='detaileds'>
+      <image src='img/Detailed.png'></image>
+      <text>明细</text>
+    </view>
     <view class='balance'>
       <text>余额账户(元)</text>
       <text>{{wallet.money}}</text>
@@ -27,4 +31,6 @@
     <image src='img/Arrow.png' class='Arrow'></image>
   </view>
 </view>
-<view class='footer'><text class='question'>常见问题</text></view>
+<view class='footer'>
+  <text class='question'>常见问题</text>
+</view>

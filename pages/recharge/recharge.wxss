@@ -7,6 +7,20 @@ page {
   background-color: rgba(212, 215, 218, 0.521);
 }
 
+.detailed {
+  text-align: right;
+}
+.detailed image{
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.detailed text {
+  font-size: 30rpx;
+  font-family: STFangsong;
+  margin: 0rpx 20rpx 10rpx 5rpx;
+}
+
 .header {
   color: #fff;
   width: 100%;
@@ -42,7 +56,7 @@ page {
   background-color: rgb(254, 254, 255);
 }
 
-.recharge .OnlineRecharge image{
+.recharge .OnlineRecharge image {
   width: 50rpx;
   height: 60rpx;
   margin-right: 20rpx;
@@ -66,7 +80,7 @@ page {
   background-color: rgb(254, 254, 255);
 }
 
-.cashs .cash image{
+.cashs .cash image {
   width: 65rpx;
   height: 60rpx;
   margin-right: 12rpx;
@@ -114,7 +128,7 @@ page {
   top: 12rpx;
 }
 
-.footer{
+.footer {
   width: 100%;
   line-height: 2;
   position: fixed;
