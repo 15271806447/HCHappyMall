@@ -51,7 +51,7 @@ Page({
   getFans: function () {
     var that = this;
     wx.request({
-      url: app.globalData.url + '/apis/becomeFans?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
+      url: app.globalData.url + '/api/fans/becomeFans?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
       data: {
         //被推荐
         userId: this.data.refereesId,
