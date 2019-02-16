@@ -27,7 +27,7 @@ page {
   padding: 40rpx 0;
   text-align: center;
   min-height: 160rpx;
-  background-color: rgba(8, 127, 206, 0.877);
+  background-color: rgb(230, 73, 86);
 }
 
 .balance {
