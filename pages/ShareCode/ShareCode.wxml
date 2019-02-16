@@ -1,5 +1,24 @@
 <!--index.wxml-->
 <view class="box">
-  <canvas canvas-id='qrcode' style='margin:auto;width:660rpx; height:660rpx; background:#AAA;'>
-  </canvas>
+  <view class='qr'>
+    <canvas canvas-id='qrcode'>
+    </canvas>
+  </view>
+  <view class='userInfo'>
+    <view>
+      <image src="{{userInfo.avatarUrl}}"></image>
+    </view>
+    <view class='describe'>
+        <text>{{userInfo.nickName}}</text>
+        <text>扫一扫二维码，关注我</text>
+    </view>
+  </view>
+</view>
+<view class='scan'>
+  <view bindtap='click'>
+    <image src='img/Scan.png'></image>
+  </view>
+  <view>
+    <text>扫一扫</text>
+  </view>
 </view>

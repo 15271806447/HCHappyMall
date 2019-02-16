@@ -1,16 +1,75 @@
 /**index.wxss**/
+
+page {
+  height: 100%; /*生效*/
+  background-color: rgba(212, 215, 218, 0.041);
+}
+
 .box {
-  
+  border-top: solid 1px #ccc;
+  border-right: solid 1px #ccc;
+  border-left: solid 1px #ccc;
+  margin: 100rpx 100rpx 0rpx 100rpx;
+  background-color: rgb(255, 255, 255);
 }
-.url-input {
-  margin: 50rpx 0;
-  border-bottom: solid 1px #ccc;
-  padding: 20rpx;
- 
-  height: 50rpx;
+
+.box .qr {
+  width: 150rpx;
+  margin: 100rpx 50rpx 100rpx 130rpx;
+  background-color: rgba(212, 215, 218, 0.521);
+}
+
+.box .userInfo {
   width: 100%;
+  height: 120rpx;
+  margin-bottom: 0rpx;
+  border-top: solid 1px #ccc;
+  border-bottom: solid 1px #ccc;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(212, 215, 218, 0.521);
 }
- 
-.create-qrcode-btn {
-  width: 660rpx;
+
+.userInfo image {
+  width: 100rpx;
+  height: 100rpx;
+  margin-top: 10rpx;
+}
+
+.userInfo .describe {
+  display: flex;
+  flex-wrap: wrap;
+  /* flex-direction: row-reverse; *//* align-items:center;垂直居中 */
+}
+
+.userInfo text:nth-child(1) {
+  font-size: 30rpx;
+  font-family: STFangsong;
+  margin: auto;
+  margin-left: 10rpx;
+}
+
+.userInfo text:nth-child(2) {
+  font-size: 25rpx;
+  font-family: STFangsong;
+  font-weight: normal;
+  margin: auto;
+  margin-left: 18rpx;
+}
+
+.scan {
+  display: flex;
+  align-items: center; /*垂直居中*/
+  justify-content: center; /*水平居中*/
+}
+
+.scan image {
+  width: 100rpx;
+  height: 100rpx;
+  margin-top: 20rpx;
+}
+
+.scan text {
+  font-size: 30rpx;
+  font-family: STFangsong;
 }
