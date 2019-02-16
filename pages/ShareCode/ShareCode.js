@@ -71,10 +71,6 @@ Page({
     //分享二维码
     this.createQRcode();
   },
-  onLoad: function () {
-    this.getUserInfo();
-    this.getQrCode();
-  },
   //--------------------------------扫码开始----------------------------------------
   //扫码后推荐
   getFans: function () {
@@ -142,4 +138,8 @@ Page({
     })
   },
   //---------------------------------扫码结束------------------------------------------
+  onLoad: function () {
+    this.getUserInfo();
+    this.getQrCode();
+  },
 })

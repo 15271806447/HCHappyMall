@@ -200,15 +200,15 @@ page {
   justify-content: center;
   align-items: center;
 }
-/* 扫码  */
-.saoma {
-  position: absolute;
-  right: 10rpx;
-  top: 5rpx;
-  height: 40rpx;
-  width:50rpx;
-}
 
 .footer2{
 background-color: #D7D8DC;
+}
+
+.QR image{
+  height: 40rpx;
+  width: 40rpx;
+  margin-top: 55rpx ;
+  margin-left: 10rpx;
+  margin-right: 5rpx;
 }
