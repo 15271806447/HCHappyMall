@@ -40,7 +40,9 @@
     "pages/mylession/mylession",
     "pages/recomend/recomend",
     "pages/secfan/secfan",
-    "pages/pay/pay"
+    "pages/pay/pay",
+    "pages/OnlineRecharge/OnlineRecharge",
+    "pages/RechargeOrder/RechargeOrder"
   ],
   "window": {
     "backgroundTextStyle": "light",
