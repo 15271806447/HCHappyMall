@@ -1,6 +1,6 @@
 <view class='Global'>
   <view class='header'>
-    <view class='detailed' bindtap='detaileds'>
+    <view class='detailed' bindtap='account'>
       <image src='img/Detailed.png'></image>
       <text>明细</text>
     </view>

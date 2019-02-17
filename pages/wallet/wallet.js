@@ -82,5 +82,10 @@ Page({
         });
       }
     })
-  }
+  },
+  account: function () {
+      wx.navigateTo({
+        url: '../account/account',
+      })
+    },
 })
