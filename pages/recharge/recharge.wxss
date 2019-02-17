@@ -1,142 +1,100 @@
-page {
-  height: 100%; /*生效*/
+page{
+  background: #F5F5F5;
+  font-family: "仿宋";
 }
-
-.Global {
-  height: 100%; /*生效*/
-  background-color: rgba(212, 215, 218, 0.521);
+.rechargebox{
+  background: #3E99B5;
+  height: 210px;
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
 }
-
-.detailed {
-  text-align: right;
+.rechargebox image{
+  width: 110px;
+  height: 110px;
+  border-radius: 60px;
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  margin-left: -60px;
 }
-.detailed image{
-  width: 30rpx;
-  height: 30rpx;
-}
-
-.detailed text {
-  font-size: 30rpx;
-  font-family: STFangsong;
-  margin: 0rpx 20rpx 10rpx 5rpx;
-}
-
-.header {
+.rechargepername{
+  position: absolute;
+  top: 150px;
+  left: 42%;
   color: #fff;
+}
+.chargeCheckBox{
+  height: 50px;
+  background: #2E7E99;
+  color: #fff;
+  border: 1px solid #eeeeee;
+  line-height: 50px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.chargeCheckMony{
+  float: left;
+}
+.chargeCheck{
+  float: right;
+}
+.pockmonbox{
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  height: 115px;
+  padding-top: 5px;
+  border-bottom: 1px solid #c9c9c8;
+}
+.f1{
+  flex: 1;
+}
+.f2{
+  flex: 4;
+  margin-left: 70px;
+}
+.f1 image{
+width:90%;
+height:58px;
+margin-top:24px;
+margin-left:50px;
+
+}
+.charmoncach{
+font-size: 39px;
+font-weight: bold;
+margin-left: 10px;
+}
+.charmonlea{
+  color: gray;
+  font-size: 15px;
+  margin-left: 30px;
+  margin-bottom: 15px;
+}
+.charmon{ 
   width: 100%;
-  padding: 40rpx 0;
-  text-align: center;
-  min-height: 160rpx;
-  background-color: rgb(230, 73, 86);
-}
-
-.balance {
-  display: flex;
-  flex-direction: column;
-  line-height: 2;
-}
-
-.balance text:nth-child(1) {
-  font-size: 30rpx;
-  font-family: STFangsong;
-  margin: 10rpx 0rpx 25rpx 15rpx;
-}
-
-.balance text:nth-child(2) {
-  font-size: 80rpx;
-  font-family: STFangsong;
-  font-weight: bold;
-}
-
-.recharge {
-  height: 85rpx;
-  font-weight: 600;
-  display: flex;
-  justify-content: space-between;
-  background-color: rgb(254, 254, 255);
-}
-
-.recharge .OnlineRecharge image {
-  width: 50rpx;
-  height: 60rpx;
-  margin-right: 20rpx;
-  margin-left: 20rpx;
   position: relative;
-  top: 15rpx;
 }
-
-.recharge text {
-  font-size: 40rpx;
-  font-family: FangSong;
-  font-weight: normal;
+.charmon image{
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  left: 50%;
+  margin-left: -25px;
+  top:30px; 
 }
-
-.cashs {
-  height: 85rpx;
-  font-weight: 600;
-  margin-top: 3rpx;
-  display: flex;
-  justify-content: space-between;
-  background-color: rgb(254, 254, 255);
+.charmoney{
+  position: absolute;
+  left: 45%;
+  top:100px; 
 }
-
-.cashs .cash image {
-  width: 65rpx;
-  height: 60rpx;
-  margin-right: 12rpx;
-  margin-left: 12rpx;
-  position: relative;
-  top: 15rpx;
-}
-
-.cashs text {
-  font-size: 40rpx;
-  font-family: '仿宋';
-  font-weight: normal;
-}
-
-.integrals {
-  height: 80rpx;
-  font-weight: 600;
-  margin-top: 20rpx;
-  display: flex;
-  justify-content: space-between;
-  background-color: rgb(254, 254, 255);
-}
-
-.integrals .integral image {
-  width: 50rpx;
-  height: 50rpx;
-  margin-right: 16rpx;
-  margin-left: 18rpx;
-  position: relative;
-  top: 12rpx;
-}
-
-.integrals text {
-  font-size: 40rpx;
-  font-family: '仿宋';
-  font-weight: normal;
-  margin-top: 30rpx;
-}
-
-.Arrow {
-  width: 50rpx;
-  height: 50rpx;
-  position: relative;
-  margin-right: 15rpx;
-  top: 12rpx;
-}
-
-.footer {
+.charcarend{
+  position: absolute;
+  bottom: 10px;
+  color: gray;
+  left: 0;
   width: 100%;
-  line-height: 2;
-  position: fixed;
-  bottom: 0;
-  font-size: 32rpx;
-  color: rgb(0, 162, 255);
   text-align: center;
-  background-color: rgb(254, 254, 255);
-  font-family: '仿宋';
-  font-weight: normal;
 }

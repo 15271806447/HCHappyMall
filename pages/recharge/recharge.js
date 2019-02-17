@@ -1,24 +1,17 @@
+
+let QRCode = require("../../utils/qrcode.js").default;
+
+
 //index.js
 //获取应用实例
 const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    wallet:{
-      money:"8000.00",
-    }
+    qrtext: ''
   },
-  //事件处理函数
-  bindViewTap: function () {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
-  onLoad: function () {
+  //获得用户信息
+  getUserInfo: function () {
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -46,12 +39,12 @@ Page({
       })
     }
   },
-  getUserInfo: function (e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+  onLoad: function () {
+    this.getUserInfo();
+  },
+  recharge: function (e) {
+    wx.navigateTo({
+      url: '/pages/OnlineRecharge/OnlineRecharge',
     })
-  }
+  },
 })
