@@ -8,7 +8,10 @@ const app = getApp()
 
 Page({
   data: {
-    qrtext: ''
+    qrtext: '',
+    wallet: {
+      money: "8000.00",
+    }
   },
   //获得用户信息
   getUserInfo: function () {
@@ -39,12 +42,41 @@ Page({
       })
     }
   },
-  onLoad: function () {
-    this.getUserInfo();
-  },
   recharge: function (e) {
     wx.navigateTo({
       url: '/pages/OnlineRecharge/OnlineRecharge',
     })
+  },
+  getWallet: function () {
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/api/personalCenter/getWallet?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function (res) {
+        console.log(res);
+        var wallet = that.data.wallet;
+        var money = res.data.data.hcWallet.balance;
+        wallet.money = money;
+        if (money == null) {
+          wallet.money = 0;
+        }
+        that.setData({
+          'money': money,
+          'wallet': wallet
+        });
+      }
+    })
+  },
+  account: function () {
+    wx.navigateTo({
+      url: '../account/account',
+    })
+  },
+  onLoad: function () {
+    this.getUserInfo();
+    this.getWallet();
   },
 })

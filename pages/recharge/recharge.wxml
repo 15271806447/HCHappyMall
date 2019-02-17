@@ -12,7 +12,7 @@
   </view>
   <view class='f2'>
     <view class='charmonlea'>账户余额</view>
-    <view class='charmoncach'>8999元</view>
+    <view class='charmoncach'>{{wallet.money}}元</view>
   </view>
 </view>
 <view class='charmon' bindtap='recharge'>
