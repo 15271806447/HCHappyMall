@@ -47,4 +47,4 @@
 <text class='fl'>商品类型</text>
 <text class='fr'>账户充值卡</text>
 </view>
-<view class='payonlin'>在线支付</view>
+<view class='payonlin' bindtap='payment'>在线支付</view>
