@@ -1,0 +1,74 @@
+page {
+  font-family: "仿宋";
+}
+
+.head .main {
+  margin-top: 20rpx;
+}
+
+.head .itemBox {
+  margin-top: 50rpx;
+  margin-bottom: 30rox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.head .itemBox view {
+  height: 100rpx;
+  width: 25%;
+  margin-top: 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  border: solid 1px rgb(113, 188, 238);
+}
+
+.head .itemBox .active {
+  height: 105rpx;
+  width: 25%;
+  margin-top: 15rpx;
+  border: solid 1px rgba(209, 225, 236, 0.87);
+  background-color: rgb(40, 138, 204);
+}
+
+.head .itemBox text:nth-child(1) {
+  font-size: 35rpx;
+  color: rgb(89, 151, 192);
+  display: block;
+  text-align: center;
+  margin-top: 20rpx;
+}
+
+.head .itemBox text:nth-child(2) {
+  font-size: 25rpx;
+  color: rgba(209, 225, 236, 0.87);
+  display: block;
+  text-align: center;
+  margin-top: 10rpx;
+}
+
+.head .itemBox .active text {
+  color: white;
+}
+
+.head .thisbtn {
+  position: absolute;
+  height: 90rpx;
+  width: 80%;
+  margin-top: 50rpx;
+  display: block;
+  text-align: center;
+  background-color: rgb(40, 138, 204);
+  line-height: 80rpx;
+  margin: 0 auto;
+  bottom: 0;
+  color: #fff;
+  left: 10%;
+}
+
+.head.thisbtn text {
+  color: white;
+  font-size: 30rpx;
+  margin-top: 40rpx;
+}
