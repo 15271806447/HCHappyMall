@@ -1,0 +1,50 @@
+<view class='chaemenu'>
+<image src='../../images/money.png'></image>
+</view>
+<view class='menumes'>基本信息</view>
+<view class='conbox'>
+<text class='fl'>支付编号</text>
+<text class='fr'>254749868909</text>
+</view>
+<view class='conbox'>
+<text class='fl'>支付描述</text>
+<text class='fr'>无</text>
+</view>
+<view class='conbox'>
+<text class='fl'>支付类型</text>
+<text class='fr'>在线充值</text>
+</view>
+<view class='conbox'>
+<text class='fl'>支付总额</text>
+<text class='fr'>100</text>
+</view>
+<view class='conbox'>
+<text class='fl'>商品价格</text>
+<text class='fr'>10</text>
+</view>
+<view class='conbox'>
+<text class='fl'>创建时间</text>
+<text class='fr'>2019年09月12日 19：23：07</text>
+</view>
+<view class='conbox'>
+<text class='fl'>支付时间</text>
+<text class='fr'>2019年09月12日 19：23：07</text>
+</view>
+<view class='menumes'>商品详情</view>
+<view class='conbox'>
+<text class='fl'>商品名称</text>
+<text class='fr'>10.0</text>
+</view>
+<view class='conbox'>
+<text class='fl'>商品属性</text>
+<text class='fr'>10.0元</text>
+</view>
+<view class='conbox'>
+<text class='fl'>商品价格</text>
+<text class='fr'>10.0元</text>
+</view>
+<view class='conbox'>
+<text class='fl'>商品类型</text>
+<text class='fr'>账户充值卡</text>
+</view>
+<view class='payonlin'>在线支付</view>

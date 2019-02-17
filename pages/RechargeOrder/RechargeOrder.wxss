@@ -1,0 +1,50 @@
+page{
+  font-family: "黑体";
+}
+.chaemenu{
+width: 100%;
+height: 130px;
+background: #2AD5A1;
+position: relative;
+top: 0;
+left: 0;
+}
+.chaemenu image{
+  position: absolute;
+width: 80px;
+height: 80px;
+top:25px;
+left: 50%;
+margin-left: -40px; 
+}
+.menumes{
+  background: #F7F7F7;
+  height: 60px;
+  line-height: 60px;
+  padding-left: 10px;
+}
+.conbox{
+  line-height: 40px;
+  display: flex;
+  padding-left: 10px;
+}
+.fl{
+flex: 1;
+}
+.fr{
+flex: 2;
+}
+.payonlin{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 45px;
+  line-height: 45px;
+  text-align: centetr;
+  border: 1px solid #ACA9A9;
+  background:#F7F7F7;
+  width: 98%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
