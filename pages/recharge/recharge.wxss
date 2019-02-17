@@ -29,7 +29,6 @@ page{
   height: 50px;
   background: #2E7E99;
   color: #fff;
-  border: 1px solid #eeeeee;
   line-height: 50px;
   padding-left: 5px;
   padding-right: 5px;
