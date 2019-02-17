@@ -14,14 +14,6 @@
     <text class='balancepay1'>余额支付</text>
     <radio checked="true" color='red' class='balancepay11' />
   </view>
-  <view class='otherpay'>
-    <text class='bankpay1'>银行卡支付</text>
-    <radio checked="true" color='red' class='bankpay11' />
-  </view>
-  <view class='otherpay'>
-    <text class='otherpay1'>第三方支付</text>
-    <radio checked="true" color='red' class='otherpay11' />
-  </view>
   </radio-group>
 </view>
 
