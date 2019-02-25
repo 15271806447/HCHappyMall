@@ -10,15 +10,16 @@
       <view class='detail-tilte'>
         <text>{{vritualCourse.productTitle}}</text>
       </view>
+        <view class='price'>
+              <text class='original-price'>原价:￥{{vritualCourse.price}}</text>
+              <text class='membership-price'>会员价:￥{{vritualCourse.memberPrice}}</text>
+        </view>
       <view class='detail-describe'>
         <text>指导老师：{{vritualCourse.productAuthor}}</text>
       </view>
       <view class='detail-describe'>
         <text>已更新{{vritualCourse.nowNum}}/{{vritualCourse.totalNum}}节</text>
-      </view>
-      <view class='detail-money'>
-        <text class='original-price' space="nbsp">原   价:￥{{vritualCourse.price}}\n</text>
-        <text class='membership-price'>会员价:￥{{vritualCourse.memberPrice}}</text>
+        <text class='sales'>销量 : {{vritualCourse.productSales}}</text>
       </view>
     </view>
   </view>
@@ -68,12 +69,11 @@
     </view>
 
     <!-- 锁 -->
-    <view wx:if="{{item.isCharge}}">
+    <view wx:if="{{lock}}">
       <!-- 锁图标 -->
       <view class='unfree'>
-        <image src='../../images/voice.png'></image>
+        <image src='../../images/block.png'></image>
       </view>
-
     </view>
     <view wx:else>
       <!-- 试学 -->

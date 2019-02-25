@@ -25,14 +25,34 @@ page {
   height: 100%;
 }
 .detail-tilte{
-font-size: 46rpx;
+font-size: 35rpx;
 margin: 20rpx 0 0 30rpx;
 }
 .detail-describe{
-  font-size: 32rpx;
+  font-size: 28rpx;
   margin: 10rpx 0rpx 0rpx 30rpx;
   color: gray;
 }
+
+.sales{
+  display: block;
+  position: absolute;
+  margin-left: 550rpx;
+  margin-top: -36rpx;
+}
+.price{
+  font-size: 34rpx;
+   margin: 10rpx 0rpx 0rpx 30rpx;
+}
+/* 会员 */
+/* .membership-price{
+  position: absolute;
+  display: block;
+ font-size: 34rpx;
+ color: red;
+ margin-left: 215rpx;
+ margin-top: 730rpx;
+} */
 .detail-money  {
   width: 210px;
   height: 100%;
@@ -45,9 +65,11 @@ margin: 20rpx 0 0 30rpx;
 }
 .original-price{
   text-decoration:line-through;
-  top: 37rpx;
+  top: 635rpx;
+  margin-left: 480rpx;
   position: absolute; 
 }
+
 .sale{
   display: flex;
   justify-content: space-between;
@@ -63,12 +85,9 @@ margin: 20rpx 0 0 30rpx;
 .membership-price{
  position: absolute;
  color: red;
- margin-right: 30rpx;
- top: 75rpx;
-
+ top: 680rpx;
+ margin-left: 447rpx;
 }
-
-
 .right-sale{
   display: block;
   margin-right: 30rpx;
