@@ -86,7 +86,9 @@ Page({
     tcity.init(that);
     var cityData = this.data.cityData;
     var index = this.data.index;
-
+    wx.showLoading({
+      title: '加载中',
+    })
     wx.request({
       url: app.globalData.url + '/api/userAddress/getAddress?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
       method: "POST",
@@ -94,6 +96,7 @@ Page({
         'X-Requested-With': 'APP'
       },
       success: function(res) {
+        wx.hideLoading();
         console.log(res);
         var hcUserAddressList = res.data.data.hcUserAddressList;
         var t = 0
@@ -120,7 +123,7 @@ Page({
             address = addressList[i].userAddress;
           }
           addressId[i] = addressList[i].id;
-
+  
         }
         that.setData({
           'addressList': addressList,
