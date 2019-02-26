@@ -242,7 +242,7 @@ swiper-item image {
 }
 
 .footer {
-  width: 100vh;
+  width: 100%;
   height: 120rpx;
   margin-top: 20rpx;
   font-size: 32rpx;
@@ -259,6 +259,7 @@ swiper-item image {
   padding: 12rpx 18rpx;
   flex-direction: column;
   border: 2rpx solid #f0f0f0;
+  width: 20%;
 }
 
 .fotpic {
@@ -273,13 +274,13 @@ swiper-item image {
   line-height: 120rpx;
   /* border: 1% solid orange; */
   background-color: orange;
-  width: 20%;
+  width: 40%;
 }
 
 .footer .tet.buy  {
   background-color: red;
-  width: 19%;
-  border-right: 1% solid red;
+  width: 40%;
+  /* border-right: 1% solid red; */
 }
 
 #yellow {
