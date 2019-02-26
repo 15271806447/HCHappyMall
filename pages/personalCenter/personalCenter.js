@@ -23,11 +23,11 @@ cheakMember : function(){
       'X-Requested-With': 'APP'
     },
     success(res) {
-      var memberTypeId = res.data.data.hcUserMember.memberTypeId;
-      if (memberTypeId == null || memberTypeId == ""){
-        that.data.user.member = false;
-      }else{
-        that.data.user.member = true;
+      var memberType = res.data.data.hcUserMember;
+      if (memberType.length >= 0) {
+        that.setData({
+          member: true
+        })
       }
       console.log("是否会员：");
       console.log(that.data.user.member);

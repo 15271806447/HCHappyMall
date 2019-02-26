@@ -229,6 +229,7 @@ Page({
       //这个地方不做逻辑，逻辑要写在下面，否则会被覆盖
     } else if (options.type == 'member') { //充值会员的订单
       var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
+      console.log("会员订单接收数据：");
       console.log(productInfo);
       var goodsList = [1];
       var product = {
@@ -236,6 +237,7 @@ Page({
         productTitle: "",
         oldprice: "",
         originalPrice: "",
+        memberPrice:"",
         productCovermap: "",
         count: 1,
         price: 0
@@ -243,13 +245,16 @@ Page({
       product.id = productInfo.productId;
       product.productTitle = productInfo.memberCategoryName;
       product.oldprice = productInfo.price;
-      product.productCovermap = productInfo.coverPath;
+      product.productCovermap = productInfo.memberSign;
       product.price = productInfo.price;
       product.originalPrice = productInfo.price;
+      product.memberPrice = productInfo.price;
       goodsList[0] = product;
+      console.log("会员订单转移数据：");
+      console.log(product);
       that.setData({
-        'goodsList': goodsList
-
+        'goodsList': goodsList,
+        'isMemberPay': true
       })
     } else { //拿到订单数据
       var data = this.change(app.globalData.productCartList);
@@ -349,6 +354,7 @@ Page({
         //这个地方不做逻辑，逻辑要写在下面，否则会被覆盖
       } else if (options.type == 'member') { //充值会员的订单
         var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
+        console.log("会员订单接收数据：");
         console.log(productInfo);
         var goodsList = [1];
         var product = {
@@ -356,17 +362,21 @@ Page({
           productTitle: "",
           oldprice: "",
           originalPrice: "",
+          memberPrice:"",
           productCovermap: "",
           count: 1,
           price: 0
         };
-        product.id = productInfo.id;
+        product.id = productInfo.productId;
         product.productTitle = productInfo.memberCategoryName;
         product.oldprice = productInfo.price;
-        product.productCovermap = productInfo.coverPath;
+        product.productCovermap = productInfo.memberSign;
         product.price = productInfo.price;
+        product.memberPrice = productInfo.price;
         product.originalPrice = productInfo.price;
         goodsList[0] = product;
+        console.log("会员订单转移数据：");
+        console.log(product);
         that.setData({
           'goodsList': goodsList,
           'isMemberPay': true
