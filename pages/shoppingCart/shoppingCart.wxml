@@ -5,11 +5,11 @@
 </view>
 
 <checkbox-group bindchange="checkboxChange">
-  <view class="productList" wx:for="{{productList}}" wx:key="*this" data-index='{{index}}'>
+  <view class="productList" wx:for="{{productList}}" wx:key="*this" catchtap='ToGoods' data-index='{{index}}'>
     <!-- 多选框 -->
     <checkbox class='productListCheckbox' value="{{item.productId}}" checked="{{item.checked}}"></checkbox>
     <!-- 商品主图 -->
-    <image class='productListImage' mode="scaleToFill" src='{{item.productImage}}'  catchtap='ToGoods'> </image>
+    <image class='productListImage' mode="scaleToFill" src='{{item.productImage}}'> </image>
     <view class='productDescription'>
       <!-- 商品名 -->
       <text class='productListName'>{{item.productName}}</text>

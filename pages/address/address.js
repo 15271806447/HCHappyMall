@@ -1,9 +1,8 @@
 var app = getApp();
 var tcity = require("../../utils/citys.js");
 Page({
-
   /**
-   * 页面的初始数据
+   \* 页面的初始数据
    */
   data: {
     address: '',
@@ -16,33 +15,29 @@ Page({
     phone: "",
     options: ""
   },
-
   /**
-   * 生命周期函数--监听页面加载
+   \* 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
     this.setData({
       options: options.type
     })
+
     var that = this;
     that.getAddress();
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
+   \* 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
   },
 
   /**
-   * 生命周期函数--监听页面显示
+   \* 生命周期函数--监听页面显示
    */
   onShow: function() {
-
   },
-
-
   addAddress: function() {
     wx: wx.navigateTo({
       url: '../addAddress/addAddress',
@@ -51,7 +46,6 @@ Page({
       complete: function(res) {},
     })
   },
-
   // 删除交互
   deletes: function(e) {
     var index = e.currentTarget.dataset.index;
@@ -59,7 +53,6 @@ Page({
     var that = this;
     var addressId = this.data.addressId[index];
     console.log(addressId);
-
     console.log(this.data.show);
     wx.request({
       url: app.globalData.url + '/api/userAddress/deleteAddress?sid=' + app.globalData.sid + '&Id=' + addressId,
@@ -88,9 +81,13 @@ Page({
     var index = this.data.index;
     wx.showLoading({
       title: '加载中',
+      icon: 'none',
+      duration: 300,
+      mask: true
     })
     wx.request({
       url: app.globalData.url + '/api/userAddress/getAddress?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
+
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
@@ -123,7 +120,6 @@ Page({
             address = addressList[i].userAddress;
           }
           addressId[i] = addressList[i].id;
-  
         }
         that.setData({
           'addressList': addressList,
@@ -134,7 +130,6 @@ Page({
       }
     })
   },
-
   /**监测点击的地址*/
   select: function(e) {
     var that = this;

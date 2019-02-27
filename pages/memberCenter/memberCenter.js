@@ -32,10 +32,9 @@ Page({
     state: false,
     first_click: true,
     ismember: false,
-    imageUrl: app.globalData.imageUrl,
-    hcUserMember: "",
+    imageUrl: app.globalData.imageUrl
   },
-  convertHtmlToText: function(inputText) {
+  convertHtmlToText: function (inputText) {
     var returnText = "" + inputText;
     returnText = returnText.replace(/<\/div>/ig, '\r\n');
     returnText = returnText.replace(/<\/li>/ig, '\r\n');
@@ -70,7 +69,7 @@ Page({
     return returnText;
   },
   //获取会员类型
-  getMemberType: function() {
+  getMemberType: function () {
     var that = this;
     wx.request({
       url: app.globalData.url + '/api/product/getAllMemberCards?sid=' + app.globalData.sid,
@@ -91,7 +90,7 @@ Page({
           var memberType = {
             id: "",
             memberCategoryName: "",
-            productId: "",
+            productId:"",
             price: "",
             memberSign: "",
             ischecked: bool,
@@ -111,14 +110,14 @@ Page({
       }
     })
   },
-  recharge: function(e) {
+  recharge: function (e) {
     var index = e.currentTarget.dataset.indext_num;
     wx: wx.navigateTo({
       url: '../confirm/confirm?type=' + 'member' + '&productInfo=' + encodeURIComponent(JSON.stringify(this.data.memberCategory[index])),
     })
   },
-  //获取用户会员关系
-  getUserMember: function() {
+  //检查是否是会员
+  cheakMember: function () {
     console.log(app.globalData.uid);
     var that = this;
     wx.request({
@@ -128,30 +127,23 @@ Page({
         'X-Requested-With': 'APP'
       },
       success(res) {
-        console.log("用户会员关系：");
-        console.log(res.data.data.hcUserMember);
-        var memberType = res.data.data.hcUserMember;
-        that.setData({
-          hcUserMember: res.data.data.hcUserMember,
-        })
+        var memberTypeId = res.data.data.hcUserMember.memberTypeId;
+        if (memberTypeId == null || memberTypeId == "") {
+          that.setData({
+            ismember: false
+          })
+        } else {
+          that.setData({
+            ismember: true
+          })
+        }
+        console.log("是否会员：");
+        console.log(that.data.ismember);
       }
     })
   },
-  //检测是否是该会员
-  checkMember: function (index) {
-    var memeberid = this.data.memberCategory[index].id;
-    var userMember = this.data.hcUserMember;
-    for (var i = 0; i < userMember.length; i++) {
-      if (memeberid == userMember[i].id){
-        this.setData({
-          ismember:true
-        })
-        break;
-      }
-    }
-  },
-  onLoad: function(options) {
-    this.getUserMember();
+  onLoad: function (options) {
+    this.cheakMember();
     if (options.isPaySuccess != null && options.isPaySuccess != "") {
       console.log("会员中心充值成功：");
       console.log(options.isPaySuccess);
@@ -198,7 +190,7 @@ Page({
   /**
    * 选择会员
    */
-  chooseMember: function(e) {
+  chooseMember: function (e) {
     //获取点击索引
     var index = e.currentTarget.dataset.index;
     var memberCategory = this.data.memberCategory;
@@ -210,9 +202,8 @@ Page({
       'memberCategory': memberCategory,
       'thisindex': index
     })
-    this.checkMember(index);
   },
-  more: function() {
+  more: function () {
     var list_state = this.data.state,
       first_state = this.data.first_click;
     if (!first_state) {
