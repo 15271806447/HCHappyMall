@@ -86,7 +86,7 @@ Page({
     } else if (type == 2) {
       //我的优惠券
       wx.request({
-        url: app.globalData.url + '/api/coupon/showCoupon?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid,
+        url: app.globalData.url + '/api/coupon/showCoupon?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid ,
         method: "POST",
         header: {
           'X-Requested-With': 'APP'

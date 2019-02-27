@@ -57,12 +57,11 @@ Page({
     if(options.type=='pay'){
       console.log(JSON.parse(options.orderDetail));
       var orderDetail = JSON.parse(options.orderDetail).orderVO;
-      // var orderData=new Object();
-      // orderData.state = orderDetail.state;
-      // orderData.orderItemVOList = orderDetail.orderItemVOList;
+      orderDetail.state = 2;
       this.setData({
         'orderData': orderDetail
       })
+      this.getOrderform();
       return;
     }
     var orderData = options.orderData;
@@ -73,53 +72,13 @@ Page({
     this.getOrderform();
     
   },
-
   /**
-   * 生命周期函数--监听页面初次渲染完成
+   * toIndex 跳转首页
    */
-  onReady: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-    
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-    
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-    
+  toIndex:function(){
+    wx.switchTab({
+      url: '../index/index',
+    })
   }
+ 
 })
