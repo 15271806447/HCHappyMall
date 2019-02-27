@@ -32,11 +32,13 @@ Page({
     let item = JSON.parse(options.data)
     console.log(item)
     this.data.goodsList[0]={
-      productName: item.productTitle,
-      oldprice: item.money,
-      productImage: "../image/math.jpg",
-      count: 1,
-      price: item.money - item.productDiscount
+              productName: item.productTitle,
+              oldprice: item.numArray,
+              productImage: item.productCovermap,
+              count: 1,
+              price: item.numArray*item.productDiscount,
+              memberPrice: item.memberPrice,
+              id:item.id,
     }
     console.log(this.data.goodsList[0])
     this.getAddress();
@@ -74,8 +76,8 @@ Page({
     hcOrder.user_id = app.globalData.uid;
     hcOrder.coupon_id = null;
     hcOrder.address_id = this.data.address.id;
-    hcOrder.integral = this.data.integral;
-    hcOrder.information = this.data.inputValue;
+    hcOrder.integral = 0;
+    hcOrder.information = null;
     hcOrder.payment_way = 1;
     hcOrder.freight = 0;
     hcOrder.actualPayment = 232323;
