@@ -116,14 +116,12 @@ Page({
           userId: res.result,
           refereesId: app.globalData.uid
         })
+        //获得粉丝
+        that.modalcnt();
         wx.showToast({
           title: '成功',
           icon: 'success',
           duration: 2000,
-          success: function () {
-            //获得粉丝
-            that.modalcnt()
-          }
         })
       },
       fail: (res) => {
