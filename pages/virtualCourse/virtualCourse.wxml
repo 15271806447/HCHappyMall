@@ -10,9 +10,9 @@
       <view class='detail-tilte'>
         <text>{{vritualCourse.productTitle}}</text>
       </view>
-        <view class='price'>
+       <view class='price'>
+              <text class='membership-price'>会员价:￥{{vritualCourse.memberPrice}}\n</text>
               <text class='original-price'>原价:￥{{vritualCourse.price}}</text>
-              <text class='membership-price'>会员价:￥{{vritualCourse.memberPrice}}</text>
         </view>
       <view class='detail-describe'>
         <text>指导老师：{{vritualCourse.productAuthor}}</text>

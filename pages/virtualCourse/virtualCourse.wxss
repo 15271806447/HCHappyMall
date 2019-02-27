@@ -25,8 +25,8 @@ page {
   height: 100%;
 }
 .detail-tilte{
-font-size: 35rpx;
-margin: 20rpx 0 0 30rpx;
+font-size: 39rpx;
+margin: 20rpx 0 20rpx 30rpx;
 }
 .detail-describe{
   font-size: 28rpx;
@@ -40,19 +40,7 @@ margin: 20rpx 0 0 30rpx;
   margin-left: 550rpx;
   margin-top: -36rpx;
 }
-.price{
-  font-size: 34rpx;
-   margin: 10rpx 0rpx 0rpx 30rpx;
-}
-/* 会员 */
-/* .membership-price{
-  position: absolute;
-  display: block;
- font-size: 34rpx;
- color: red;
- margin-left: 215rpx;
- margin-top: 730rpx;
-} */
+
 .detail-money  {
   width: 210px;
   height: 100%;
@@ -64,10 +52,11 @@ margin: 20rpx 0 0 30rpx;
    font-weight: bold;
 }
 .original-price{
-  text-decoration:line-through;
-  top: 635rpx;
-  margin-left: 480rpx;
-  position: absolute; 
+text-decoration:line-through;
+ margin-left: 30rpx;
+ font-size: 32rpx;
+ color: #999;
+ margin-top: 30rpx;
 }
 
 .sale{
@@ -83,10 +72,10 @@ margin: 20rpx 0 0 30rpx;
 }
 
 .membership-price{
- position: absolute;
- color: red;
- top: 680rpx;
- margin-left: 447rpx;
+  margin-left: 30rpx;
+  color: red;
+  font-size: 37rpx;
+   margin-top: 20rpx;
 }
 .right-sale{
   display: block;
