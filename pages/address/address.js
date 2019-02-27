@@ -86,7 +86,6 @@ Page({
     tcity.init(that);
     var cityData = this.data.cityData;
     var index = this.data.index;
-
     wx.request({
       url: app.globalData.url + '/api/userAddress/getAddress?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
       method: "POST",

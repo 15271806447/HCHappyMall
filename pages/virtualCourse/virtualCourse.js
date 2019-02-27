@@ -10,6 +10,7 @@ Page({
       coverPath: '',
       productTitle: "",
       productAuthor: "",
+      freeNum: "",
       totalNum: '',
       nowNum: '',
       productSales: '',
@@ -18,37 +19,21 @@ Page({
       memberPrice: '',
       courseIntroduce: "",
     },
-    courseList: [
-      // {
-      //   chapterName: "1.  java基础-常用dos命令  环境变量的配置",
-      //   isCharge: false,
-      // },
-      // {
-      //   chapterName: "1.  java基础-常用dos命令  环境变量的配置",
-      //   isCharge: true,
-      // },
-      // {
-      //   chapterName: "1.  java基础-常用dos命令  环境变量的配置",
-      //   isCharge: true,
-      // },
-      // {
-      //   chapterName: "1.  java基础-常用dos命令  环境变量的配置",
-      //   isCharge: true,
-      // },
-    ],
+    courseList: [],
     hidden: false,
     nocancel: false,
     isFolded: true,
     isClick: false,
     addCar: false,
     show: false,
+    lock: false,
     rows: 4,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
 
     var json = JSON.parse(options.productInfo);
     console.log(json);
@@ -78,7 +63,7 @@ Page({
   /**
    * 跳转购买
    */
-  addBuy: function() {
+  addBuy: function () {
     app.globalData.goodsInfo = this.data.goods;
     wx.navigateTo({
       url: '../confirm/confirm?type=virtualGoods',
@@ -87,7 +72,7 @@ Page({
   /**
    * 简介展示
    */
-  change: function(e) {
+  change: function (e) {
     if (this.data.isFolded) {
       this.setData({
         isFolded: false,
@@ -101,7 +86,7 @@ Page({
     }
   },
 
-  bounced: function() {
+  bounced: function () {
     if (this.data.show) {
       this.setData({
         show: false
@@ -115,7 +100,7 @@ Page({
   /**
    * 点击收藏
    */
-  addCollection: function() {
+  addCollection: function () {
     if (!this.data.isClick == true) {
       wx.showToast({
         title: '已收藏',
@@ -135,45 +120,33 @@ Page({
     })
   },
   // 加入购物车
-  addCar: function() {
+  addCar: function () {
     this.JoinShoppingCart();
   },
 
-  bounced: function(e) {
-    var index = e.currentTarget.dataset.index;
-    if (this.data.courseList[index].isCharge == true) {
-      wx.showModal({
-        title: '收费课程',
-        content: '请您购买',
-        showCancel: false,
-        confirmText: '取消',
-      })
-    } else {
-      wx: wx.navigateTo({
-        url: '',
-        success: function(res) {},
-        fail: function(res) {},
-        complete: function(res) {},
-      })
-    }
-  },
+    /**列表数据表交互*/
+    getCourseInfo: function() {
+      var that = this;
+      var id = this.data.vritualCourse.id;
+      var vritualCourse = this.data.vritualCourse;
+      console.log("id:" + id);
+      wx.request({
+        url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + '&id=' + id,
+        method: "POST",
+        header: {
+          'X-Requested-With': 'APP'
+        },
+        success: function (res) {
+          console.log(res);
+          var course = res.data.data.courseVO;
+          var courseList = res.data.data.courseVO.hcFSectionInfoList;
 
-  /**列表数据表交互*/
-  getCourseInfo: function() {
-    var that = this;
-    var id = this.data.vritualCourse.id;
-    var vritualCourse = this.data.vritualCourse;
-    console.log("id:" + id);
-    wx.request({
-      url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + '&id=' + id,
-      method: "POST",
-      header: {
-        'X-Requested-With': 'APP'
-      },
-      success: function(res) {
-        console.log(res);
-        var course = res.data.data.courseVO;
-        var courseList = res.data.data.courseVO.hcFSectionInfoList;
+          vritualCourse.freeNum = course.freeNum
+          vritualCourse.totalNum = course.totalNum
+          vritualCourse.nowNum = course.nowNum
+
+          that.data.lock = true
+
         console.log('courseList')
         console.log(courseList)
         if (that.data.type == 'VideoItem') {
@@ -189,6 +162,7 @@ Page({
         }
         vritualCourse.totalNum = course.totalNum
         vritualCourse.nowNum = course.nowNum
+
 
         that.setData({
           'vritualCourse': vritualCourse,
@@ -249,26 +223,35 @@ Page({
     })
   },
 
-  /* 视频音频播放页面 */
-  free: function() {
+  /* 跳转视频音频播放页面 */
+  bounced:function(e){
+    console.log("免费观看的讲次：" + this.data.vritualCourse.freeNum);
+    var index = e.currentTarget.dataset.index;
+    var freeNum = this.data.vritualCourse.freeNum
     var that = this;
-    console.log(this);
     var type = that.data.type;
-    var time = that.data.time;
-    if (type == 'VideoItem') {
-      wx.navigateTo({
-        url: '../videoPlay/videoPlay?type=1&videoDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)) + "&time=" + JSON.stringify(time),
-      })
-    } else if (type == 'AudioItem') {
-      wx.navigateTo({
-        url: '../audioPlay/audioPlay?type=1&audioDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)) + "&time=" + JSON.stringify(time),
-      })
+    if (index < freeNum){
+      if (type == 'VideoItem') {
+        wx.navigateTo({
+          url: '../videoPlay/videoPlay?type=1&videoDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)),
+        })
+      } else if (type == 'AudioItem') {
+        wx.navigateTo({
+          url: '../audioPlay/audioPlay?type=1&audioDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)),
+        })
+      }
+    }else{
+      wx.showModal({
+        title: '收费课程',
+        content: '请您购买',
+        showCancel: false,
+        confirmText: '取消',
+    })
     }
   },
 
-
   /**判断视屏与音频交互*/
-  flagVideoAndAudio: function(options) {
+  flagVideoAndAudio: function (options) {
     var that = this;
     var type = options.type;
     that.setData({
@@ -276,7 +259,7 @@ Page({
     })
   },
 
-  getVideoTime: function(src, i) {
+  getVideoTime: function (src, i) {
     var that = this;
     var playTime = "time" + "[" + i + "]";
     const innerAudioContext = wx.createInnerAudioContext()  //初始化createInnerAudioContext接口
@@ -286,7 +269,7 @@ Page({
     //音频进入可以播放状态，但不保证后面可以流畅播放
     innerAudioContext.onCanplay(() => {
       innerAudioContext.duration //类似初始化-必须触发-不触发此函数延时也获取不到
-      setTimeout(function() {
+      setTimeout(function () {
         //在这里就可以获取到大家梦寐以求的时长了
         console.log('innerAudioContext.duration');
         console.log(innerAudioContext.duration); //延时获取长度 单位：秒
@@ -299,7 +282,7 @@ Page({
     })
   },
 
-  toTime: function(s) {
+  toTime: function (s) {
     var day = Math.floor(s / (24 * 3600)); // Math.floor()向下取整 
     var hour = Math.floor((s - day * 24 * 3600) / 3600);
     var minute = Math.floor((s - day * 24 * 3600 - hour * 3600) / 60);
@@ -319,12 +302,12 @@ Page({
     return time;
   },
 
-  getAudioPaht: function(id) {
+  getAudioPaht: function (id) {
     return app.globalData.url + '/common/file/showPicture.do?id=' + id;
   },
 
   //获取文件路径
-  getFilePath: function(fileId, index) {
+  getFilePath: function (fileId, index) {
     var that = this;
     var myArray = new Array();
     var i = index;
@@ -332,7 +315,7 @@ Page({
     wx.request({
       url: app.globalData.url + '/api/common/file/get?id=' + fileId,
       method: 'GET',
-      success: function(res) {
+      success: function (res) {
         console.log('res');
         console.log(res);
         var index = res.data.data.storageId.indexOf("upload");
