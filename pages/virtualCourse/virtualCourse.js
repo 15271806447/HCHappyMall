@@ -132,7 +132,7 @@ Page({
       var vritualCourse = this.data.vritualCourse;
       console.log("id:" + id);
       wx.request({
-        url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + '&id=' + id,
+        url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + '&productId=' + id,
         method: "POST",
         header: {
           'X-Requested-With': 'APP'
