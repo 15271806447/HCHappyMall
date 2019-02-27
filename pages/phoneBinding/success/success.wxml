@@ -3,4 +3,4 @@
 </view>
 <view class='bindphone'>你已绑定手机号</view>
 <view class='bindphonenum'>{{phoneNum}}</view>
-<navigator class='changenum' url="../../Management/Management">确定</navigator>
+<view class='changenum' bindtap='jump'>确定</view>
