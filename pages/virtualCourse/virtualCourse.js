@@ -127,6 +127,7 @@ Page({
     /**列表数据表交互*/
     getCourseInfo: function() {
       var that = this;
+      var temp = 0;
       var id = this.data.vritualCourse.id;
       var vritualCourse = this.data.vritualCourse;
       console.log("id:" + id);
@@ -145,19 +146,24 @@ Page({
           vritualCourse.totalNum = course.totalNum
           vritualCourse.nowNum = course.nowNum
 
-          that.data.lock = true
-
-        console.log('courseList')
-        console.log(courseList)
         if (that.data.type == 'VideoItem') {
           for (var i = 0; i < courseList.length; i++) {
+            temp++;
             var path = that.getFilePath(courseList[i].fileAddr, i);
             that.getVideoTime(path, i);
+            if (temp > vritualCourse.freeNum){
+              that.data.lock = true
+              console.log("********" + that.data.lock);
+              }
           }
         } else if (that.data.type == 'AudioItem') {
           for (var i = 0; i < courseList.length; i++) {
+            temp++;
             console.log(courseList[i].fileAddr);
             that.getVideoTime(that.getAudioPaht(courseList[i].fileAddr), i);
+            if (temp > vritualCourse.freeNum) {
+              that.data.lock = true
+            }
           }
         }
         vritualCourse.totalNum = course.totalNum
