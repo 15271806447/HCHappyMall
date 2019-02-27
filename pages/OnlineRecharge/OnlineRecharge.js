@@ -6,7 +6,10 @@ Page({
    */
   data: {
     activeIndex: 0,//默认选中第一个
-    numArray: [10, 20, 30, 40, 50, 60, 70, 80, 90]
+    numArray: [10, 20, 30, 40, 50, 60, 70, 80, 90], //原价
+    productTitle:"充值卡",//标题
+    productDiscount:"0.01",  //折扣
+    memberPrice:"0.01"      //会员价
   },
 
   /**
@@ -71,8 +74,19 @@ Page({
     })
   },
   Refill: function () {
+    var that = this
+    //获取指定充值卡
+    console.log(this.data.numArray[this.data.activeIndex])
+    //创建订单所需信息
+    var dataSet = {
+      money: this.data.numArray[this.data.activeIndex],
+      productTitle: this.data.productTitle,//标题
+      productDiscount: this.data.productDiscount,  //折扣
+      memberPrice: this.data.memberPrice,      //会员价
+    }
+    let data = JSON.stringify(dataSet)
     wx.navigateTo({
-      url: '../RechargeOrder/RechargeOrder',
+      url: '../RechargeOrder/RechargeOrder?data=' + data,
     })
   },
 })

@@ -50,7 +50,7 @@ Page({
   getWallet: function () {
     var that = this;
     wx.request({
-      url: app.globalData.url + '/api/personalCenter/getWallet?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
+      url: app.globalData.url + '/api/wallet/getWallet?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
