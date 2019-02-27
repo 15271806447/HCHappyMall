@@ -86,6 +86,13 @@ Page({
     tcity.init(that);
     var cityData = this.data.cityData;
     var index = this.data.index;
+
+    wx.showLoading({
+      title: '加载中',
+      icon: 'none',
+      duration: 300,
+      mask: true
+    })
     wx.request({
       url: app.globalData.url + '/api/userAddress/getAddress?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
       method: "POST",
