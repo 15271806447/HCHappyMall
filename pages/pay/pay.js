@@ -81,6 +81,7 @@ Page({
         'X-Requested-With': 'APP'
       },
       success: function(res) {
+        console.log("=======================================")
         console.log(res);
         wx.hideLoading();
         var orderNum = res.data.data.orderVO.orderNum;

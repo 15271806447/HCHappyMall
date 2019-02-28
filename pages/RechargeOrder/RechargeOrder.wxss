@@ -34,6 +34,10 @@ flex: 1;
 .fr{
 flex: 2;
 }
+.frid {
+ font-size: 30rpx;
+ text-align: center;
+}
 .payonlin{
   display: flex;
   align-items: center;

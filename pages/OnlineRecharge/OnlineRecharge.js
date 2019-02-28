@@ -13,77 +13,20 @@ Page({
       productDiscount: "0.01",  //折扣
       memberPrice: "0.01",      //会员价
       productCovermap: "",
-    },
-      {
-        id: "",
-        numArray: "20",
-        productTitle: "充值卡",//标题
-        productDiscount: "0.01",  //折扣
-        memberPrice: "0.01",      //会员价
-        productCovermap: "",
-      },
-      {
-        id: "",
-        numArray: "30",
-        productTitle: "充值卡",//标题
-        productDiscount: "0.01",  //折扣
-        memberPrice: "0.01",      //会员价
-        productCovermap: "",
-      },
-      {
-        id: "",
-        numArray: "40",
-        productTitle: "充值卡",//标题
-        productDiscount: "0.01",  //折扣
-        memberPrice: "0.01",      //会员价
-        productCovermap: "",
-      },
-      {
-        id: "",
-        numArray: "50",
-        productTitle: "充值卡",//标题
-        productDiscount: "0.01",  //折扣
-        memberPrice: "0.01",      //会员价
-        productCovermap: "",
-      },
-      {
-        id: "",
-        numArray: "60",
-        productTitle: "充值卡",//标题
-        productDiscount: "0.01",  //折扣
-        memberPrice: "0.01",      //会员价
-        productCovermap: "",
-      },
-      {
-        id: "",
-        numArray: "70",
-        productTitle: "充值卡",//标题
-        productDiscount: "0.01",  //折扣
-        memberPrice: "0.01",      //会员价
-        productCovermap: "",
-      },
-      {
-        id: "",
-        numArray: "80",
-        productTitle: "充值卡",//标题
-        productDiscount: "0.01",  //折扣
-        memberPrice: "0.01",      //会员价
-        productCovermap: "",
-      },
-      {
-        id: "",
-        numArray: "90",
-        productTitle: "充值卡",//标题
-        productDiscount: "0.01",  //折扣
-        memberPrice: "0.01",      //会员价
-        productCovermap:"",
-      }]
+      url:""
+    }]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var urls = options.url;
+    console.log("urls:===========",urls)
+    var url = "RechargeCardInfo[0].url";
+    this.setData({
+      [url]: urls
+    })
     //充值卡信息
     this.RechargeCardInfo();
   },

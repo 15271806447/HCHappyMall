@@ -4,7 +4,7 @@
 <view class='menumes'>基本信息</view>
 <view class='conbox'>
 <text class='fl'>支付编号</text>
-<text class='fr'>254749868909</text>
+<text class='frid'>{{goodsList[0].id}}</text>
 </view>
 <view class='conbox'>
 <text class='fl'>支付描述</text>
@@ -16,32 +16,20 @@
 </view>
 <view class='conbox'>
 <text class='fl'>支付总额</text>
-<text class='fr'>{{money}}</text>
+<text class='fr'>{{goodsList[0].price}}元</text>
 </view>
 <view class='conbox'>
 <text class='fl'>商品价格</text>
-<text class='fr'>{{money}}</text>
-</view>
-<view class='conbox'>
-<text class='fl'>创建时间</text>
-<text class='fr'>2019年09月12日 19：23：07</text>
-</view>
-<view class='conbox'>
-<text class='fl'>支付时间</text>
-<text class='fr'>2019年09月12日 19：23：07</text>
+<text class='fr'>{{goodsList[0].oldprice}}元</text>
 </view>
 <view class='menumes'>商品详情</view>
 <view class='conbox'>
 <text class='fl'>商品名称</text>
-<text class='fr'>在线充值卡</text>
-</view>
-<view class='conbox'>
-<text class='fl'>商品属性</text>
-<text class='fr'>10.0元</text>
+<text class='fr'>{{goodsList[0].productName}}</text>
 </view>
 <view class='conbox'>
 <text class='fl'>商品价格</text>
-<text class='fr'>{{money}}</text>
+<text class='fr'>{{goodsList[0].oldprice}}元</text>
 </view>
 <view class='conbox'>
 <text class='fl'>商品类型</text>
