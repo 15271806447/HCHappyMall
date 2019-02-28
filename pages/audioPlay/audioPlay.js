@@ -258,26 +258,30 @@ Page({
     var audio = [];
     var fileId = [];
     wx.request({
-      url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + "&id=" + audioId,
+      url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + "&productId=" + audioId,
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
       },
       success: function(res) {
+        console.log(777777777777777777);
         console.log(res);
+        
         var courseVO = res.data.data.courseVO;
+        console.log(courseVO);
+        console.log(777777777777777777);
         that.setData({
 
           [audioNowEpisodes]: courseVO.nowNum,
           [audioAllEpisodes]: courseVO.totalNum
         });
-        var audiochapter = {
-          audioName: "",
-          audiosrc: "",
-          //audioTime: '加载中...',
-        };
-        for (var i = 0; i < courseVO.hcFSectionInfoList.length; i++) {
 
+        for (var i = 0; i < courseVO.hcFSectionInfoList.length; i++) {
+          var audiochapter = {
+            audioName: "",
+            audiosrc: "",
+            //audioTime: '加载中...',
+          };
           var hcFSectionInfo = courseVO.hcFSectionInfoList[i];
           audiochapter.audioName = hcFSectionInfo.chapterName;
           audiochapter.audiosrc = that.getAudioPath(hcFSectionInfo.fileAddr);
