@@ -1,90 +1,146 @@
-// pages/recharge/recharge.js
+var app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    activeIndex: 0,//默认选中第一个
-    numArray: [10, 20, 30, 40, 50, 60, 70, 80, 90], //原价
-    productTitle:"充值卡",//标题
-    productDiscount:"0.01",  //折扣
-    memberPrice:"0.01"      //会员价
+    activeIndex:'0',
+    RechargeCardInfo:[{
+      id:"",
+      numArray:"10",
+      productTitle: "充值卡",//标题
+      productDiscount: "0.01",  //折扣
+      memberPrice: "0.01",      //会员价
+      productCovermap: "",
+    },
+      {
+        id: "",
+        numArray: "20",
+        productTitle: "充值卡",//标题
+        productDiscount: "0.01",  //折扣
+        memberPrice: "0.01",      //会员价
+        productCovermap: "",
+      },
+      {
+        id: "",
+        numArray: "30",
+        productTitle: "充值卡",//标题
+        productDiscount: "0.01",  //折扣
+        memberPrice: "0.01",      //会员价
+        productCovermap: "",
+      },
+      {
+        id: "",
+        numArray: "40",
+        productTitle: "充值卡",//标题
+        productDiscount: "0.01",  //折扣
+        memberPrice: "0.01",      //会员价
+        productCovermap: "",
+      },
+      {
+        id: "",
+        numArray: "50",
+        productTitle: "充值卡",//标题
+        productDiscount: "0.01",  //折扣
+        memberPrice: "0.01",      //会员价
+        productCovermap: "",
+      },
+      {
+        id: "",
+        numArray: "60",
+        productTitle: "充值卡",//标题
+        productDiscount: "0.01",  //折扣
+        memberPrice: "0.01",      //会员价
+        productCovermap: "",
+      },
+      {
+        id: "",
+        numArray: "70",
+        productTitle: "充值卡",//标题
+        productDiscount: "0.01",  //折扣
+        memberPrice: "0.01",      //会员价
+        productCovermap: "",
+      },
+      {
+        id: "",
+        numArray: "80",
+        productTitle: "充值卡",//标题
+        productDiscount: "0.01",  //折扣
+        memberPrice: "0.01",      //会员价
+        productCovermap: "",
+      },
+      {
+        id: "",
+        numArray: "90",
+        productTitle: "充值卡",//标题
+        productDiscount: "0.01",  //折扣
+        memberPrice: "0.01",      //会员价
+        productCovermap:"",
+      }]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    //充值卡信息
+    this.RechargeCardInfo();
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
   activethis: function (event) {//点击选中事件
     var thisindex = event.currentTarget.dataset.thisindex;//当前index
     this.setData({
       activeIndex: thisindex
     })
   },
+  //json数组比较
+  compare: function (property) {
+    return function (a, b) {
+      var value1 = a[property];
+      var value2 = b[property];
+      return value1 - value2
+    }
+  },
+ //充值卡信息
+  RechargeCardInfo: function(){
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/api/product/getAllPrepaidCards?sid=' + app.globalData.sid,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP',
+      },
+      success: function (res) {
+        var data = res.data.data.prepaidCards;
+        data.sort(that.compare("originalPrice"));
+        console.log("data:",data)
+        for (var i = 0; i < data.length;i++){
+          var numArray = "RechargeCardInfo["+i+"].numArray";
+          var productTitle = "RechargeCardInfo[" + i + "].productTitle";
+          var productDiscount = "RechargeCardInfo[" + i + "].productDiscount";
+          var memberPrice = "RechargeCardInfo[" + i + "].memberPrice";
+          var productCovermap = "RechargeCardInfo[" + i + "].productCovermap";
+          var id = "RechargeCardInfo[" + i + "].id";
+          that.setData({
+            [numArray] : data[i].originalPrice,
+            [productTitle]: data[i].productTitle,
+            [productDiscount]: data[i].productDiscount,
+            [memberPrice]: data[i].memberPrice,
+            [productCovermap]: data[i].productCovermap,
+            [id]: data[i].id
+          });
+          console.log(that.data.RechargeCardInfo[i]);
+        }
+      }
+    })
+  },
   Refill: function () {
     var that = this
     //获取指定充值卡
-    console.log(this.data.numArray[this.data.activeIndex])
+    console.log("获取指定充值卡:",this.data.RechargeCardInfo[this.data.activeIndex])
     //创建订单所需信息
-    var dataSet = {
-      money: this.data.numArray[this.data.activeIndex],
-      productTitle: this.data.productTitle,//标题
-      productDiscount: this.data.productDiscount,  //折扣
-      memberPrice: this.data.memberPrice,      //会员价
-    }
-    let data = JSON.stringify(dataSet)
+    let data = JSON.stringify(this.data.RechargeCardInfo[this.data.activeIndex])
     wx.navigateTo({
       url: '../RechargeOrder/RechargeOrder?data=' + data,
     })

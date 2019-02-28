@@ -4,9 +4,9 @@
     <text>选择充值金额</text>
   </view>
   <view class='itemBox'>
-    <view class="{{activeIndex == index ? 'active':''}}" wx:for="{{numArray}}" bindtap='activethis' data-thisindex='{{index}}'>
-      <text>充{{item}}元</text>
-      <text>售价:{{item-0.1}}元</text>
+    <view class="{{activeIndex == index ? 'active':''}}" wx:for="{{RechargeCardInfo}}" bindtap='activethis' data-thisindex='{{index}}'>
+      <text>充{{item.numArray}}元</text>
+      <text>售价:{{item.numArray*item.productDiscount}}元</text>
     </view>
   </view>
   <view class='thisbtn' bindtap='Refill'>
