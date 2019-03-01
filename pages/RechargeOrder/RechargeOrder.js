@@ -16,37 +16,129 @@ Page({
       id: ""
     },
     goodsList: [{
+      id: "",
       productName: "线性代数",
       oldprice: "66.00",
       productImage: "../image/math.jpg",
       count: 1,
-      price: 0
+      price: 0,
     }],
+    getUrl:"",
+    orderNum: "",
     TotalPrice: '0',
+  },
+  /**
+   * 获取用户地址
+   */
+  getAddress: function(options) {
+    var that = this;
+    var address = that.data.address;
+    var options = this.data.options
+    if (!options) {
+      wx.request({
+        url: app.globalData.url + '/api/userAddress/getAddress?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid,
+        method: "POST",
+        header: {
+          'X-Requested-With': 'APP'
+        },
+        success: function(res) {
+          console.log(res);
+          var hcUserAddressList = res.data.data.hcUserAddressList;
+          //没有收货就选择默认值
+          if (hcUserAddressList.length == 0) {
+            return;
+          }
+          for (let i = 0; i < hcUserAddressList.length; i++) {
+            if (hcUserAddressList[i].isDefault == true) {
+              address.username = hcUserAddressList[i].userName;
+              address.telephone = hcUserAddressList[i].userPhone;
+              address.address = hcUserAddressList[i].userAddress;
+              address.id = hcUserAddressList[i].id;
+            }
+          }
+          that.setData({
+            'address': address
+          })
+        }
+      })
+    } else {
+      console.log("没请求");
+      return;
+    }
+  },
+  // 查询订单
+  getOrderByOrderId: function() {
+    var that = this;
+    wx.showLoading({
+      title: '加载中',
+      mask: true,
+    })
+    // var that = thats;
+    console.log("id======================:",that.data.goodsList[0].id)
+    wx.request({
+      url: app.globalData.url + '/api/order/getOrderByOrderId?sid=' + app.globalData.sid + '&orderId=' + that.data.orderNum,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function(res) {
+        wx.hideLoading();
+        var orderId = res.data.data.orderVO.orderNum;
+        console.log("查询订单:orderId:====================================", orderId)
+        that.setData({
+          orderNum: orderId
+        })
+        console.log("==============")
+        console.log("that.data.getUrl:===============",that.data.getUrl)
+        getApp().pay("同源梦商城-" + that.data.goodsList[0].productName, that.data.orderNum, that.data.goodsList[0].price, function () { }, function () { }, function () {
+          wx.redirectTo({
+            url: '../' + that.data.getUrl + '/' + that.data.getUrl,
+          })
+        });
+      }
+    })
+    console.log(this.data.orderNum);
+  },
+  jump: function () {
+    wx.navigateBack({
+      delta: 2
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
+
     console.log(options.data)
     let item = JSON.parse(options.data)
     console.log(item)
-    this.data.goodsList[0]={
-              productName: item.productTitle,
-              oldprice: item.numArray,
-              productImage: item.productCovermap,
-              count: 1,
-              price: item.numArray*item.productDiscount,
-              memberPrice: item.memberPrice,
-              id:item.id,
-    }
-    console.log(this.data.goodsList[0])
+    var oldprice = "goodsList[0].oldprice";
+    var productName = "goodsList[0].productName";
+    var price = "goodsList[0].price";
+    var memberPrice = "goodsList[0].memberPrice";
+    var productImage = "goodsList[0].productImage";
+    var id = "goodsList[0].id";
+    var urls = item.url;
+    console.log("============================")
+    console.log("url:=======",item.url)
+    this.setData({
+      [oldprice]: item.numArray,
+      [productName]: item.productTitle,
+      [price]: item.numArray * item.productDiscount,
+      [memberPrice]: item.memberPrice,
+      [productImage]: item.productCovermap,
+      [id]: item.id,
+      count: 1,
+      getUrl:urls,
+    });
+
+    console.log("goodsList:", this.data.goodsList[0])
     this.getAddress();
   },
   /**
-    * 存储订单到数据库 
-    */
-  payment: function () {
+   * 存储订单到数据库 
+   */
+  payment: function() {
     var that = this;
     console.log(this.data.address.id);
     if (this.data.address.id == "") {
@@ -70,7 +162,7 @@ Page({
     OrderItem.product_id = goodsList[0].id;
     OrderItem.shop_number = goodsList[0].count;
     hcOrderItemList[0] = OrderItem;
-    
+
     console.log(this.data.address.id);
     var hcOrder = new Object();
     hcOrder.user_id = app.globalData.uid;
@@ -96,56 +188,16 @@ Page({
       header: {
         'X-Requested-With': 'APP',
       },
-      success: function (res) {
+      success: function(res) {
         console.log("创建订单结果：")
         console.log(res);
-        var productName = "";
-        for (let i = 0; i < that.data.goodsList.length; i++) {
-          productName += goodsList[i].productName + ',';
-        }
-        wx.navigateTo({
-          url: '../pay/pay?TotalPrice=' + that.data.goodsList[0].price + '&orderId=' + res.data.data.orderId + '&product=' + productName + '&isMemberPay=' + that.data.isMemberPay + "&memberTypeId=" + that.data.goodsList[0].id,
+        console.log("id:", that.data.goodsList[0].id)
+        that.setData({
+          orderNum: res.data.data.orderId
         })
+        that.getOrderByOrderId();
+        console.log("返回订单orderNum======================:", that.data.orderNum)
       }
     })
   },
-  /**
-   * 获取用户地址
-   */
-  getAddress: function (options) {
-    var that = this;
-    var address = that.data.address;
-    var options = this.data.options
-    if (!options) {
-      wx.request({
-        url: app.globalData.url + '/api/userAddress/getAddress?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid,
-        method: "POST",
-        header: {
-          'X-Requested-With': 'APP'
-        },
-        success: function (res) {
-          console.log(res);
-          var hcUserAddressList = res.data.data.hcUserAddressList;
-          //没有收货就选择默认值
-          if (hcUserAddressList.length == 0) {
-            return;
-          }
-          for (let i = 0; i < hcUserAddressList.length; i++) {
-            if (hcUserAddressList[i].isDefault == true) {
-              address.username = hcUserAddressList[i].userName;
-              address.telephone = hcUserAddressList[i].userPhone;
-              address.address = hcUserAddressList[i].userAddress;
-              address.id = hcUserAddressList[i].id;
-            }
-          }
-          that.setData({
-            'address': address
-          })
-        }
-      })
-    } else {
-      console.log("没请求");
-      return;
-    }
-  }
 })

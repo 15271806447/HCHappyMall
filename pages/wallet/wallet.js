@@ -57,7 +57,7 @@ Page({
   },
   recharge: function(e) {
     wx.navigateTo({
-      url: '/pages/OnlineRecharge/OnlineRecharge',
+      url: '../OnlineRecharge/OnlineRecharge?url=wallet',
     })
   },
   getWallet: function() {
