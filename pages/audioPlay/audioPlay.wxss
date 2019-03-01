@@ -132,6 +132,7 @@ input {
   font-size: 14px;
 }
 
+
 .section .vedioDescription .text .score {
   color: #f30;
 }
@@ -262,6 +263,15 @@ input {
   flex-direction: column;
   margin-left: 15rpx;
 }
+
+.learning{
+  position: absolute;
+  margin-left: 400rpx;
+  margin-top: 14rpx;
+  color: #007d20;
+  font-size: 28rpx;
+}
+
 .selectionbox .time{
   font-size: 14px;
   color: #999;

@@ -233,17 +233,18 @@ Page({
   bounced:function(e){
     console.log("免费观看的讲次：" + this.data.vritualCourse.freeNum);
     var index = e.currentTarget.dataset.index;
+    console.log(index)
     var freeNum = this.data.vritualCourse.freeNum
     var that = this;
     var type = that.data.type;
     if (index < freeNum){
       if (type == 'VideoItem') {
         wx.navigateTo({
-          url: '../videoPlay/videoPlay?type=1&videoDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)),
+          url: '../videoPlay/videoPlay?type=1&videoDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)) + '&index=' + index,
         })
       } else if (type == 'AudioItem') {
         wx.navigateTo({
-          url: '../audioPlay/audioPlay?type=1&audioDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)),
+          url: '../audioPlay/audioPlay?type=1&audioDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)) + '&index=' + index,
         })
       }
     }else{
