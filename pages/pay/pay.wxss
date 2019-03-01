@@ -212,8 +212,8 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
 
 .input_control {
   position: relative;
-  left: 0;
+  left: -300rpx;
   bottom: 0;
-  width: 100%;
-  /* height: 100rpx; */
+  width: 100rpx;
+  height: 100rpx;
 }
