@@ -5,7 +5,7 @@ Page({
     audioInformation: {
       name: "",
       //当前播放的视频索引
-      thisindex: 1,
+      thisindex: 0,
       coverimg: "",
       desption: "",
       // 评分
@@ -21,11 +21,24 @@ Page({
     first_click: false,
     //音频封面图
     audiolist: [
-      // {
-      //   audiosrc: '',
-      //   audioName: "",
-      //   audioTime:0,
-      // }
+      {
+        audiosrc: '',
+        audioName: "",
+        audioTime:0,
+        id:""
+      },
+       {
+        audiosrc: '',
+        audioName: "",
+        audioTime: 0,
+         id: ""
+      },
+        {
+        audiosrc: '',
+        audioName: "",
+        audioTime: 0,
+        id: ""
+      },
     ],
     isPlayAudio: false,
     // 音频跳转
@@ -34,8 +47,14 @@ Page({
     audioDuration: 0,
     showTime1: '00:00',
     showTime2: '00:00',
-    imageUrl: app.globalData.imageUrl
+    imageUrl: app.globalData.imageUrl,
     //audioTime: 0
+    // 学习时间
+    learnTime:[],
+    // 学习情况
+    learnDataList:[],
+    //记录传参
+    audioDetail:""
   },
   onReady(res) {
 
@@ -51,11 +70,9 @@ Page({
     var t = this;
     var index = this.data.audioInformation.thisindex;
 
-    if (t.data.audiolist[index].audiosrc.length != 0) {
+    if (this.data.audiolist[index].audiosrc.length != 0) {
       //设置src
       innerAudioContext.src = t.data.audiolist[index].audiosrc;
-      console.log('index:' + index);
-      console.log(t.data.audiolist[index].audiosrc);
       //运行一次
       innerAudioContext.play();
       innerAudioContext.pause();
@@ -100,7 +117,6 @@ Page({
     var that = this;
     var index = this.data.audioInformation.thisindex;
     innerAudioContext.src = this.data.audiolist[index].audiosrc;
-    console.log(e.detail.value);
     //获取进度条百分比
     var value = e.detail.value;
     //更新进度条进度
@@ -117,7 +133,7 @@ Page({
     });
     //调用seek方法跳转歌曲时间
     innerAudioContext.seek(value);
-    //播放歌曲
+    // 
     innerAudioContext.play();
   },
   /**
@@ -212,17 +228,22 @@ Page({
     //卸载页面，清除计步器
     clearInterval(this.data.durationIntval);
     innerAudioContext.stop();
-    console.log(777777777);
   },
 
   /*video
-  / 选择视频
+  / 点击列表视频
   */
   choosevideo: function(e) {
-    //获取点击的索引
+    this.duration
+    var that = this;
     var index = e.currentTarget.dataset.index;
+    console.log("获取点击的索引" + index);
     var audioInformation = this.data.audioInformation;
     audioInformation.thisindex = index;
+
+    var audioDetail = this.data.audioDetail;
+    that.saveOrUpdateLearnSituate(audioDetail);
+
     this.setData({
       'audioInformation': audioInformation
     });
@@ -264,12 +285,10 @@ Page({
         'X-Requested-With': 'APP'
       },
       success: function(res) {
-        console.log(777777777777777777);
-        console.log(res);
         
         var courseVO = res.data.data.courseVO;
-        console.log(courseVO);
-        console.log(777777777777777777);
+        console.log("节的信息")
+        console.log(res);
         that.setData({
 
           [audioNowEpisodes]: courseVO.nowNum,
@@ -283,9 +302,11 @@ Page({
             //audioTime: '加载中...',
           };
           var hcFSectionInfo = courseVO.hcFSectionInfoList[i];
+
           audiochapter.audioName = hcFSectionInfo.chapterName;
           audiochapter.audiosrc = that.getAudioPath(hcFSectionInfo.fileAddr);
-          //that.getAudioTime(audiochapter.audiosrc,i);
+          audiochapter.id = hcFSectionInfo.id;
+
           fileId.push(hcFSectionInfo.fileAddr);
           audio.push(audiochapter);
         }
@@ -304,19 +325,25 @@ Page({
   },
 
   setTime: function (options) {
-    console.log(JSON.parse(options.time))
+    console.log("传参options为")
+    console.log(options);
     this.setData({
-      time: JSON.parse(options.time)
+      time: JSON.parse(options)
     })
   },
-
+  /**
+   * 生命周期函数--监听页面加载
+   */
   onLoad: function(e) {
     var that = this;
     this.setTime(e);
+
     var audioDetail = JSON.parse(decodeURIComponent(e.audioDetail));
-    console.log('audioDetail');
-    console.log(audioDetail);
+    this.data.audioDetail = audioDetail
+
     that.getChapterInfo(audioDetail.id);
+    that.getLearnSituate(audioDetail);
+
     var audioName = "audioInformation.name";
     var audioDesption = "audioInformation.desption";
     var audioSales = "audioInformation.sales";
@@ -329,9 +356,7 @@ Page({
     })
 
 
-    that.getSecondClassifyName(audioDetail);
-
-    
+    that.getSecondClassifyName(audioDetail);    
   },
 
 
@@ -353,7 +378,103 @@ Page({
     })
   },
 
+/**根据用户id和商品id查询课程学习情况 */
+  getLearnSituate: function (audioDetail){
+
+    var that = this;
+    var productId = audioDetail.id;
+    var learnTime = this.data.learnTime;
+    var learnDataList = this.data.learnDataList;
+
+    wx.request({
+      url: app.globalData.url + '/api/course/getLearnSituate?userId=' + app.globalData.uid + '&sid=' + app.globalData.sid+"&productId=" + productId,
+      method: 'POST',
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function (res) {
+   
+        var learnDataList = res.data.data.hcFLearnSituateList;
+        learnDataList = res.data.data.hcFLearnSituateList;
+
+        for (var i = 0; i < learnDataList.length; i++) {
+          if (learnDataList.length == 0){
+                       learnDataList[i] = '00:00'
+              }else{
+                        learnTime[i] = learnDataList[i].courseSchedule
+            if ((learnTime[i] / 60) < 10){
+              if ((learnTime[i] % 60 < 10)){
+                        learnTime[i] = "0" + Math.floor(learnTime[i] / 60) + ":" + "0" + (learnTime[i] % 60)
+                  }else{
+                        learnTime[i] ="0" + Math.floor(learnTime[i] / 60) + ":" + (learnTime[i] % 60)
+                  }
+            }else{
+                  if ((learnTime[i] % 60 < 10)) {
+                    learnTime[i] ="0" + Math.floor(learnTime[i] / 60) + ":" + "0" + (learnTime[i] % 60)
+                  } else {
+                    learnTime[i] ="0" + Math.floor(learnTime[i] / 60) + ":" + (learnTime[i] % 60)
+                  }
+            }
+            
+              }
+          }
+        that.setData({
+          'learnTime': learnTime
+        })
+      }
+    })
+  },
 
 
+// 根据索引获取节的id
+  getIdIndex: function (index){
+    var audiolist = this.data.audiolist;
+    return audiolist[index].id;
+  },
 
+/**根据虚拟商品更新保存学习信息 */
+ // 首先根据判断用户有没有每一节的学习信息，如果没有，添加不需要learnSituateId,这个时候需要当前播放的节的id，如果有可以直接更新，这个时候需要获取之前的学习情况id.
+  saveOrUpdateLearnSituate: function (audioDetail,res) {
+    var that = this;
+    var productId = audioDetail.id;
+    var hcFLearnSituateList = this.data.learnDataList;
+    var uid = app.globalData.uid;
+    var learnTime = this.data.learnTime;
+    var index = this.data.audioInformation.thisindex;
+    var learnSituateId ="";
+    var courseChapterId = that.getIdIndex(index);
+
+    // 视频停止时间
+    var duration = 999;
+    console.log('视频停止时间' + duration);
+    if (hcFLearnSituateList.length != 0){
+      for (var i = 0; i < hcFLearnSituateList; i++) {
+        // 如果当前节的播放时间不为0  需要id
+        if (hcFLearnSituateList[i].courseChapterId == courseChapterId && hcFLearnSituateList[i].courseSchedule != 0) {
+          learnSituateId = hcFLearnSituateList[i].id;
+        } else {
+          learnSituateId = "";
+        }
+      }
+    }
+  
+    var formdata ={
+      learnSituateId: learnSituateId, 
+      productId: productId,
+      courseChapterId: courseChapterId,
+      userId: app.globalData.uid,
+      courseSchedule: duration
+    }
+    wx.request({
+      url: app.globalData.url + '/api/course/saveOrUpdateLearnSituate?sid=' + app.globalData.sid,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP',
+      },
+      data: JSON.stringify(formdata),
+      success: function (data) {
+        console.log("保存成功！");
+      }
+    })
+  },
 })
