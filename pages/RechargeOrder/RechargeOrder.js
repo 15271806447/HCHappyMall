@@ -90,7 +90,7 @@ Page({
         })
         console.log("==============")
         console.log("that.data.getUrl:===============",that.data.getUrl)
-        getApp().pay("同源梦商城-" + that.data.goodsList[0].productName, that.data.orderNum, that.data.goodsList[0].price, function () { }, function () { }, function () {
+        getApp().pay("幸福学院商城-" + that.data.goodsList[0].productName, that.data.orderNum, that.data.goodsList[0].price, function () { }, function () { }, function () {
           wx.redirectTo({
             url: '../' + that.data.getUrl + '/' + that.data.getUrl,
           })

@@ -1,8 +1,12 @@
 page{
   font-family: "黑体";
+  height: 100%; /*生效*/
+}
+.head{
+  height: 100%;
 }
 .chaemenu{
-width: 100%;
+width: 
 height: 130px;
 background: #2AD5A1;
 position: relative;
@@ -49,6 +53,6 @@ flex: 2;
   background:#F7F7F7;
   width: 98%;
   margin: 0 auto;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin-bottom: 0rpx;
+  margin-top: 20rpx;
 }
