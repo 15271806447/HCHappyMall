@@ -84,8 +84,13 @@ Page({
         'X-Requested-With': 'APP'
       },
       success: function (res) {
+        wx.showToast({
+          title: '成功',
+          icon: 'success',
+          duration: 2000,
+        })
         console.log("res:" + res)
-      }
+      },
     })
   },
   modalcnt: function () {
@@ -99,6 +104,11 @@ Page({
           console.log("扫码分享。。。。。。。。。")
           that.getFans()
         } else if (res.cancel) {
+            wx.showToast({
+              title: '失败',
+              icon: 'none',
+              duration: 2000
+            })
           console.log('用户点击取消')
         }
       }
@@ -118,20 +128,6 @@ Page({
         })
         //获得粉丝
         that.modalcnt();
-        wx.showToast({
-          title: '成功',
-          icon: 'success',
-          duration: 2000,
-        })
-      },
-      fail: (res) => {
-        wx.showToast({
-          title: '失败',
-          icon: 'success',
-          duration: 2000
-        })
-      },
-      complete: (res) => {
       }
     })
   },
