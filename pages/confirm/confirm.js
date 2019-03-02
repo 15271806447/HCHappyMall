@@ -105,7 +105,7 @@ Page({
         if (coupon[index].isUse == false) {
           //判断优惠券是否到达使用日期
           wx.showToast({
-            title: '优惠券未到达使用日期',
+            title: '优惠券未生效',
             icon: 'none',
             duration: 2000
           })
@@ -481,20 +481,20 @@ Page({
           }
           coupon.manjian = couponVOS[i].name;
 
+          //判断是否生效
+          coupon.startTime = couponVOS[i].effectiveTime.split(' ')[0];
+          coupon.isUse = that.flagData(couponVOS[i].effectiveTime, 'start');
+          //判断是否过期
           coupon.endTime = couponVOS[i].expirationTime.split(' ')[0];
           coupon.isExpired = that.flagData(couponVOS[i].expirationTime, 'end');
+
           if (coupon.isExpired == false) {
             coupon.flagType = '已过期';
             coupon.bgColor = '#c0c0c0';
-          }
-
-          coupon.startTime = couponVOS[i].effectiveTime.split(' ')[0];
-          coupon.isUse = that.flagData(couponVOS[i].effectiveTime, 'start');
-          if (coupon.isUse == false) {
+          }else if (coupon.isUse == false) {
             coupon.flagType = '无法使用';
             coupon.bgColor = '#ccc';
-          }
-
+          } 
           couponList[i] = coupon;
         }
         that.flagCouponType(couponList);
@@ -515,18 +515,18 @@ Page({
     if (flag == 'start') {
       if (nowTime[0] > tempTime[0]) {
         return true;
-      } else if (parseInt(nowTime[1]) > parseInt(tempTime[1])) {
-        return true;
-      } else if (parseInt(nowTime[2]) > parseInt(tempTime[2])) {
+      } else if (parseInt(nowTime[1]) < parseInt(tempTime[1])) {
+        return false;
+      } else if (parseInt(nowTime[2]) >= parseInt(tempTime[2])) {
         return true;
       } else {
         return false;
       }
     } else if (flag == 'end') {
-      if (nowTime[0] < tempTime[0]) {
+      if (parseInt(nowTime[0]) < parseInt(tempTime[0])) {
         return true;
-      } else if (parseInt(nowTime[1]) < parseInt(tempTime[1])) {
-        return true;
+      } else if (parseInt(nowTime[1]) > parseInt(tempTime[1])) {
+        return false;
       } else if (parseInt(nowTime[2]) < parseInt(tempTime[2])) {
         return true;
       } else {
@@ -597,9 +597,9 @@ Page({
         // 先算优惠券，再算积分，再算折扣
         TotalPrice -= (this.data.integral / 1000)
         if (coupon[i].couponType == "折扣券") {
-          TotalPrice -= parseFloat(coupon[i].preferentialAmount);
+          TotalPrice *= parseFloat(coupon[i].preferentialAmount);
         } else if (coupon[i].couponType == "优惠券") {
-          TotalPrice *= coupon[i].preferentialAmount;
+          TotalPrice -= coupon[i].preferentialAmount;
         }
       }
     }
