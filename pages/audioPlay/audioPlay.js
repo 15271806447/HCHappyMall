@@ -327,7 +327,8 @@ Page({
   },
   
   getAudioPath:function(id){
-    return app.globalData.url + '/common/file/showPicture.do?id=' + id;
+    var temp = app.globalData.url + '/common/file/showPicture.do?id=' + id;
+    return temp;
   },
 
   setTime: function (options) {
@@ -441,30 +442,34 @@ Page({
     var that = this;
     var productId = audioDetail.id;
     var hcFLearnSituateList = this.data.learnDataList;
+    console.log(hcFLearnSituateList);
     var uid = app.globalData.uid;
     var learnTime = this.data.learnTime;
     var beforeIndex = this.data.beforeIndex;
+    //学习情况表中的id
     var learnSituateId ="";
     var audiolist = this.data.audiolist;
+    //当前节的id
     var courseChapterId = audiolist[beforeIndex].id;
     // 视频停止时间
     var duration = this.data.audioSeek;
 
-      console.log(hcFLearnSituateList);
-
 
     if (hcFLearnSituateList.length != 0){
       for (var i = 0; i < hcFLearnSituateList; i++) {
-        // 如果当前节的播放时间不为0  需要id
-        if (hcFLearnSituateList[i].courseChapterId == courseChapterId && hcFLearnSituateList[i].courseSchedule != 0) {
-          learnSituateId = hcFLearnSituateList[i].id;
+        // 找用户有没有该节的学习情况
+        if (hcFLearnSituateList[i].courseChapterId== courseChapterId) {
+          if (hcFLearnSituateList[i].id !=""){
+              learnSituateId = hcFLearnSituateList[i].id;
+              console.log("当前节的播放时间");
+              console.log(learnSituateId);
+            }
         } else {
-          learnSituateId = "6da2fff6-43ee-4931-b1b1-878dfb70496d";
+          learnSituateId = "";
         }
       }
     }
-    console.log("学习情况id");
-    console.log(learnSituateId);
+
     var formdata ={
       learnSituateId: learnSituateId, 
       productId: productId,
@@ -480,7 +485,7 @@ Page({
       },
       data: JSON.stringify(formdata),
       success: function (data) {
-        console.log("保存成功！");
+        console.log("保存成功");
       }
     })
   },

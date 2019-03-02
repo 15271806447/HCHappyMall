@@ -45,19 +45,97 @@ Page({
   bindInputBlur(e) {
     this.inputValue = e.detail.value
   },
-  /*
-  / 选择视频
-  */
-  choosevideo: function(e) {
-    //获取点击的索引
-    var index = e.currentTarget.dataset.index;
-    var videoInformation = this.data.videoInformation;
-    videoInformation.thisindex = index;
+
+  onShow: function () {
+    this.Initialization();
+  },
+
+  // TODO 切换章节 调整数据
+  //初始化播放器，获取duration
+  Initialization() {
+    var t = this;
+    //当前点击的视频播放的index
+    var index = this.data.audioInformation.thisindex;
+    if (this.data.audiolist[index].audiosrc.length != 0) {
+      //设置src
+      innerAudioContext.src = t.data.audiolist[index].audiosrc;
+      //运行一次
+      innerAudioContext.play();
+      innerAudioContext.pause();
+      innerAudioContext.onCanplay(() => {
+        //初始化duration
+        innerAudioContext.duration
+        setTimeout(function () {
+          //延时获取音频真正的duration(总时长)
+          var duration = innerAudioContext.duration;
+          // 分钟
+          var min = parseInt(duration / 60);
+          // 秒
+          var sec = parseInt(duration % 60);
+          if (min.toString().length == 1) {
+            // 正则
+            min = `0${min}`;
+          }
+          if (sec.toString().length == 1) {
+            sec = `0${sec}`;
+          }
+          t.setData({
+            audioDuration: innerAudioContext.duration,
+            showTime2: `${min}:${sec}`
+          });
+        }, 1000)
+      })
+    }
+    //重置时间,把isPlayAudio改成false
     this.setData({
-      'videoInformation': videoInformation
+      audioSeek: 0,
+      audioTime: 0,
+      isPlayAudio: false,
+      showTime1: '00:00',
+      isPlayAudio: false
     });
+  },
+
+  /*video
+   / 点击列表视频切换数据
+   */
+  choosevideo: function (e) {
+    this.duration
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var audioInformation = this.data.audioInformation;
+    var beforeIndex = this.data.beforeIndex;
+    // 前一个正在播放的index值
+    beforeIndex = audioInformation.thisindex;
+    console.log("前一个正在播放的index值");
+    console.log(beforeIndex)
+    audioInformation.thisindex = index;
+
+    var audioDetail = this.data.audioDetail;
+    that.saveOrUpdateLearnSituate(audioDetail);
+
+    this.setData({
+      'audioInformation': audioInformation
+    });
+    this.Initialization();
     this.videoContext.play();
   },
+
+
+
+  // /*
+  // / 选择视频
+  // */
+  // choosevideo: function(e) {
+  //   //获取点击的索引
+  //   var index = e.currentTarget.dataset.index;
+  //   var videoInformation = this.data.videoInformation;
+  //   videoInformation.thisindex = index;
+  //   this.setData({
+  //     'videoInformation': videoInformation
+  //   });
+  //   this.videoContext.play();
+  // },
 
   /**
    * 下拉按钮
