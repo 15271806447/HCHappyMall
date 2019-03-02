@@ -31,7 +31,6 @@
     "pages/message/message",
     "pages/cash/cash",
     "pages/wallet/wallet",
-    "pages/recharge/recharge",
     "pages/eventDetails/eventDetails",
     "pages/virtualCourse/virtualCourse",
     

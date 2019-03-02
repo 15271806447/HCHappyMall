@@ -17,7 +17,7 @@
 </view>
 <view class='nav'>
   <!-- 充值 -->
-  <navigator url="../recharge/recharge" hover-class="navigator-hover" class='nav_block'>
+  <navigator url="../OnlineRecharge/OnlineRecharge" hover-class="navigator-hover" class='nav_block'>
     <image src='{{imageUrl}}recharge.png' class='nav_img'></image>
     <text class='nav_text'>充值</text>
   </navigator>
