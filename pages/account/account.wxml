@@ -1,20 +1,114 @@
-<view class='conbox'>
-  <view class='paywx'>
-    <image src='img/pay.png'></image>
+<!--导航条-->
+<view class="navbar">
+  <lable wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">
+    <text>{{item}}</text>
+  </lable>
+</view>
+<!--全部-->
+<view hidden="{{currentTab!==0}}" class='total'>
+  <!-- 1111111 -->
+  <view wx:if="{{iShcWalletTransactionRecordList}}">
+    <view wx:for="{{hcWalletTransactionRecordList}}">
+      <view class='conbox'>
+        <view class='paywx'>
+          <image src='img/pay.png'></image>
+        </view>
+        <view class='fbox'>
+          <text class='fl'>商家名称:</text>
+          <text class='fr'>幸福学院</text>
+        </view>
+        <view class='fbox'>
+          <text class='fl'>付款金额:</text>
+          <text class='fr'>￥{{item.transactionAmount}}</text>
+        </view>
+        <view class='fbox'>
+          <text class='fl'>账单类型:</text>
+          <text class='fr'>{{item.sourceType}}</text>
+        </view>
+        <view class='fbox'>
+          <text class='fl'>支付日期</text>
+          <text class='fr'>{{item.createTime}}</text>
+        </view>
+      </view>
+    </view>
   </view>
-<view class='fbox'>
-  <text class='fl'>商家名称:</text>
-  <text class='fr'>幸福学院</text>
-  </view>
-  <view class='fbox'>
-  <text class='fl'>付款金额:</text>
-  <text class='fr'>￥9.9</text>
-  </view>
-   <view class='fbox'>
-  <text class='fl'>支付日期</text>
-  <text class='fr'>2019年08月09日</text>
+ <!-- 否则 -->
+  <view wx:else>
+    <!-- 外层 -->
+    <view class='cont_count'>
+      <label class='none_tab'>亲,您还没有账单明细~~</label>
+    </view>
   </view>
 </view>
 
+<!--收入-->
+<view hidden="{{currentTab!==1}}">
+  <view wx:if="{{iShcIncomeBillList}}">
+    <view wx:for="{{hcIncomeBillList}}">
+      <view class='conbox'>
+        <view class='paywx'>
+          <image src='img/pay.png'></image>
+        </view>
+        <view class='fbox'>
+          <text class='fl'>商家名称:</text>
+          <text class='fr'>幸福学院</text>
+        </view>
+        <view class='fbox'>
+          <text class='fl'>付款金额:</text>
+          <text class='fr'>￥{{item.transactionAmount}}</text>
+        </view>
+        <view class='fbox'>
+          <text class='fl'>账单类型:</text>
+          <text class='fr'>{{item.sourceType}}</text>
+        </view>
+        <view class='fbox'>
+          <text class='fl'>支付日期</text>
+          <text class='fr'>{{item.createTime}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+<!-- 否则 -->
+  <view wx:else>
+    <!-- 外层 -->
+    <view class='cont_count'>
+      <label class='none_tab'>亲,您还没有收入明细~~</label>
+    </view>
+  </view>
+</view>
 
-
+<!-- 支出-->
+<view hidden="{{currentTab!==2}}">
+  <view wx:if="{{iShcBillOfExpenditureList}}">
+    <view wx:for="{{hcBillOfExpenditureList}}" wx:key="key">
+      <view class='conbox'>
+        <view class='paywx'>
+          <image src='img/pay.png'></image>
+        </view>
+        <view class='fbox'>
+          <text class='fl'>商家名称:</text>
+          <text class='fr'>幸福学院</text>
+        </view>
+        <view class='fbox'>
+          <text class='fl'>付款金额:</text>
+          <text class='fr'>￥{{item.transactionAmount}}</text>
+        </view>
+        <view class='fbox'>
+          <text class='fl'>账单类型:</text>
+          <text class='fr'>{{item.sourceType}}</text>
+        </view>
+        <view class='fbox'>
+          <text class='fl'>支付日期</text>
+          <text class='fr'>{{item.createTime}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+<!-- 否则 -->
+  <view wx:else>
+    <!-- 外层 -->
+    <view class='cont_count'>
+      <label class='none_tab'>亲,您还没有支出明细~~</label>
+    </view>
+  </view>
+</view>
