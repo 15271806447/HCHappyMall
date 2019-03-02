@@ -16,7 +16,7 @@
       <view class="price">
         <text>会员价:￥{{goods.memberPrice}}</text>
       </view>
-      <view space="nbsp">原   价:
+      <view space="nbsp">原 价:
         <text>￥{{goods.originalPrice}}</text>
       </view>
       <view class='sale'>
@@ -77,17 +77,9 @@
 
 
 <view class='footer'>
-  <!-- <view>
-    <image class='fotpic' src='../image/service2.svg'></image>
-    <text>客服</text>
-  </view>
-  <view>
-    <image class='fotpic' src='../image/store2.svg'></image>
-    <text>进店</text>
-  </view> -->
-  <view bindtap='collection'>
+  <view bindtap='collection' class='collection'>
     <text wx:if="{{isClick}}" id='yellow'>★</text>
-    <text wx:else  id='yellow'>☆</text>
+    <text wx:else id='yellow'>☆</text>
     <text>收藏</text>
   </view>
   <text class="tet" catchtap='JoinShoppingCart'>加入购物车</text>
