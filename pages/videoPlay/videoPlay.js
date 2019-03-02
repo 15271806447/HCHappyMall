@@ -91,7 +91,7 @@ Page({
     var video = [];
     var fileId = [];
     wx.request({
-      url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + "&id=" + videoId,
+      url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + "&productId=" + videoId,
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
@@ -138,8 +138,13 @@ Page({
       url: app.globalData.url + '/api/common/file/get?id=' + fileId,
       method: 'GET',
       success: function(res) {
+        console.log("获取文件路径")
+        console.log(res);
         var index = res.data.data.storageId.indexOf("upload");
+        // var filePath = 'https://www.xfxy.awcp.org.cn/api/common/file/upload?id=692073d505ac874d420f3fefe1ed0f7d';
         var filePath = app.globalData.url + "/" + res.data.data.storageId.substring(index);
+        console.log('filePath')
+        console.log(filePath)
         //that.getVideoTime(filePath, i);
         that.setData({
           [videoUrl]: filePath
