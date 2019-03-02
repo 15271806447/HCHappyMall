@@ -83,6 +83,7 @@ Page({
     })
   },
 
+
   //顶部tab切换
   navbarTap: function(e) {
     this.setData({
@@ -90,6 +91,7 @@ Page({
     });
     var options = {
       state: JSON.stringify(e.currentTarget.dataset.idx)
+
     }
     this.onLoad(options);
   },
