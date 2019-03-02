@@ -132,7 +132,7 @@ Page({
       isPlayAudio: true
     });
     //调用seek方法跳转歌曲时间
-    innerAudioContext.seek(120);
+    innerAudioContext.seek(value);
     // 
     innerAudioContext.play();
   },
@@ -448,7 +448,7 @@ Page({
     var audiolist = this.data.audiolist;
     var courseChapterId = audiolist[beforeIndex].id;
     // 视频停止时间
-    var duration = 999;
+    var duration = this.data.audioSeek;
 
       console.log(hcFLearnSituateList);
 
