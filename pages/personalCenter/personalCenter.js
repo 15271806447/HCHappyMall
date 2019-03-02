@@ -74,4 +74,11 @@ cheakMember : function(){
       url: '/pages/ShareCode/ShareCode',
     })
   },
+
+  toFavourable:function(){
+    app.globalData.couponPage = 2;
+    wx.navigateTo({
+      url: '../favourable/favourable',
+    })
+  }
 })

@@ -1,3 +1,9 @@
+<view class="navbar">
+  <lable wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">
+    <text>{{item}}</text>
+  </lable>
+</view>
+
 <view class='coupon' wx:for="{{couponVOS}}" wx:for-item="item">
   <view class='coupon-left'>
     <view class='coupon-money'>

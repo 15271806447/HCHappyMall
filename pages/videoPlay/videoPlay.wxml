@@ -40,6 +40,9 @@
     <view class='index center'>{{index+1}}</view>
     <view class='colum'>
       <view>{{item.videoName}}</view>
+       <view class='learning'>
+        <text>已学习 :00:00</text>
+      </view>
       <view class='time'>视频 {{time[index]}}</view>
     </view>
   </view>

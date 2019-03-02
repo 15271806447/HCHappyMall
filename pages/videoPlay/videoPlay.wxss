@@ -182,7 +182,13 @@ input {
   height: 55rpx;
   margin: 0 15rpx -5rpx 15rpx;
 }
-
+.learning{
+  position: absolute;
+  margin-left: 400rpx;
+  margin-top: 14rpx;
+  color: #007d20;
+  font-size: 28rpx;
+}
 .selectionbox .selection {
   height: 110rpx;
   font-size: 16px;

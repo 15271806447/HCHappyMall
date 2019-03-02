@@ -70,6 +70,7 @@
     <view class='submit'>
       合计：
       <text>￥{{TotalPrice}}</text>
+      <view class='toIndex' catchtap='toIndex'>回到首页</view>
       <view bindtap='pay' class='pay'>提交订单</view>
     </view>
   </view>

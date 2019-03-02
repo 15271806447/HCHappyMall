@@ -1,7 +1,8 @@
 {
   "pages": [
-    
     "pages/index/index",
+    "pages/orderdetail/orderdetail",
+    
     "pages/videoPlay/videoPlay",
     "pages/addcard/addcard",
     "pages/Management/Management",
@@ -18,7 +19,6 @@
     "pages/phoneBinding/success/success",
     "pages/myActivities/myActivities",
     "pages/confirm/confirm",
-    "pages/myOrderdetail/myOrderdetail",
     "pages/login/login",
     "pages/account/account",
     "pages/searchPage/searchPage",
@@ -34,7 +34,7 @@
     "pages/recharge/recharge",
     "pages/eventDetails/eventDetails",
     "pages/virtualCourse/virtualCourse",
-    "pages/orderdetail/orderdetail",
+    
     "pages/orderdetails/orderdetails",
     "pages/collection/collection",
     "pages/mylession/mylession",

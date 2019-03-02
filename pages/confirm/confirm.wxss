@@ -314,5 +314,16 @@ button {
   color: white;
   margin-right: 40rpx;
   padding: 0 20rpx;
-  border-radius: 20rpx;
+  border-radius: 10rpx;
+}
+
+.toIndex{
+  border: 1px;
+  margin-right: -15px;
+  background: #cac4c4;
+  color: #fff;
+  width: 100px;
+  height: 50px;
+  text-align: center;
+  border-radius: 10rpx;
 }

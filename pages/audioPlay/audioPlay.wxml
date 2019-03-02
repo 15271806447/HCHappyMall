@@ -64,6 +64,9 @@
     <view class='index center'>{{index+1}}</view>
     <view class='colum'>
       <view>{{item.audioName}}</view>
+      <view  wx:for="{{learnTime}}" class='learning'>
+        <text>已学习 :{{item}}</text>
+      </view>
       <view class='time'>音频 {{time[index]}}</view>
     </view>
   </view>

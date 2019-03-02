@@ -60,9 +60,10 @@
 <view class='odertol'>
 <text class='summon'>合计：</text>
   <text class='summondeta'>￥{{orderData.actualPayment+orderData.freight}}</text>
-  <view class='toPay' wx:if="{{orderData.state==1}}"><text class='toPay' bindtap='toPay'>付款</text></view>
-  <view class='pay' wx:elif="{{orderData.state==2}}"><text class='pay'>已付款</text></view>
-  <view class='pay' wx:elif="{{orderData.state==3}}"><text class='pay' >已付款</text></view>
-  <view class='pay' wx:elif="{{orderData.state==4}}"><text class='pay'>已付款</text></view>
-  <view class='pay' wx:elif="{{orderData.state==5}}"><text class='pay'>退货...</text></view>
+  <view class='pay' catchtap='toIndex'>回到首页</view>
+  <view class='toPay' wx:if="{{orderData.state==1}}" bindtap='toPay'>付款</view>
+  <view class='toPay' wx:elif="{{orderData.state==2}}">已付款</view>
+  <view class='toPay' wx:elif="{{orderData.state==3}}">已付款</view>
+  <view class='toPay' wx:elif="{{orderData.state==4}}">已付款</view>
+  <view class='toPay' wx:elif="{{orderData.state==5}}">退货...</view>
 </view>
