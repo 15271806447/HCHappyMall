@@ -6,23 +6,23 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isMemberPay:false,
-    isPaySuccess:false,
+    isMemberPay: false,
+    isPaySuccess: false,
     TotalPrice: 0,
-    showPayPwdInput: false,  //是否展示密码输入层
-    pwdVal: '',  //输入的密码
+    showPayPwdInput: false, //是否展示密码输入层
+    pwdVal: '', //输入的密码
     payFocus: true, //文本框焦点
-    payMent:"balancePayment"
+    payMent: "balancePayment"
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    if (options.isMemberPay != null && options.isMemberPay !=""){
-    this.setData({
-      isMemberPay: options.isMemberPay
-    });
+    if (options.isMemberPay != null && options.isMemberPay != "") {
+      this.setData({
+        isMemberPay: options.isMemberPay
+      });
     }
     console.log("是否会员购买：");
     console.log(options.isMemberPay);
@@ -51,29 +51,35 @@ Page({
   /**
    * 显示支付密码输入层
    */
-  showInputLayer: function () {
-    this.setData({ showPayPwdInput: true, payFocus: true });
+  showInputLayer: function() {
+    this.setData({
+      showPayPwdInput: true,
+      payFocus: true
+    });
   },
   /**
    * 隐藏支付密码输入层
    */
-  hidePayLayer: function () {
+  hidePayLayer: function() {
     var pwdVal = this.data.pwdVal;
-    this.setData({ showPayPwdInput: false, payFocus: false, pwdVal: '' }, function () {
-    });
-    if (pwdVal.length == 6){
+    this.setData({
+      showPayPwdInput: false,
+      payFocus: false,
+      pwdVal: ''
+    }, function() {});
+    if (pwdVal.length == 6) {
       //TODO 校验用户的密码是否输入正确
       var key = md5.hexMD5(pwdVal);
       var test = md5.hexMD5('123456');
-      if(key==test){
+      if (key == test) {
         wx.showModal({
           title: '提示',
           content: '支付成功!!!',
-          showCancel: false, 
+          showCancel: false,
           confirmColor: 'red'
         })
         //TODO 扣除余额
-      }else{
+      } else {
         wx.showModal({
           title: '提示',
           content: '密码错误!!!',
@@ -81,21 +87,25 @@ Page({
           confirmColor: 'red'
         })
       }
-      
+
     }
-    
+
   },
   /**
    * 获取焦点
    */
-  getFocus: function () {
-    this.setData({ payFocus: true });
+  getFocus: function() {
+    this.setData({
+      payFocus: true
+    });
   },
   /**
    * 输入密码监听
    */
-  inputPwd: function (e) {
-    this.setData({ pwdVal: e.detail.value });
+  inputPwd: function(e) {
+    this.setData({
+      pwdVal: e.detail.value
+    });
 
     if (e.detail.value.length >= 6) {
       this.hidePayLayer();
@@ -106,7 +116,7 @@ Page({
   /**
    * 单选框change
    */
-  radioChange:function(e){
+  radioChange: function(e) {
     console.log(e);
     this.setData({
       payMent: e.detail.value
@@ -117,35 +127,42 @@ Page({
    * 支付
    */
   pay: function() {
-    if (this.data.payMent == 'balancePayment'){
+    if (this.data.payMent == 'balancePayment') {
       this.showInputLayer();
-    }
-    else if (this.data.payMent == 'weixinPayment'){
+    } else if (this.data.payMent == 'weixinPayment') {
       var that = this;
       if (that.data.isMemberPay == true) {
-        getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function () {
+        getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function() {
           that.setData({
             isPaySuccess: true
           })
-        }, function () {
+        }, function() {
           that.setData({
             isPaySuccess: false
           })
-        }, function () {
+        }, function() {
           wx.redirectTo({
             url: '../memberCenter/memberCenter?isPaySuccess=' + that.data.isPaySuccess + '&memberTypeId=' + that.data.memberTypeId,
           })
         });
       } else {
         console.log('money:' + this.data.TotalPrice);
-        getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function () { }, function () { }, function () {
+        getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function() {
           wx.redirectTo({
             url: '../orderdetail/orderdetail?orderDetail=' + JSON.stringify(that.data.orderDetail) + '&type=pay',
           })
+        }, function() {
+          wx.showModal({
+            title: '提示',
+            content: '支付失败！',
+            showCancel: false
+          })
+        }, function() {
+
         });
       }
     }
-    
+
   },
   // 查询订单
   getOrderByOrderId: function() {

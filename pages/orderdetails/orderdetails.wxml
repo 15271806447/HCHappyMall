@@ -20,7 +20,7 @@
           {{item.start}}</label>
       </view>
       <!-- 列表 -->
-      <view class='list' wx:for="{{item.orderItemVOList}}" wx:for-item="arr_item" wx:key="key">
+      <view class='list' bindtap='toOrderdetail' data-state='{{item.state}}'data-orderNum='{{item.orderNum}}' wx:for="{{item.orderItemVOList}}" wx:for-item="arr_item" wx:key="key">
         <!-- 列表图片 -->
         <image class='list_img' src='{{imgHeader+arr_item.productCovermap}}'></image>
         <!-- 列表标题 -->
@@ -52,7 +52,6 @@
   <view wx:else>
     <!-- 外层 -->
     <view class='cont_count'>
- 
       <label class='none_tab'>亲,您还暂未下单哦~~</label>
     </view>
   </view>
@@ -137,7 +136,7 @@
           待发货</label>
       </view>
       <!-- 商品列表 -->
-      <view class='list' wx:for="{{item.orderItemVOList}}" wx:for-item="arr_item" wx:key="key">
+      <view class='list' bindtap='toOrderdetail' data-state='{{item.state}}' data-orderNum='{{item.orderNum}}' wx:for="{{item.orderItemVOList}}" wx:for-item="arr_item" wx:key="key">
         <!-- 列表图片 -->
         <image class='list_img' src='{{imgHeader+arr_item.productCovermap}}'></image>
         <!-- 列表标题 -->
@@ -198,7 +197,7 @@
           待收货</label>
       </view>
       <!-- 商品列表 -->
-      <view class='list' wx:for="{{item.orderItemVOList}}" wx:for-item="arr_item" wx:key="key">
+      <view bindtap='toOrderdetail' data-state='{{item.state}}' data-orderNum='{{item.orderNum}}' class='list' wx:for="{{item.orderItemVOList}}" wx:for-item="arr_item" wx:key="key">
         <!-- 列表图片 -->
         <image class='list_img' src='{{imgHeader+arr_item.productCovermap}}'></image>
         <!-- 列表标题 -->
@@ -259,7 +258,7 @@
           待付款</label>
       </view>
       <!-- 商品列表 -->
-      <view class='list' wx:for="{{item.orderItemVOList}}" wx:for-item="arr_item" wx:key="key">
+      <view bindtap='toOrderdetail' data-state='{{item.state}}' data-orderNum='{{item.orderNum}}' class='list' wx:for="{{item.orderItemVOList}}" wx:for-item="arr_item" wx:key="key">
         <!-- 列表图片 -->
         <image class='list_img' src='{{imgHeader+arr_item.productCovermap}}'></image>
         <!-- 列表标题 -->
