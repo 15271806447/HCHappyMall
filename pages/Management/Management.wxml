@@ -52,7 +52,16 @@
           </view>
         </view>
       </navigator>
+      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap='judge'>
+        <view class="weui-cell__bd">
+          <view class='weui-size'>忘记密码</view>
+          <view class='weui-size-font'>
+            <image src="img/icon-chev-right.png"></image>
+          </view>
+        </view>
+      </view>
     </view>
   </view>
+  
   <!--没有页脚-->
 </view>

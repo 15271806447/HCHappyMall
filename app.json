@@ -2,7 +2,6 @@
   "pages": [
     "pages/index/index",
     "pages/orderdetail/orderdetail",
-    
     "pages/videoPlay/videoPlay",
     "pages/addcard/addcard",
     "pages/Management/Management",
@@ -19,6 +18,7 @@
     "pages/phoneBinding/success/success",
     "pages/myActivities/myActivities",
     "pages/confirm/confirm",
+    "pages/passwordSettings/passwordSettings",
     "pages/login/login",
     "pages/account/account",
     "pages/searchPage/searchPage",

@@ -82,7 +82,7 @@ Page({
       console.log('timestamp:' + (timestamp / 60000));
       console.log('payRequest:' + payRequest);
       
-      //TODO 校验用户的密码是否输入正确
+  
       wx.request({
         url: app.globalData.url + '/api/wallet/checkPayRequest?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid + '&orderId=' + this.data.orderId + '&payRequest=' + payRequest,
         method: "POST",
@@ -176,6 +176,9 @@ Page({
                 if (res.confirm) {
                   console.log('用户点击确定');
                   //TODO 跳到设置密码
+                  wx.navigateTo({
+                    url: '../passwordSettings/passwordSettings"',
+                  })
                 } else if (res.cancel) {
                   console.log('用户点击取消');
                 }

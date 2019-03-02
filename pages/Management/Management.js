@@ -119,6 +119,70 @@ Page({
         url: '../authentication/authentication',
       })
     }
+  },
 
+   //查看用户是否已经有支付密码了
+  checkUserHasPassword: function () {
+    var that = this;
+    console.log(77777777777777777777777777);
+    console.log(app.globalData.uid);
+    wx.request({
+      url: app.globalData.url + '/api/wallet/isUserHavePassword?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function (res) {
+        console.log(res);
+        if (!res.data.data.isUserHavePassword) {
+          wx.showModal({
+            title: '提示',
+            content: '请设置您的密码',
+            success(res1) {
+              if (res1.confirm) {
+                wx.navigateTo({
+                  url: '../passwordSettings/passwordSettings?phoneNum=' + that.data.phoneNum,
+                })
+              } else if (res1.cancel) {
+                // wx.navigateBack({
+                //   delta: 1
+                // })
+              }
+            }
+          })
+        }else {
+          wx.navigateTo({
+            url: '../passwordSettings/passwordSettings?phoneNum=' + that.data.phoneNum,
+          })
+        }
+      }
+    })
+  },
+  judge:function(){
+    if(this.data.phoneNum == ""){
+      wx.showModal({
+        title: '提示',
+        content: '请先绑定手机号',
+        success(res1) {
+          if (res1.confirm) {
+            wx.navigateTo({
+              url: '../phoneBinding/phoneBinding',
+            })
+          } else if (res1.cancel) {
+            // wx.navigateBack({
+            //   delta: 1
+            // })
+          }
+        }
+      })
+    }else {
+      this.checkUserHasPassword();
+      console.log("7777777777777777")
+      console.log(app.globalData.uid); 
+      console.log("7777777777777777");
+    }
   }
+
+
+
 })
