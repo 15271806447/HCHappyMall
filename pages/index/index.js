@@ -468,5 +468,15 @@ Page({
        
       
     
+  },
+
+/**
+ * 跳转优惠券中心页面
+ */
+  toFavourable:function(){
+    app.globalData.couponPage = 1;
+    wx.navigateTo({
+      url: '../favourable/favourable',
+    })
   }
 })

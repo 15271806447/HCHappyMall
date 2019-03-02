@@ -28,6 +28,8 @@ Page({
     show: false,
     lock: false,
     rows: 4,
+    // 长度列表
+   time:0,
   },
 
   /**
@@ -241,15 +243,16 @@ Page({
     console.log(index)
     var freeNum = this.data.vritualCourse.freeNum
     var that = this;
+    var time = that.data.time;
     var type = that.data.type;
     if (index < freeNum){
       if (type == 'VideoItem') {
         wx.navigateTo({
-          url: '../videoPlay/videoPlay?type=1&videoDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)) + '&index=' + index,
+          url: '../videoPlay/videoPlay?type=1&videoDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)) + '&index=' + index + "&time=" + JSON.stringify(time),
         })
       } else if (type == 'AudioItem') {
         wx.navigateTo({
-          url: '../audioPlay/audioPlay?type=1&audioDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)) + '&index=' + index,
+          url: '../audioPlay/audioPlay?type=1&audioDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)) + '&index=' + index + "&time=" + JSON.stringify(time),
         })
       }
     }else{
@@ -270,10 +273,11 @@ Page({
       'type': type
     })
   },
-
+/**获取视频的长度 */
   getVideoTime: function (src, i) {
     var that = this;
     var playTime = "time" + "[" + i + "]";
+    var timeList = this.data.timeList;
     const innerAudioContext = wx.createInnerAudioContext()  //初始化createInnerAudioContext接口
     //设置播放地址
     innerAudioContext.src = src;
@@ -286,16 +290,17 @@ Page({
         console.log('innerAudioContext.duration');
         console.log(innerAudioContext.duration); //延时获取长度 单位：秒
         var time = that.toTime(innerAudioContext.duration);
-
+        timeList = that.toTime(innerAudioContext.duration);
         that.setData({
           [playTime]: time
+          
         })
       }, 1000)  //这里设置延时1秒获取
     })
   },
 
   toTime: function (s) {
-    var day = Math.floor(s / (24 * 3600)); // Math.floor()向下取整 
+    var day = Math.floor(s / (24 * 3600)); // Math.floor()
     var hour = Math.floor((s - day * 24 * 3600) / 3600);
     var minute = Math.floor((s - day * 24 * 3600 - hour * 3600) / 60);
     var second = Math.floor(s - day * 24 * 3600 - hour * 3600 - minute * 60);
