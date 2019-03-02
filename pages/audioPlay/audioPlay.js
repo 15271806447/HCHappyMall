@@ -54,7 +54,9 @@ Page({
     // 学习情况
     learnDataList:[],
     //记录传参
-    audioDetail:""
+    audioDetail:"",
+    //前一个播放视频的index值
+    beforeIndex:0,
   },
   onReady(res) {
 
@@ -66,10 +68,9 @@ Page({
   // TODO 切换章节 调整数据
   //初始化播放器，获取duration
   Initialization() {
-
     var t = this;
+ //当前点击的视频播放的index
     var index = this.data.audioInformation.thisindex;
-
     if (this.data.audiolist[index].audiosrc.length != 0) {
       //设置src
       innerAudioContext.src = t.data.audiolist[index].audiosrc;
@@ -100,7 +101,6 @@ Page({
         }, 1000)
       })
     }
-
     //重置时间,把isPlayAudio改成false
     this.setData({
       audioSeek: 0,
@@ -136,11 +136,14 @@ Page({
     // 
     innerAudioContext.play();
   },
+
+
   /**
    * 播放、暂停按钮
    */
   playAudio() {
     var index = this.data.audioInformation.thisindex;
+    var beforeIndex = this.data.beforeIndex;
     //获取播放状态和当前播放时间
     var isPlayAudio = this.data.isPlayAudio;
     var seek = this.data.audioSeek;
@@ -156,7 +159,7 @@ Page({
       });
     } else {
       //如果在暂停，获取播放时间并继续播放
-      innerAudioContext.src = this.data.audiolist[index].audiosrc;
+      innerAudioContext.src = this.data.audiolist[beforeIndex].audiosrc;
       if (innerAudioContext.duration != 0) {
         this.setData({
           audioDuration: innerAudioContext.duration
@@ -167,12 +170,11 @@ Page({
       innerAudioContext.play();
     }
   },
+
   /**
    * 计时器每秒更新进度条进度
    */
   loadaudio() {
-
-
     var that = this;
     //设置一个计步器
     this.data.durationIntval = setInterval(function() {
@@ -231,14 +233,18 @@ Page({
   },
 
   /*video
-  / 点击列表视频
+  / 点击列表视频切换数据
   */
   choosevideo: function(e) {
     this.duration
     var that = this;
     var index = e.currentTarget.dataset.index;
-    console.log("获取点击的索引" + index);
     var audioInformation = this.data.audioInformation;
+    var beforeIndex = this.data.beforeIndex;
+ // 前一个正在播放的index值
+    beforeIndex = audioInformation.thisindex;
+    console.log("前一个正在播放的index值");
+    console.log(beforeIndex)
     audioInformation.thisindex = index;
 
     var audioDetail = this.data.audioDetail;
@@ -328,7 +334,8 @@ Page({
     console.log("传参options为")
     console.log(options);
     this.setData({
-      time: JSON.parse(options)
+      time: JSON.parse(options.time),
+      thisindex: JSON.parse(options.index)
     })
   },
   /**
@@ -394,8 +401,8 @@ Page({
       },
       success: function (res) {
    
-        var learnDataList = res.data.data.hcFLearnSituateList;
-        learnDataList = res.data.data.hcFLearnSituateList;
+         learnDataList = res.data.data.hcFLearnSituateList;
+      
 
         for (var i = 0; i < learnDataList.length; i++) {
           if (learnDataList.length == 0){
@@ -419,18 +426,14 @@ Page({
               }
           }
         that.setData({
-          'learnTime': learnTime
+          'learnTime': learnTime,
+          'learnDataList': learnDataList
         })
       }
     })
   },
 
 
-// 根据索引获取节的id
-  getIdIndex: function (index){
-    var audiolist = this.data.audiolist;
-    return audiolist[index].id;
-  },
 
 /**根据虚拟商品更新保存学习信息 */
  // 首先根据判断用户有没有每一节的学习信息，如果没有，添加不需要learnSituateId,这个时候需要当前播放的节的id，如果有可以直接更新，这个时候需要获取之前的学习情况id.
@@ -440,24 +443,28 @@ Page({
     var hcFLearnSituateList = this.data.learnDataList;
     var uid = app.globalData.uid;
     var learnTime = this.data.learnTime;
-    var index = this.data.audioInformation.thisindex;
+    var beforeIndex = this.data.beforeIndex;
     var learnSituateId ="";
-    var courseChapterId = that.getIdIndex(index);
-
+    var audiolist = this.data.audiolist;
+    var courseChapterId = audiolist[beforeIndex].id;
     // 视频停止时间
-    var duration = 999;
-    console.log('视频停止时间' + duration);
+    var duration = this.data.audioSeek;
+
+      console.log(hcFLearnSituateList);
+
+
     if (hcFLearnSituateList.length != 0){
       for (var i = 0; i < hcFLearnSituateList; i++) {
         // 如果当前节的播放时间不为0  需要id
         if (hcFLearnSituateList[i].courseChapterId == courseChapterId && hcFLearnSituateList[i].courseSchedule != 0) {
           learnSituateId = hcFLearnSituateList[i].id;
         } else {
-          learnSituateId = "";
+          learnSituateId = "6da2fff6-43ee-4931-b1b1-878dfb70496d";
         }
       }
     }
-  
+    console.log("学习情况id");
+    console.log(learnSituateId);
     var formdata ={
       learnSituateId: learnSituateId, 
       productId: productId,

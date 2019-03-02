@@ -43,8 +43,9 @@ Page({
     }
   },
   recharge: function (e) {
+    // this.$route('pages/OnlineRecharge/OnlineRecharge?url=recharge')
     wx.navigateTo({
-      url: '../OnlineRecharge/OnlineRecharge?url=recharge',
+     url: '../OnlineRecharge/OnlineRecharge?url=recharge',
     })
   },
   getWallet: function () {
