@@ -34,12 +34,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-    var json = JSON.parse(options.productInfo);
+    var json = null;
+    if (options.type == 'search') {
+      json = app.globalData.goodsInfo;
+    }else{
+      json = JSON.parse(options.productInfo);
+    }
     console.log(json);
     this.setData({
       'json': json
     })
+    
     var vritualCourse = this.data.vritualCourse;
     vritualCourse.id = json.id;
     vritualCourse.coverPath = app.globalData.url + '/common/file/showPicture.do?id=' + json.productCovermap;

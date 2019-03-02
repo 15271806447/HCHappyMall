@@ -62,32 +62,59 @@ Page({
    */
   hidePayLayer: function() {
     var pwdVal = this.data.pwdVal;
+    var that = this;
     this.setData({
       showPayPwdInput: false,
       payFocus: false,
       pwdVal: ''
     }, function() {});
     if (pwdVal.length == 6) {
+      //  钱包密码的加盐值
+      var PasswordSalt = "602904194941511675975522089765";
+      //  支付请求的加盐值
+      var PayRequestSalt = "FmnYgg8Nmq1fhMZdP5C1cb8JiHkqy6";
+      //  支付时间戳
+      var timestamp = (new Date()).valueOf();
+      //  支付请求 = MD5（支付加盐 + 用户输入的6位数字 + 密码加盐 + 时间戳 / 60000L）
+      var payRequest = md5.hexMD5("" + PayRequestSalt + pwdVal + PasswordSalt + (parseInt(timestamp / 60000)));
+      console.log('=========================');
+      console.log('pwdVal:' + pwdVal);
+      console.log('timestamp:' + (timestamp / 60000));
+      console.log('payRequest:' + payRequest);
+      
       //TODO 校验用户的密码是否输入正确
-      var key = md5.hexMD5(pwdVal);
-      var test = md5.hexMD5('123456');
-      if (key == test) {
-        wx.showModal({
-          title: '提示',
-          content: '支付成功!!!',
-          showCancel: false,
-          confirmColor: 'red'
-        })
-        //TODO 扣除余额
-      } else {
-        wx.showModal({
-          title: '提示',
-          content: '密码错误!!!',
-          showCancel: false,
-          confirmColor: 'red'
-        })
-      }
-
+      wx.request({
+        url: app.globalData.url + '/api/wallet/checkPayRequest?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid + '&orderId=' + this.data.orderId + '&payRequest=' + payRequest,
+        method: "POST",
+        header: {
+          'X-Requested-With': 'APP'
+        },
+        success: function(res) {
+          console.log(res);
+          if(res.data.success){
+            wx.showModal({
+              title: '提示',
+              content: '支付成功!!!',
+              showCancel: false,
+              confirmColor: 'red',
+              success(res){ 
+                console.log(res);
+                if(res.confirm)
+                  wx.redirectTo({
+                    url: '../orderdetail/orderdetail?orderDetail=' + JSON.stringify(that.data.orderDetail) + '&type=pay'
+                  })
+              }
+            })
+          }else{
+            wx.showModal({
+              title: '提示',
+              content: '密码错误!!!',
+              showCancel: false,
+              confirmColor: 'red'
+            })
+          }
+        }
+      })
     }
 
   },
@@ -127,8 +154,37 @@ Page({
    * 支付
    */
   pay: function() {
+    var that = this;
     if (this.data.payMent == 'balancePayment') {
-      this.showInputLayer();
+      //检验是否有密码
+      wx.request({
+        url: app.globalData.url + '/api/wallet/isUserHavePassword?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
+        method: "POST",
+        header: {
+          'X-Requested-With': 'APP'
+        },
+        success: function(res) {
+          console.log(res);
+          if (res.data.data.isUserHavePassword) {
+            that.showInputLayer();
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: '没有支付密码！',
+              confirmText: '设置密码',
+              success(res) {
+                if (res.confirm) {
+                  console.log('用户点击确定');
+                  //TODO 跳到设置密码
+                } else if (res.cancel) {
+                  console.log('用户点击取消');
+                }
+              }
+            })
+          }
+        }
+      })
+
     } else if (this.data.payMent == 'weixinPayment') {
       var that = this;
       if (that.data.isMemberPay == true) {

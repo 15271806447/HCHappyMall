@@ -85,9 +85,15 @@ Page({
     var firstClassifyId = "";
     for (let i = 0; i < typesBtnActive.length; i++) {
       if (typesBtnActive[i] == "btnActive") {
-        firstClassifyId = app.globalData.firstClassifyList[i].id;
+        for (let j = 0; j < app.globalData.firstClassifyList.length; j++) {
+          if ((i + 1) == app.globalData.firstClassifyList[j].classNumber) {
+            firstClassifyId = app.globalData.firstClassifyList[i].id;
+            firstClassifyId = app.globalData.firstClassifyList[j].id;
+          }
+        }
       }
     }
+    console.log(firstClassifyId);
     var category = this.data.category;
     var categoryId = "";
     for (var i = 0; i < category.length; i++) {
@@ -136,11 +142,19 @@ Page({
     var that = this;
     var typesBtnActive = this.data.typesBtnActive;
     var firstClassifyId = "";
+    console.log(app.globalData.firstClassifyList);
     for (let i = 0; i < typesBtnActive.length; i++) {
       if (typesBtnActive[i] == "btnActive") {
-        firstClassifyId = app.globalData.firstClassifyList[i].id;
+        for (let j = 0; j < app.globalData.firstClassifyList.length; j++) {
+          if ((i + 1) == app.globalData.firstClassifyList[j].classNumber) {
+            firstClassifyId = app.globalData.firstClassifyList[j].id;
+          }
+        }
+        break;
       }
+
     }
+    console.log()
     var category = this.data.category;
     var categoryId = "";
     for (let i = 0; i < category.length; i++) {
@@ -151,7 +165,7 @@ Page({
     var minStr = that.data.priceFilter[0];
     var maxStr = that.data.priceFilter[1];
     var keyword = "";
-    if (that.data.searchinput){
+    if (that.data.searchinput) {
       keyword = that.data.searchinput;
     }
     wx.request({
@@ -364,13 +378,29 @@ Page({
   /**
    * 商品详情跳转
    */
-  ToGoods: function(e){
+  ToGoods: function(e) {
     console.log(e);
+    var app = getApp();
     // 获取索引
     var index = e.currentTarget.dataset.index;
     app.globalData.goodsInfo = this.data.product[index];
-    wx.navigateTo({
-      url: '../goods/goods?type=search'
-    })
+    //如果是声音、视频课程跳声音、视频课程
+    if (app.globalData.goodsInfo.firstClassifyId == app.globalData.firstClassifyList[1].id || app.globalData.goodsInfo.firstClassifyId == app.globalData.firstClassifyList[2].id) {
+      wx.navigateTo({
+        url: '../virtualCourse/virtualCourse?type=search'
+      })
+    } else if (app.globalData.goodsInfo.firstClassifyId == app.globalData.firstClassifyList[0].id) {
+      //如果是实体课程跳实体课程
+      wx.navigateTo({
+        url: '../goods/goods?type=search'
+      })
+    } else if (app.globalData.goodsInfo.firstClassifyId == app.globalData.firstClassifyList[3].id) {
+      app.globalData.activeDetail = this.data.product[index];
+      wx.navigateTo({
+        url: '../eventDetails/eventDetails?type=find'
+      })
+    }
+
+
   }
 })
