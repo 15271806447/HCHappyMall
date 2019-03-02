@@ -5,18 +5,36 @@
   </view>
   <view class='bkee10'></view>
   <view class='choseway'>请选择支付方式</view>
-  <radio-group>
+  <radio-group bindchange="radioChange">
   <view class='otherpay'>
     <text class='wxpay1'>微信支付</text>
-    <radio checked="true" color='red' class='wxpay11' />
+    <radio checked="false" value='weixinPayment' color='red' class='wxpay11' />
   </view>
   <view class='otherpay'>
     <text class='balancepay1'>余额支付</text>
-    <radio checked="true" color='red' class='balancepay11' />
+    <radio checked="true" value='balancePayment' color='red' class='balancepay11' />
   </view>
   </radio-group>
 </view>
 
 <view class='atpay'>
   <view class='redbtnpay' bindtap='pay'>立即支付</view>
+</view>
+<!-- 密码输入框 -->
+<view wx:if='{{showPayPwdInput}}'>
+    <view class='bg_layer'></view>
+    <view class='input_main'>
+        <view class='input_title'>
+            <view class='input_back' catchtap='hidePayLayer'><text></text></view>
+            <text>输入支付密码</text>
+        </view>
+        <view class='input_tip'><text>使用会员卡余额支付需要验证身份，验证通过后才可进行支付。</text></view>
+        <view class='input_row' catchtap='getFocus'>
+            <view class='pwd_item' wx:for='{{6}}' wx:key='item' wx:for-index='i'>
+                <text wx:if='{{pwdVal.length>i}}'></text>
+            </view>
+        </view>
+        <view class='forget_pwd' catchtap='hidePayLayer'>忘记密码</view>
+        <input class='input_control' password type='number' focus='{{payFocus}}' bindinput='inputPwd' maxlength='6'/>
+    </view>
 </view>

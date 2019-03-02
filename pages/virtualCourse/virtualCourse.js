@@ -127,11 +127,12 @@ Page({
     /**列表数据表交互*/
     getCourseInfo: function() {
       var that = this;
+      var temp = 0;
       var id = this.data.vritualCourse.id;
       var vritualCourse = this.data.vritualCourse;
       console.log("id:" + id);
       wx.request({
-        url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + '&id=' + id,
+        url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + '&productId=' + id,
         method: "POST",
         header: {
           'X-Requested-With': 'APP'
@@ -145,19 +146,24 @@ Page({
           vritualCourse.totalNum = course.totalNum
           vritualCourse.nowNum = course.nowNum
 
-          that.data.lock = true
-
-        console.log('courseList')
-        console.log(courseList)
         if (that.data.type == 'VideoItem') {
           for (var i = 0; i < courseList.length; i++) {
+            temp++;
             var path = that.getFilePath(courseList[i].fileAddr, i);
             that.getVideoTime(path, i);
+            if (temp > vritualCourse.freeNum){
+              that.data.lock = true
+              console.log("********" + that.data.lock);
+              }
           }
         } else if (that.data.type == 'AudioItem') {
           for (var i = 0; i < courseList.length; i++) {
+            temp++;
             console.log(courseList[i].fileAddr);
             that.getVideoTime(that.getAudioPaht(courseList[i].fileAddr), i);
+            if (temp > vritualCourse.freeNum) {
+              that.data.lock = true
+            }
           }
         }
         vritualCourse.totalNum = course.totalNum
@@ -227,17 +233,18 @@ Page({
   bounced:function(e){
     console.log("免费观看的讲次：" + this.data.vritualCourse.freeNum);
     var index = e.currentTarget.dataset.index;
+    console.log(index)
     var freeNum = this.data.vritualCourse.freeNum
     var that = this;
     var type = that.data.type;
     if (index < freeNum){
       if (type == 'VideoItem') {
         wx.navigateTo({
-          url: '../videoPlay/videoPlay?type=1&videoDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)),
+          url: '../videoPlay/videoPlay?type=1&videoDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)) + '&index=' + index,
         })
       } else if (type == 'AudioItem') {
         wx.navigateTo({
-          url: '../audioPlay/audioPlay?type=1&audioDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)),
+          url: '../audioPlay/audioPlay?type=1&audioDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)) + '&index=' + index,
         })
       }
     }else{

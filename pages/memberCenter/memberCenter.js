@@ -121,7 +121,7 @@ Page({
     console.log(app.globalData.uid);
     var that = this;
     wx.request({
-      url: app.globalData.url + '/api/personalCenter/getUserMember?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
+      url: app.globalData.url + '/api/member/getUserMember?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
@@ -150,7 +150,7 @@ Page({
       if (options.isPaySuccess == 'true') {
         var memberTypeId = options.memberTypeId;
         wx.request({
-          url: app.globalData.url + '/api/personalCenter/createUserMember?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid + "&memberTypeId=" + memberTypeId,
+          url: app.globalData.url + '/api/member/createUserMember?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid + "&memberTypeId=" + memberTypeId,
           method: "POST",
           header: {
             'X-Requested-With': 'APP'

@@ -157,6 +157,8 @@ Page({
         'X-Requested-With': 'APP'
       },
       success: function (res) {
+        console.log('res')
+        console.log(res)
         if (res.data.data.hcUserMember.length > 0 || res.data.data.hcUserMember != null) {
           that.setData({
             'isMember': true
@@ -389,7 +391,7 @@ Page({
   getWallet: function() {
     var that = this;
     wx.request({
-      url: app.globalData.url + '/api/personalCenter/getWallet?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid,
+      url: app.globalData.url + '/api/wallet/getWallet?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid,
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
@@ -422,7 +424,7 @@ Page({
   showCoupon: function() {
     var that = this;
     wx.request({
-      url: app.globalData.url + '/api/coupon/showCoupon?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid,
+      url: app.globalData.url + '/api/coupon/showCoupon?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid + '&couponType=' + 1,
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
@@ -483,7 +485,7 @@ Page({
           coupon.isExpired = that.flagData(couponVOS[i].expirationTime, 'end');
           if (coupon.isExpired == false) {
             coupon.flagType = '已过期';
-            coupon.bgColor = '#ccc';
+            coupon.bgColor = '#c0c0c0';
           }
 
           coupon.startTime = couponVOS[i].effectiveTime.split(' ')[0];
@@ -758,5 +760,13 @@ Page({
         showCouponCount: 2,
       })
     }
+  },
+  /**
+   * toIndex 跳转首页
+   */
+  toIndex: function () {
+    wx.switchTab({
+      url: '../index/index',
+    })
   }
 })

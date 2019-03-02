@@ -22,10 +22,10 @@
     <text class='nav_text'>充值</text>
   </navigator>
   <!-- 领券 -->
-  <navigator url="../favourable/favourable?type=1" hover-class="navigator-hover" class='nav_block'>
+  <view  hover-class="navigator-hover" class='nav_block' bindtap='toFavourable'>
     <image src='{{imageUrl}}coupon.png' class='nav_img'></image>
     <text class='nav_text'>领券中心</text>
-  </navigator>
+  </view>
   <!-- 会员 -->
   <navigator url="../memberCenter/memberCenter" hover-class="navigator-hover" class='nav_block'>
     <image src='{{imageUrl}}crown.png' class='nav_img'></image>
