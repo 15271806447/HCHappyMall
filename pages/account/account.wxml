@@ -1,42 +1,22 @@
-<view class="body">
-  <view class="nav">
-    <view class="{{selected?'red':'default'}}" bindtap="selected">全部</view>
-    <view class="{{selected1?'red':'default'}}" bindtap="selected1">收入</view>
-    <view class="{{selected2?'red':'default'}}" bindtap="selected2">支出</view>
+<view class='conbox'>
+  <view class='paywx'>
+    <image src='img/pay.png'></image>
+    <view class='fr'>钱包支付</view>
   </view>
-  <view class="{{selected?'show':'hidden'}}">
-      <view class='between' wx:for="{{recardSours}}">
-          <view class='column'>
-          <text>{{item.sourceType}}</text>
-          <text>{{item.createTime}}</text>
-          </view>
-          <view>
-          <text >{{item.transactionAmount}}</text>
-          <image class='pic' src="../image/right.svg"></image>
-          </view>
-      </view>
+  <view class='paymuch'>付款金额: ￥9.9</view>
+  <view class='fbox'>
+  <text class='fl'>商家名称</text>
+  <text class='fr'>幸福学院</text>
   </view>
-  <view class="{{selected1?'show':'hidden'}}">
-    <view class='between' wx:for="{{incomeList}}">
-          <view class='column'>
-          <text>{{item.sourceType}}</text>
-          <text>{{item.createTime}}</text>
-          </view>
-          <view>
-          <text >{{item.transactionAmount}}</text>
-          <image class='pic' src="../image/right.svg"></image>
-          </view>
-    </view>
+  <view class='fbox'>
+    <text class='fl'>充值详情</text>
+    <text class='fr'>10元充值卡</text>
   </view>
-  <view class="{{selected2?'show':'hidden'}}">
-  <view class='between' wx:for="{{expenditure}}">
-          <view class='column'>
-          <text>{{item.sourceType}}</text>
-          <text>{{item.createTime}}</text>
-          </view>
-          <view>
-          <text >{{item.transactionAmount}}</text>
-          <image class='pic' src="../image/right.svg"></image>
-          </view>
-    </view></view>
+   <view class='fbox'>
+  <text class='fl'>支付日期</text>
+  <text class='fr'>2019年08月09日</text>
+  </view>
 </view>
+
+
+
