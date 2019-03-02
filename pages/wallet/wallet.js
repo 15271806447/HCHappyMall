@@ -88,4 +88,9 @@ Page({
         url: '../account/account',
       })
     },
+  integral: function (){
+    wx.navigateTo({
+      url: '../integral/integral',
+    })
+  },
 })
