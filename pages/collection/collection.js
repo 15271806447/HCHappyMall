@@ -51,6 +51,9 @@ Page({
     wx.request({
       url: app.globalData.url + '/api/collection/getAllCollection?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
       method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
       success: function(res) {
         console.log(res);
         var products = res.data.data.hcCollectionVOList;
@@ -116,6 +119,9 @@ Page({
       success(res) {
         if (res.confirm) {
           if (type == 'bookArr') {
+            console.log(66666666666);
+            console.log(that.data.bookArr[index]);
+            console.log(66666666666);
             app.removeCollection(that.data.bookArr[index].id);
             var bookArr = that.data.bookArr;
             bookArr.splice(index, 1);

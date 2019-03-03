@@ -10,7 +10,8 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     wallet: {
       money: "8000.00",
-    }
+    },
+    delta:1,
   },
   //事件处理函数
   bindViewTap: function() {
@@ -57,7 +58,7 @@ Page({
   },
   recharge: function(e) {
     wx.navigateTo({
-      url: '../OnlineRecharge/OnlineRecharge?url=wallet',
+      url: '../OnlineRecharge/OnlineRecharge?delta=' + this.data.delta,
     })
   },
   getWallet: function() {

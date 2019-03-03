@@ -28,8 +28,10 @@ Page({
     show: false,
     lock: false,
     rows: 4,
-    // 长度列表
+// 长度列表
    time:0,
+// 判断用户是否购买课程
+   isHave:false,
   },
 
   /**
@@ -41,6 +43,7 @@ Page({
       json = app.globalData.goodsInfo;
     }else{
       json = JSON.parse(options.productInfo);
+      this.verificationCollection(json.id);
     }
     console.log(json);
     this.setData({
@@ -64,8 +67,8 @@ Page({
     })
 
     this.getCourseInfo();
-    // this.checkCourse();
     this.flagVideoAndAudio(options);
+    this.checkCourse();
   },
   /**
    * 跳转购买
@@ -112,15 +115,17 @@ Page({
       wx.showToast({
         title: '已收藏',
       });
-      var collectionId = app.collectionProduct(app.globalData.uid, this.data.vritualCourse.id);
-      this.setData({
-        'collectionId': collectionId
-      })
+      app.collectionProduct(app.globalData.uid, this.data.vritualCourse.id);
+      // var collectionId = 
+      // this.setData({
+      //   'collectionId': collectionId
+      // })
     } else {
       wx.showToast({
         title: '已取消收藏',
       });
-      app.removeCollection(this.data.collectionId);
+      // app.removeCollection(this.data.collectionId);
+      this.cancelCollection();
     }
     this.setData({
       isClick: !this.data.isClick
@@ -189,19 +194,21 @@ Page({
   checkCourse: function() {
     var that = this;
     var id = this.data.vritualCourse.id;
-    var number = that.data.vritualCourse
+    var isHave = that.data.isHave
     wx.request({
       url: app.globalData.url + '/api/course/checkCourse?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid + '&productId=' + id,
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
       },
-      // success: function (res) {
-      //   console.log(res);
-      //   that.setData({
-      //     'number': number,
-      //   });
-      // }
+      success: function (res) {
+        console.log("用户是否购买交互");
+        console.log(res.data.data);
+        isHave = res.data.data.isHave;
+        that.setData({
+          'isHave': isHave,
+        });
+      }
     })
   },
   /**
@@ -221,7 +228,7 @@ Page({
           console.log("id:" + id);
           console.log("userId:" + app.globalData.uid);
           wx.request({
-            url: app.globalData.url + '/api/productCart/addToProductCart?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid + "&productId=" + id,
+            url: app.globalData.url + '/api/productCart/addToProductCart?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid + "&productId=" + id + "&num=1",
             method: "POST",
             header: {
               'X-Requested-With': 'APP'
@@ -245,7 +252,8 @@ Page({
     var that = this;
     var time = that.data.time;
     var type = that.data.type;
-    if (index < freeNum){
+    var isHave = that.data.isHave
+    if (index < freeNum || isHave == true){
       if (type == 'VideoItem') {
         wx.navigateTo({
           url: '../videoPlay/videoPlay?type=1&videoDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)) + '&index=' + index + "&time=" + JSON.stringify(time),
@@ -349,4 +357,67 @@ Page({
       }
     })
   },
+
+  //验证收藏
+  verificationCollection: function (productId) {
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/api/collection/isCollection?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid + "&productId=" + productId,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function (res) {
+        console.log("888888888888888888888")
+        console.log(res)
+        that.setData({
+          isClick: res.data.data.isCollection
+        })
+      }
+    })
+  },
+  //取消收藏
+  cancelCollection: function () {
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/api/collection/getAllCollection?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function (res) {
+        console.log("5555555555555555");
+        console.log(res);
+        var collectionList = res.data.data.hcCollectionVOList;
+        console.log(collectionList);
+        console.log("5555555555555555");
+        for (var i = 0; i < collectionList.length; i++) {
+          if (collectionList[i].productId == that.data.vritualCourse.id) {
+            console.log(collectionList[i].id);
+            that.deleteCollection(collectionList[i].id);
+          }
+        }
+
+      }
+
+    })
+  },
+
+  //删除收藏
+  deleteCollection: function (collectionId) {
+    wx.request({
+      url: app.globalData.url + '/api/collection/removeCollection?sid=' + app.globalData.sid + "&collectionId=" + collectionId,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function (res) {
+        console.log(555555555555555666);
+        console.log(res);
+        console.log(555555555555555666);
+
+      }
+
+    })
+  }
 })

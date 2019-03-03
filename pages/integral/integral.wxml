@@ -4,7 +4,7 @@
   <view class='user_info'>
     <view class='circle'>
       <text class='jifen_total'>积分总额</text>
-      <text class='jifen_number'>{{user.jifenTotal}}</text>
+      <text class='jifen_number'>{{jifenTotal}}</text>
     </view>
   </view>
 

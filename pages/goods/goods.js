@@ -10,6 +10,8 @@ Page({
     autoplay: true,
     interval: 5000,
     duration: 1000,
+    collectionId:"",
+    productId:"",
     goods: {
       productTitle: "那莲  那禅 那光阴",
       memberPrice: "66",
@@ -52,19 +54,29 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    console.log("7777777777777777777777777");
+    console.log(options)
     if (options.type == "collection" || options.type == "search" || options.type == "shoppingCart") {
       //TODO
       this.setData({
-        'goods': app.globalData.goodsInfo
+        'goods': app.globalData.goodsInfo,
+        productId: app.globalData.goodsInfo.productId
       })
     }else {
       var productInfo = JSON.parse(options.productInfo);
+      console.log("7777777777777777777777777");
       console.log(productInfo);
+      console.log("7777777777777777777777777");
       this.setData({
-        'goods': productInfo
+        'goods': productInfo,
+        productId: productInfo.id
       })
     }
+    console.log("777777777777777777777777788");
+    console.log(this.data.goods);
+    console.log("777777777777777777777777788");
     this.getProductPicture();
+    this.verificationCollection(this.data.productId);
   },
   /**
    * 请求商品配图
@@ -94,23 +106,36 @@ Page({
    * 收藏
    */
   collection: function() {
-    if (!this.data.isClick == true) {
+    var that = this;
+    if (!this.data.isClick) {
       wx.showToast({
         title: '已收藏',
       });
-      var collectionId = app.collectionProduct(app.globalData.uid, this.data.goods.id);
-      this.setData({
-        'collectionId': collectionId
-      })
+      
+      app.collectionProduct(app.globalData.uid, this.data.goods.id);
+      // var collectionId = app.collectionProduct(app.globalData.uid, this.data.goods.id);
+      // console.log("7777777777777777777");
+      // console.log(collectionId);
+      // console.log(Promise.resolve(collectionId));
+      // Promise.all([collectionId]).then(function (values) {
+      //   console.log(values[0]);
+      //   that.setData({
+      //     collectionId: values[0]
+      //   })
+      // });
+  
+      console.log("7777777777777777777");
+
     } else {
       wx.showToast({
         title: '已取消收藏',
       });
-      app.removeCollection(this.data.collectionId);
+      this.cancelCollection();
     }
     this.setData({
       isClick: !this.data.isClick
     })
+
   },
   /**
    * 加入购物车
@@ -129,7 +154,7 @@ Page({
           console.log("id:" + id);
           console.log("userId:" + app.globalData.uid);
           wx.request({
-            url: app.globalData.url + '/api/productCart/addToProductCart?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid + "&productId=" + id,
+            url: app.globalData.url + '/api/productCart/addToProductCart?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid + "&productId=" + id + "&num=1",
             method: "POST",
             header: {
               'X-Requested-With': 'APP'
@@ -151,6 +176,71 @@ Page({
     wx: wx.navigateTo({
       url: '../confirm/confirm?type=goods',
     })
+  },
+
+  //验证收藏
+  verificationCollection:function(productId){
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/api/collection/isCollection?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid + "&productId=" + productId,
+      method:"POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success:function(res){
+        console.log("888888888888888888888")
+        console.log(res)
+        that.setData({
+          isClick: res.data.data.isCollection
+        })
+      }
+    })
+  },
+
+  //取消收藏
+  cancelCollection:function(){
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/api/collection/getAllCollection?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function (res) {
+        console.log("5555555555555555");
+        console.log(res);
+        var collectionList = res.data.data.hcCollectionVOList;
+        console.log(collectionList);
+        console.log("5555555555555555");
+        for (var i = 0; i < collectionList.length; i++){
+          if (collectionList[i].productId == that.data.productId){
+            console.log(collectionList[i].id);
+            that.deleteCollection(collectionList[i].id);
+          }
+        }
+        
+      }
+
+    })
+  },
+
+  //删除收藏
+  deleteCollection: function (collectionId){
+    wx.request({
+      url: app.globalData.url + '/api/collection/removeCollection?sid=' + app.globalData.sid + "&collectionId=" + collectionId,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success:function(res){
+        console.log(555555555555555666);
+        console.log(res);
+        console.log(555555555555555666);
+
+      }
+
+    })
   }
+
 
 })

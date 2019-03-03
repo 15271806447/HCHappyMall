@@ -1,32 +1,38 @@
-<view class='head'>
-  <view class='chaemenu'>
-    <image src='../../images/money.png'></image>
-  </view>
-  <view class='menumes'>基本信息</view>
-  <view class='conbox'>
-    <text class='fl'>支付描述</text>
-    <text class='fr'>充值卡</text>
-  </view>
-  <view class='conbox'>
-    <text class='fl'>支付类型</text>
-    <text class='fr'>在线充值</text>
-  </view>
-  <view class='conbox'>
-    <text class='fl'>支付总额</text>
-    <text class='fr'>{{goodsList[0].price}}元</text>
-  </view>
-  <view class='menumes'>商品详情</view>
-  <view class='conbox'>
-    <text class='fl'>商品名称</text>
-    <text class='fr'>幸福学院充值卡</text>
-  </view>
-  <view class='conbox'>
-    <text class='fl'>商品类型</text>
-    <text class='fr'>钱包充值卡</text>
-  </view>
-  <view class='conbox'>
-    <text class='fl'>商品价格</text>
-    <text class='fr'>{{goodsList[0].oldprice}}元</text>
-  </view>
-  <view class='payonlin' bindtap='payment'>在线支付</view>
+<view class='chaemenu'>
+<image src='../../images/money.png'></image>
 </view>
+<view class='menumes'>基本信息</view>
+<view class='conbox'>
+<text class='fl'>支付编号</text>
+<text class='frid'>{{goodsList[0].id}}</text>
+</view>
+<view class='conbox'>
+<text class='fl'>支付描述</text>
+<text class='fr'>充值卡充值</text>
+</view>
+<view class='conbox'>
+<text class='fl'>支付类型</text>
+<text class='fr'>在线充值</text>
+</view>
+<view class='conbox'>
+<text class='fl'>支付总额</text>
+<text class='fr'>{{goodsList[0].price}}元</text>
+</view>
+<view class='conbox'>
+<text class='fl'>商品价格</text>
+<text class='fr'>{{goodsList[0].oldprice}}元</text>
+</view>
+<view class='menumes'>商品详情</view>
+<view class='conbox'>
+<text class='fl'>商品名称</text>
+<text class='fr'>{{goodsList[0].productName}}</text>
+</view>
+<view class='conbox'>
+<text class='fl'>商品价格</text>
+<text class='fr'>{{goodsList[0].oldprice}}元</text>
+</view>
+<view class='conbox'>
+<text class='fl'>商品类型</text>
+<text class='fr'>账户充值卡</text>
+</view>
+<view class='payonlin' bindtap='payment'>在线支付</view>

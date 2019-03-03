@@ -101,11 +101,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var urls = options.url;
-    console.log("urls:===========", urls)
-    var url = "RechargeCardInfo[0].url";
+    var delta="";
+    if (options.delta == null || options.delta==""){
+      delta=1;
+    }else{
+      delta = options.delta;
+    }
     this.setData({
-      [url]: urls
+      delta: delta
     })
     //充值卡信息
     this.RechargeCardInfo();
@@ -165,7 +168,7 @@ Page({
     //创建订单所需信息
     let data = JSON.stringify(this.data.RechargeCardInfo[this.data.activeIndex])
     wx.navigateTo({
-      url: '../RechargeOrder/RechargeOrder?data=' + data,
+      url: '../RechargeOrder/RechargeOrder?data=' + data + '&delta=' + that.data.delta,
     })
   },
 })

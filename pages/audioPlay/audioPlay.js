@@ -321,8 +321,6 @@ Page({
           fileId: fileId,
         });
       }
-
-
     });
   },
   
@@ -437,43 +435,36 @@ Page({
 
 
 /**根据虚拟商品更新保存学习信息 */
- // 首先根据判断用户有没有每一节的学习信息，如果没有，添加不需要learnSituateId,这个时候需要当前播放的节的id，如果有可以直接更新，这个时候需要获取之前的学习情况id.
-  saveOrUpdateLearnSituate: function (audioDetail,res) {
+  saveOrUpdateLearnSituate: function (audioDetail) {
     var that = this;
+    // 商品的id
     var productId = audioDetail.id;
-    var hcFLearnSituateList = this.data.learnDataList;
-    console.log(hcFLearnSituateList);
+    // 用户的id 
     var uid = app.globalData.uid;
+    // 用户之前的学习时间
     var learnTime = this.data.learnTime;
+    // 用户当前学习节索引
     var beforeIndex = this.data.beforeIndex;
     //学习情况表中的id
     var learnSituateId ="";
-    var audiolist = this.data.audiolist;
-    //当前节的id
-    var courseChapterId = audiolist[beforeIndex].id;
     // 视频停止时间
     var duration = this.data.audioSeek;
+    // 学习情况列表
+    var hcFLearnSituateList = this.data.learnDataList;
+    // 节的列表
+    var audiolist = this.data.audiolist;
+    var courseChapterId = audiolist[beforeIndex].id;
 
-
-    if (hcFLearnSituateList.length != 0){
-      for (var i = 0; i < hcFLearnSituateList; i++) {
-        // 找用户有没有该节的学习情况
-        if (hcFLearnSituateList[i].courseChapterId== courseChapterId) {
-          if (hcFLearnSituateList[i].id !=""){
-              learnSituateId = hcFLearnSituateList[i].id;
-              console.log("当前节的播放时间");
-              console.log(learnSituateId);
-            }
-        } else {
-          learnSituateId = "";
-        }
+      if (learnTime[beforeIndex] != 0) {
+        learnSituateId = hcFLearnSituateList[beforeIndex].id
+      }else{
+        learnSituateId = "";
       }
-    }
 
     var formdata ={
       learnSituateId: learnSituateId, 
       productId: productId,
-      courseChapterId: courseChapterId,
+      courseChapterId: courseChapterId ,
       userId: app.globalData.uid,
       courseSchedule: duration
     }

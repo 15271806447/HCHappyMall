@@ -23,7 +23,7 @@ Page({
       count: 1,
       price: 0,
     }],
-    getUrl:"",
+    delta:"",
     orderNum: "",
     TotalPrice: '0',
   },
@@ -90,10 +90,15 @@ Page({
         })
         console.log("==============")
         console.log("that.data.getUrl:===============",that.data.getUrl)
-        getApp().pay("幸福学院商城-" + that.data.goodsList[0].productName, that.data.orderNum, that.data.goodsList[0].price, function () { }, function () { }, function () {
+<<<<<<< HEAD
+        getApp().pay("同源梦商城-" + that.data.goodsList[0].productName, that.data.orderNum, that.data.goodsList[0].price, function () { }, function () { }, function () {
           wx.redirectTo({
             url: '../' + that.data.getUrl + '/' + that.data.getUrl,
           })
+=======
+        getApp().pay("幸福学院商城-" + that.data.goodsList[0].productName, that.data.orderNum, that.data.goodsList[0].price, function () { }, function () { }, function () {
+          that.jump();
+>>>>>>> 9887c69b529b443c7474571cc2c20b74537f379a
         });
       }
     })
@@ -111,6 +116,7 @@ Page({
 
     console.log(options.data)
     let item = JSON.parse(options.data)
+    var delta = options.delta
     console.log(item)
     var oldprice = "goodsList[0].oldprice";
     var productName = "goodsList[0].productName";
@@ -118,7 +124,6 @@ Page({
     var memberPrice = "goodsList[0].memberPrice";
     var productImage = "goodsList[0].productImage";
     var id = "goodsList[0].id";
-    var urls = item.url;
     console.log("============================")
     console.log("url:=======",item.url)
     this.setData({
@@ -129,7 +134,7 @@ Page({
       [productImage]: item.productCovermap,
       [id]: item.id,
       count: 1,
-      getUrl:urls,
+      delta: delta,
     });
 
     console.log("goodsList:", this.data.goodsList[0])
