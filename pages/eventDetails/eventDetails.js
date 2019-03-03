@@ -30,7 +30,8 @@ Page({
     var activitiesList = new Object();
     if (options.type == "find") {
       activeDetail = app.globalData.activeDetail;
-      console.log(app.globalData.activeDetail);
+      
+      console.log(activeDetail);
       //填写属性
       activitiesList.id = activeDetail.id;
       activitiesList.coverPath = activeDetail.productCovermap;
@@ -47,7 +48,7 @@ Page({
       activitiesList.activitiIntroduction = activeDetail.courseIntroduce;
     } else {
       //填写属性
-      activeDetail = JSON.parse(options.activeDetail);
+      activeDetail = options.activeDetail;
       activitiesList.id = activeDetail.id;
       activitiesList.coverPath = activeDetail.coverPath;
       activitiesList.productTitle = activeDetail.productTitle;
@@ -129,6 +130,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    console.log(options);
+    // var json = JSON.parse(options);
+    // console.log(json);
     this.showActiveDetail(options);
     // this.setImgArr();
   },

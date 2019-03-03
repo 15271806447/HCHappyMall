@@ -204,18 +204,33 @@ Page({
     var productInfo = null;
     if (type == 'bookArr') {
       productInfo = that.data.bookArr[index];
+      app.globalData.goodsInfo = productInfo;
     } else if (type == 'movieArr') {
       productInfo = that.data.movieArr[index];
+      app.globalData.virtualCourse = productInfo;
     } else if (type == 'audioArr') {
       productInfo = that.data.audioArr[index];
+      app.globalData.virtualCourse = productInfo;
     } else if (type == 'activeArr') {
       productInfo = that.data.activeArr[index];
+      app.globalData.activeDetail = productInfo;
     }
     //appdata接收
-    app.globalData.goodsInfo = productInfo;
-    wx.navigateTo({
-      url: '../goods/goods?type=collection',
-    })
+    
+    if (type == 'bookArr'){
+      wx.navigateTo({
+        url: '../goods/goods?type=collection',
+      })
+    } else if (type == "activeArr"){
+      wx.navigateTo({
+        url: '../eventDetails/eventDetails?type=find',
+      })
+    }else{
+      wx.navigateTo({
+        url: '../virtualCourse/virtualCourse?type=search',
+      })
+    }
+   
   }
 
 })

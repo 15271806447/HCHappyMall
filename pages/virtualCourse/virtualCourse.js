@@ -7,7 +7,7 @@ Page({
   data: {
     vritualCourse: {
       id: '',
-      coverPath: '',
+      // coverPath: '',
       productTitle: "",
       productAuthor: "",
       freeNum: "",
@@ -18,6 +18,7 @@ Page({
       price: '',
       memberPrice: '',
       courseIntroduce: "",
+      productCovermap:""
     },
     courseList: [],
     hidden: false,
@@ -40,7 +41,8 @@ Page({
   onLoad: function (options) {
     var json = null;
     if (options.type == 'search') {
-      json = app.globalData.goodsInfo;
+      console.log(app.globalData.virtualCourse);
+      json = app.globalData.virtualCourse;
     }else{
       json = JSON.parse(options.productInfo);
       this.verificationCollection(json.id);
@@ -52,6 +54,9 @@ Page({
     
     var vritualCourse = this.data.vritualCourse;
     vritualCourse.id = json.id;
+    if (options.type == 'search'){
+      vritualCourse.id = json.productId;
+    }
     vritualCourse.coverPath = app.globalData.url + '/common/file/showPicture.do?id=' + json.productCovermap;
     vritualCourse.productTitle = json.productTitle;
     vritualCourse.productAuthor = json.productAuthor;
@@ -60,7 +65,7 @@ Page({
     vritualCourse.productSales = json.productSales;
     vritualCourse.productStock = json.productStock;
     vritualCourse.courseIntroduce = json.courseIntroduce;
-
+    vritualCourse.productCovermap = json.productCovermap
     this.setData({
       'vritualCourse': vritualCourse,
       goods: this.data.vritualCourse
