@@ -28,8 +28,10 @@ Page({
     show: false,
     lock: false,
     rows: 4,
-    // 长度列表
+// 长度列表
    time:0,
+// 判断用户是否购买课程
+   isHave:false,
   },
 
   /**
@@ -64,8 +66,8 @@ Page({
     })
 
     this.getCourseInfo();
-    // this.checkCourse();
     this.flagVideoAndAudio(options);
+    this.checkCourse();
   },
   /**
    * 跳转购买
@@ -189,19 +191,21 @@ Page({
   checkCourse: function() {
     var that = this;
     var id = this.data.vritualCourse.id;
-    var number = that.data.vritualCourse
+    var isHave = that.data.isHave
     wx.request({
       url: app.globalData.url + '/api/course/checkCourse?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid + '&productId=' + id,
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
       },
-      // success: function (res) {
-      //   console.log(res);
-      //   that.setData({
-      //     'number': number,
-      //   });
-      // }
+      success: function (res) {
+        console.log("用户是否购买交互");
+        console.log(res.data.data);
+        isHave = res.data.data.isHave;
+        that.setData({
+          'isHave': isHave,
+        });
+      }
     })
   },
   /**
@@ -245,7 +249,8 @@ Page({
     var that = this;
     var time = that.data.time;
     var type = that.data.type;
-    if (index < freeNum){
+    var isHave = that.data.isHave
+    if (index < freeNum || isHave == true){
       if (type == 'VideoItem') {
         wx.navigateTo({
           url: '../videoPlay/videoPlay?type=1&videoDetail=' + encodeURIComponent(JSON.stringify(that.data.vritualCourse)) + '&index=' + index + "&time=" + JSON.stringify(time),
