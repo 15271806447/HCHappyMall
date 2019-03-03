@@ -52,5 +52,5 @@
     </view>
   </view>
   <!-- 图片展示模块结束了 -->
-  <button type="primary" bindtap='buyNow' class="button-hover">立即参加</button>
+  <button bindtap='buyNow' class="hover">立即参加</button>
 </view>

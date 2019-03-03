@@ -80,12 +80,21 @@ Page({
    */
   ToGoods: function(e) {
     console.log(e);
+    var app = getApp();
     // 获取索引
     var index = e.currentTarget.dataset.index;
     app.globalData.goodsInfo = this.data.TotalProductCartVOList[index];
-    wx.navigateTo({
-      url: '../goods/goods?type=shoppingCart'
-    })
+    //如果是声音、视频课程跳声音、视频课程
+    if (app.globalData.goodsInfo.firstClassifyId == app.globalData.firstClassifyList[1].id || app.globalData.goodsInfo.firstClassifyId == app.globalData.firstClassifyList[2].id) {
+      wx.navigateTo({
+        url: '../virtualCourse/virtualCourse?type=search'
+      })
+    } else if (app.globalData.goodsInfo.firstClassifyId == app.globalData.firstClassifyList[0].id) {
+      //如果是实体课程跳实体课程
+      wx.navigateTo({
+        url: '../goods/goods?type=search'
+      })
+    }
   },
 
   /**

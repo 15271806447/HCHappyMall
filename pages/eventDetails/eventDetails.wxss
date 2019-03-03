@@ -129,3 +129,7 @@ display: flex;
 .collection {
   margin-right: 15rpx; 
 }
+.hover {
+  color: white;
+  background-color: red;
+}
