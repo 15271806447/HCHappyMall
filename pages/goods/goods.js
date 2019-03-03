@@ -129,7 +129,7 @@ Page({
           console.log("id:" + id);
           console.log("userId:" + app.globalData.uid);
           wx.request({
-            url: app.globalData.url + '/api/productCart/addToProductCart?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid + "&productId=" + id,
+            url: app.globalData.url + '/api/productCart/addToProductCart?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid + "&productId=" + id + "&num=1",
             method: "POST",
             header: {
               'X-Requested-With': 'APP'
