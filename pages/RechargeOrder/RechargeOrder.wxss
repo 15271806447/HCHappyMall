@@ -6,7 +6,6 @@ page{
   height: 100%;
 }
 .chaemenu{
-width: 
 height: 130px;
 background: #2AD5A1;
 position: relative;
