@@ -13,17 +13,14 @@ Page({
     // 默认选中菜单
     currentTab: 0,
     //全部账单信息
-    hcWalletTransactionRecordList: [{
-    }, ],
+    hcWalletTransactionRecordList: [{}, ],
     //收入账单信息
-    hcIncomeBillList: [{
-    },],
+    hcIncomeBillList: [{}, ],
     //支出账单信息
-    hcBillOfExpenditureList: [{
-    },],
-    iShcWalletTransactionRecordList:"",//是否有全部明细
-    iShcIncomeBillList:"",//是否有收入账单明细，
-    iShcBillOfExpenditureList:"",//是否有支出账单明细
+    hcBillOfExpenditureList: [{}, ],
+    iShcWalletTransactionRecordList: "false", //是否有全部明细
+    iShcIncomeBillList: "false", //是否有收入账单明细，
+    iShcBillOfExpenditureList: "false", //是否有支出账单明细
   },
   //顶部tab切换
   navbarTap: function(e) {
@@ -43,21 +40,20 @@ Page({
     this.accountDetails();
   },
   //账单类型转换
-  typeConversion: function(data,hc) {
+  typeConversion: function(data, hc) {
     for (var i = 0; i < data.length; i++) {
       //类型
       var hcSourceType = data[i].sourceType;
       //收入或支出
       var hcType = data[i].type;
-      var type = data[i].type;
-      var hcSourceType = this.data.sourceType[hcSourceType-1]
+      var hcSourceType = this.data.sourceType[hcSourceType - 1]
       var hcType = this.data.navbar[type]
-      var sourceType = hc+"[" + i + "].sourceType";
-      var type = hc+"[" + i + "].type";
-        this.setData({
-          [sourceType]: hcSourceType,
-          [type]: hcType,
-        })
+      var sourceType = hc + "[" + i + "].sourceType";
+      var type = hc + "[" + i + "].type";
+      this.setData({
+        [sourceType]: hcSourceType,
+        [type]: hcType,
+      })
     }
   },
   /**
@@ -77,41 +73,53 @@ Page({
       },
       success: function(res) {
         //全部账单类型转换
-        if (that.data.hcWalletTransactionRecordList != null) {
-          console.log(res.data.data.hcWalletTransactionRecordList)
+        if (that.data.hcWalletTransactionRecordList != null && that.data.hcWalletTransactionRecordList != '') {
           var hcWalletTransactionRecordList = res.data.data.hcWalletTransactionRecordList;
           that.setData({
             'hcWalletTransactionRecordList': hcWalletTransactionRecordList
           })
           that.setData({
-            iShcWalletTransactionRecordList:'false'
+            iShcWalletTransactionRecordList: 'true'
           })
           var data = res.data.data.hcWalletTransactionRecordList;
-          for (var i = 0; i < data.length;i++){
+          for (var i = 0; i < data.length; i++) {
             var datas = data[i]
-            if (data[i].type =='1'){
+            if (data[i].type == '1') {
               var hcIncomeBillList = "hcIncomeBillList[" + i + "]";
               that.setData({
                 [hcIncomeBillList]: datas
               })
               that.setData({
-                iShcIncomeBillList: 'false'
+                iShcIncomeBillList: 'true'
               })
-            }else{
+            }
+            if (data[i].type == '2') {
               var hcBillOfExpenditureList = "hcBillOfExpenditureList[" + i + "]";
               that.setData({
                 [hcBillOfExpenditureList]: datas
               })
               that.setData({
-                iShcBillOfExpenditureList: 'false'
+                iShcBillOfExpenditureList: 'true'
               })
             }
           }
+          if (that.data.hcWalletTransactionRecordList != null && that.data.hcWalletTransactionRecordList != '') {
+            console.log("全部明细：", that.data.hcWalletTransactionRecordList)
+            console.log(that.data.iShcWalletTransactionRecordList)
             that.typeConversion(that.data.hcWalletTransactionRecordList, 'hcWalletTransactionRecordList');
+          }
+          if (that.data.hcIncomeBillList != null && that.data.hcIncomeBillList != '') {
+            console.log("收入明细：", that.data.hcIncomeBillList)
+            console.log(that.data.iShcIncomeBillList)
             //收入账单类型转换
             that.typeConversion(that.data.hcIncomeBillList, 'hcIncomeBillList');
+          }
+          if (that.data.hcBillOfExpenditureList != null && that.data.hcBillOfExpenditureList != '') {
+            console.log("支出明细：", that.data.hcBillOfExpenditureList)
+            console.log(that.data.iShcBillOfExpenditureList)
             //支出账单类型转换
             that.typeConversion(that.data.hcBillOfExpenditureList, 'hcBillOfExpenditureList');
+          }
         }
       }
     })
