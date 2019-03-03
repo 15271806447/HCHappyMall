@@ -4,6 +4,36 @@
     <text>{{item}}</text>
   </lable>
 </view>
+<!-- 排序功能 -->
+<view class='sort'>
+  <view class='img' bindtap='onChangeShowState'>
+    <image src='img/search.png'></image>
+  </view>
+</view>
+<view hidden="{{showView}}">
+  <view class='time' bindtap='onChangeShowState1'>
+    <text>时间排序</text></view>
+  <view hidden="{{showView1}}">
+    <view class='up'>
+      <text class='ml20'></text>升序</view>
+    <view class='decrease'>
+      <text class='ml20'></text>降序</view>
+  </view>
+  <!-- <view class='type' bindtap='onChangeShowState2'>
+    <text class='ml20'></text>类型排序</view>
+  <view hidden="{{showView2}}">
+    <view class='up'>
+      <text class='ml20'></text>在线充值</view>
+    <view class='up'>
+      <text class='ml20'></text>订单消费</view>
+    <view class='up'>
+      <text class='ml20'></text>订单返回消费</view>
+    <view class='up'>
+      <text class='ml20'></text>提取现金</view>
+    <view class='up'>
+      <text class='ml20'></text>获得佣金</view>
+  </view> -->
+</view>
 <!--全部-->
 <view hidden="{{currentTab!==0}}" class='total'>
   <!-- 1111111 -->
@@ -32,7 +62,7 @@
       </view>
     </view>
   </view>
- <!-- 否则 -->
+  <!-- 否则 -->
   <view wx:else>
     <!-- 外层 -->
     <view class='cont_count'>
@@ -68,7 +98,7 @@
       </view>
     </view>
   </view>
-<!-- 否则 -->
+  <!-- 否则 -->
   <view wx:else>
     <!-- 外层 -->
     <view class='cont_count'>
@@ -104,7 +134,7 @@
       </view>
     </view>
   </view>
-<!-- 否则 -->
+  <!-- 否则 -->
   <view wx:else>
     <!-- 外层 -->
     <view class='cont_count'>

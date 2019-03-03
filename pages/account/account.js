@@ -21,7 +21,11 @@ Page({
     iShcWalletTransactionRecordList: "false", //是否有全部明细
     iShcIncomeBillList: "false", //是否有收入账单明细，
     iShcBillOfExpenditureList: "false", //是否有支出账单明细
+    showView:true,
+    showView1: true,
+    // showView2: true
   },
+  //只需要动态变更select既可以改变class渲染
   //顶部tab切换
   navbarTap: function(e) {
     this.setData({
@@ -32,13 +36,28 @@ Page({
     }
     this.onLoad(options);
   },
+  //下拉框
+  onChangeShowState: function () {
+    var that = this;
+    that.setData({
+      showView: (!that.data.showView)
+    })
+  },
+  onChangeShowState1: function () {
+    var that = this;
+    that.setData({
+      showView1: (!that.data.showView1)
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
     //获得账户明细
     this.accountDetails();
+    onChangeShowState();
   },
+
   //账单类型转换
   typeConversion: function(data, hc) {
     for (var i = 0; i < data.length; i++) {

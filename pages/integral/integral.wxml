@@ -7,7 +7,7 @@
       <text class='jifen_number'>{{jifenTotal}}</text>
     </view>
   </view>
-
+ 
   <view class='space'></view>
 
   <view wx:if='{{!isShow}}'>

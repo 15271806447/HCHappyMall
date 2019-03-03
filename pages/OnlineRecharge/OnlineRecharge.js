@@ -90,13 +90,6 @@ Page({
     ]
 
   },
-  // fetchData: function () {
-  //   //充值卡信息
-  //   this.RechargeCardInfo();
-  // },
-  // onNavigate: function (res) {
-  //   this.$put('detail', this.fetchData(res.query))
-  // },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -112,7 +105,6 @@ Page({
     })
     //充值卡信息
     this.RechargeCardInfo();
-    // this.$take('detail') || this.fetchData(query);
   },
   activethis: function(event) { //点击选中事件
     var thisindex = event.currentTarget.dataset.thisindex; //当前index
