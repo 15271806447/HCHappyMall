@@ -2,10 +2,7 @@ page{
   font-family: "黑体";
 }
 .chaemenu{
-<<<<<<< HEAD
 width: 100%;
-=======
->>>>>>> 9887c69b529b443c7474571cc2c20b74537f379a
 height: 130px;
 background: #2AD5A1;
 position: relative;

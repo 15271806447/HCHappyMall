@@ -90,15 +90,8 @@ Page({
         })
         console.log("==============")
         console.log("that.data.getUrl:===============",that.data.getUrl)
-<<<<<<< HEAD
-        getApp().pay("同源梦商城-" + that.data.goodsList[0].productName, that.data.orderNum, that.data.goodsList[0].price, function () { }, function () { }, function () {
-          wx.redirectTo({
-            url: '../' + that.data.getUrl + '/' + that.data.getUrl,
-          })
-=======
         getApp().pay("幸福学院商城-" + that.data.goodsList[0].productName, that.data.orderNum, that.data.goodsList[0].price, function () { }, function () { }, function () {
           that.jump();
->>>>>>> 9887c69b529b443c7474571cc2c20b74537f379a
         });
       }
     })
