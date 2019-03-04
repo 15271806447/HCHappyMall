@@ -41,8 +41,10 @@ Page({
   onLoad: function (options) {
     var json = null;
     if (options.type == 'search') {
-      console.log(app.globalData.virtualCourse);
-      json = app.globalData.virtualCourse;
+      json = app.globalData.goodsInfo;
+      this.setData({
+        'type': options.type
+      });
     }else{
       json = JSON.parse(options.productInfo);
       this.verificationCollection(json.id);
@@ -53,8 +55,13 @@ Page({
     })
     
     var vritualCourse = this.data.vritualCourse;
+    console.log(json);
     vritualCourse.id = json.id;
-    vritualCourse.coverPath = app.globalData.url + '/common/file/showPicture.do?id=' + json.productCovermap;
+    if(this.data.type!='search'){
+      vritualCourse.coverPath = app.globalData.url + '/common/file/showPicture.do?id=' + json.productCovermap;
+    }else{
+      vritualCourse.coverPath = json.productCovermap;
+    }
     vritualCourse.productTitle = json.productTitle;
     vritualCourse.productAuthor = json.productAuthor;
     vritualCourse.price = json.originalPrice;
@@ -102,17 +109,17 @@ Page({
     }
   },
 
-  bounced: function () {
-    if (this.data.show) {
-      this.setData({
-        show: false
-      })
-    } else {
-      this.setData({
-        show: true
-      })
-    }
-  },
+  // bounced: function () {
+  //   if (this.data.show) {
+  //     this.setData({
+  //       show: false
+  //     })
+  //   } else {
+  //     this.setData({
+  //       show: true
+  //     })
+  //   }
+  // },
   /**
    * 点击收藏
    */
@@ -146,11 +153,10 @@ Page({
     getCourseInfo: function() {
       var that = this;
       var temp = 0;
-      var id = this.data.vritualCourse.id;
+      console.log("列表数据表交互");
       var vritualCourse = this.data.vritualCourse;
-      console.log("id:" + id);
       wx.request({
-        url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + '&productId=' + id,
+        url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + '&productId=' + that.data.json.id,
         method: "POST",
         header: {
           'X-Requested-With': 'APP'
@@ -167,7 +173,9 @@ Page({
         if (that.data.type == 'VideoItem') {
           for (var i = 0; i < courseList.length; i++) {
             temp++;
-            var path = that.getFilePath(courseList[i].fileAddr, i);
+            
+              var path = that.getFilePath(courseList[i].fileAddr, i);
+            
             that.getVideoTime(path, i);
             if (temp > vritualCourse.freeNum){
               that.data.lock = true
@@ -178,7 +186,7 @@ Page({
           for (var i = 0; i < courseList.length; i++) {
             temp++;
             console.log(courseList[i].fileAddr);
-            that.getVideoTime(that.getAudioPaht(courseList[i].fileAddr), i);
+            that.getVideoTime(that.getAudioPath(courseList[i].fileAddr), i);
             if (temp > vritualCourse.freeNum) {
               that.data.lock = true
             }
@@ -333,7 +341,7 @@ Page({
     return time;
   },
 
-  getAudioPaht: function (id) {
+  getAudioPath: function (id) {
     return app.globalData.url + '/common/file/showPicture.do?id=' + id;
   },
 

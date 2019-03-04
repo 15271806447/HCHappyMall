@@ -52,7 +52,7 @@ Page({
     priceFilter: [0, 0],
     hidden: "hidden",
     all_state: true,
-    imageUrl: app.globalData.imageUrl
+    imageUrl: app.globalData.imageUrl,
   },
 
   onLoad: function(options) {
@@ -176,14 +176,14 @@ Page({
       },
       success: function(res) {
         console.log(res);
-        console.log('=================');
         console.log(app.globalData.url + '/api/product/searchProduct?sid=' + app.globalData.sid + "&firstClassifyId=" + firstClassifyId + "&secondClassifyId=" + categoryId + "&keyword=" + that.data.searchinput + "&minStr=" + minStr + "&maxStr=" + maxStr + "&page=1&size=12");
         var hcProductInfoList = res.data.data.hcProductInfoList;
         for (let i = 0; i < hcProductInfoList.length; i++) {
-          hcProductInfoList[i].productCovermap = app.globalData.url + '/common/file/showPicture.do?id=' + hcProductInfoList[i].productCovermap;
+          hcProductInfoList[i].productCovermap = app.globalData.url + '/common/file/showPicture.do?id=' +                  hcProductInfoList[i].productCovermap;
         }
         that.setData({
-          'product': hcProductInfoList
+          'product': hcProductInfoList,
+          'TotalProduct': res.data.data.hcProductInfoList
         })
       }
     })
@@ -383,9 +383,11 @@ Page({
     var app = getApp();
     // 获取索引
     var index = e.currentTarget.dataset.index;
-    app.globalData.goodsInfo = this.data.product[index];
+    console.log(index);
+    app.globalData.goodsInfo = this.data.TotalProduct[index];
+    console.log(this.data.TotalProduct);
     //如果是声音、视频课程跳声音、视频课程
-    if (app.globalData.goodsInfo.firstClassifyId == app.globalData.firstClassifyList[1].id || app.globalData.goodsInfo.firstClassifyId == app.globalData.firstClassifyList[2].id) {
+    if (app.globalData.goodsInfo.firstClassifyId == app.globalData.firstClassifyList[1].id || app.globalData.goodsInfo.firstClassifyId == app.globalData.firstClassifyList[3].id) {
       wx.navigateTo({
         url: '../virtualCourse/virtualCourse?type=search'
       })
@@ -394,7 +396,7 @@ Page({
       wx.navigateTo({
         url: '../goods/goods?type=search'
       })
-    } else if (app.globalData.goodsInfo.firstClassifyId == app.globalData.firstClassifyList[3].id) {
+    } else if (app.globalData.goodsInfo.firstClassifyId == app.globalData.firstClassifyList[5].id) {
       app.globalData.activeDetail = this.data.product[index];
       wx.navigateTo({
         url: '../eventDetails/eventDetails?type=find'
