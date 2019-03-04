@@ -14,14 +14,14 @@ Page({
     that.setData({
       firstFansVOList: a
     })
+    
   },
-
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
     this.fensdata(JSON.parse(options.firfan));
-
+    console.log("返回粉丝信息")
+    console.log(JSON.parse(options.firfan))
   }
 })
