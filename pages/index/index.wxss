@@ -140,8 +140,11 @@ page {
   font-weight: 600;
   font-size: 14px;
 }
-.detail:first-child {
-
+.more{
+  color:#616161;
+  font-size: 30rpx;
+  margin-left: 22rpx;
+  margin-top: 15rpx;
 }
 .content-item .productName {
   /* 把商品标题居中 */
