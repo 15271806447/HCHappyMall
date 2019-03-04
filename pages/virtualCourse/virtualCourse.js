@@ -43,9 +43,10 @@ Page({
     if (options.type == 'search') {
       console.log(app.globalData.virtualCourse);
       json = app.globalData.virtualCourse;
+      // this.verificationCollection(json.productId);
     }else{
       json = JSON.parse(options.productInfo);
-      this.verificationCollection(json.id);
+      // this.verificationCollection(json.id);
     }
     console.log(json);
     this.setData({
@@ -75,6 +76,8 @@ Page({
     this.getCourseInfo();
     this.flagVideoAndAudio(options);
     this.checkCourse();
+    this.verificationCollection(this.data.vritualCourse.id);
+    
   },
   /**
    * 跳转购买
@@ -425,5 +428,7 @@ Page({
       }
 
     })
-  }
+  },
+
+ 
 })

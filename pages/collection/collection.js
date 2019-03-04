@@ -212,8 +212,11 @@ Page({
       productInfo = that.data.audioArr[index];
       app.globalData.virtualCourse = productInfo;
     } else if (type == 'activeArr') {
+      console.log("9999999999999999999999999999999999999999");
       productInfo = that.data.activeArr[index];
       app.globalData.activeDetail = productInfo;
+      console.log(productInfo);
+      console.log("9999999999999999999999999999999999999999");
     }
     //appdata接收
     
@@ -223,11 +226,11 @@ Page({
       })
     } else if (type == "activeArr"){
       wx.navigateTo({
-        url: '../eventDetails/eventDetails?type=find',
+        url: '../eventDetails/eventDetails?type=active',
       })
     }else{
       wx.navigateTo({
-        url: '../virtualCourse/virtualCourse?type=search',
+        url: '../virtualCourse/virtualCourse?type=search'
       })
     }
    

@@ -165,12 +165,8 @@ App({
           'X-Requested-With': 'APP'
         },
         success: function (res) {
-          console.log(888888888888888888888888)
           console.log(res);
-          // this.globalData.collectionId = res.data.data.collectionId;
-          console.log(res.data.data.collectionId);
-          console.log(888888888888888888888888)
-          resolve(res.data.data.collectionId);
+          return res.data.data.collectionId;
         }
       })
    
