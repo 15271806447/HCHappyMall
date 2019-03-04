@@ -41,6 +41,9 @@ Page({
     var json = null;
     if (options.type == 'search') {
       json = app.globalData.goodsInfo;
+      this.setData({
+        'type': options.type
+      });
     }else{
       json = JSON.parse(options.productInfo);
     }
@@ -51,7 +54,11 @@ Page({
     
     var vritualCourse = this.data.vritualCourse;
     vritualCourse.id = json.id;
-    vritualCourse.coverPath = app.globalData.url + '/common/file/showPicture.do?id=' + json.productCovermap;
+    if(this.data.type!='search'){
+      vritualCourse.coverPath = app.globalData.url + '/common/file/showPicture.do?id=' + json.productCovermap;
+    }else{
+      vritualCourse.coverPath = json.productCovermap;
+    }
     vritualCourse.productTitle = json.productTitle;
     vritualCourse.productAuthor = json.productAuthor;
     vritualCourse.price = json.originalPrice;
@@ -95,17 +102,17 @@ Page({
     }
   },
 
-  bounced: function () {
-    if (this.data.show) {
-      this.setData({
-        show: false
-      })
-    } else {
-      this.setData({
-        show: true
-      })
-    }
-  },
+  // bounced: function () {
+  //   if (this.data.show) {
+  //     this.setData({
+  //       show: false
+  //     })
+  //   } else {
+  //     this.setData({
+  //       show: true
+  //     })
+  //   }
+  // },
   /**
    * 点击收藏
    */
@@ -158,7 +165,9 @@ Page({
         if (that.data.type == 'VideoItem') {
           for (var i = 0; i < courseList.length; i++) {
             temp++;
-            var path = that.getFilePath(courseList[i].fileAddr, i);
+            
+              var path = that.getFilePath(courseList[i].fileAddr, i);
+            
             that.getVideoTime(path, i);
             if (temp > vritualCourse.freeNum){
               that.data.lock = true
@@ -169,7 +178,7 @@ Page({
           for (var i = 0; i < courseList.length; i++) {
             temp++;
             console.log(courseList[i].fileAddr);
-            that.getVideoTime(that.getAudioPaht(courseList[i].fileAddr), i);
+            that.getVideoTime(that.getAudioPath(courseList[i].fileAddr), i);
             if (temp > vritualCourse.freeNum) {
               that.data.lock = true
             }
@@ -324,7 +333,7 @@ Page({
     return time;
   },
 
-  getAudioPaht: function (id) {
+  getAudioPath: function (id) {
     return app.globalData.url + '/common/file/showPicture.do?id=' + id;
   },
 

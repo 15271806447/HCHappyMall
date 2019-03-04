@@ -99,6 +99,7 @@ Page({
     wx.request({
       url: app.globalData.url + '/api/product/getProductPicture?&sid=' + app.globalData.sid + '&id=' + activeDetail.id,
       header: {
+        
         'X-Requested-With': 'APP'
       },
       method: 'POST',
