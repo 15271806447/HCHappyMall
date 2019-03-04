@@ -45,7 +45,6 @@ Page({
       this.setData({
         'type': options.type
       });
-      console.log(app.globalData.virtualCourse);
     }else{
       json = JSON.parse(options.productInfo);
       this.verificationCollection(json.id);
@@ -56,6 +55,7 @@ Page({
     })
     
     var vritualCourse = this.data.vritualCourse;
+    console.log(json);
     vritualCourse.id = json.id;
     if(this.data.type!='search'){
       vritualCourse.coverPath = app.globalData.url + '/common/file/showPicture.do?id=' + json.productCovermap;
@@ -153,11 +153,10 @@ Page({
     getCourseInfo: function() {
       var that = this;
       var temp = 0;
-      var id = this.data.vritualCourse.id;
+      console.log("列表数据表交互");
       var vritualCourse = this.data.vritualCourse;
-      console.log("id:" + id);
       wx.request({
-        url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + '&productId=' + id,
+        url: app.globalData.url + '/api/course/getCourseInfo?sid=' + app.globalData.sid + '&productId=' + that.data.json.id,
         method: "POST",
         header: {
           'X-Requested-With': 'APP'
