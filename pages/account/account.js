@@ -21,9 +21,6 @@ Page({
     iShcWalletTransactionRecordList: "false", //是否有全部明细
     iShcIncomeBillList: "false", //是否有收入账单明细，
     iShcBillOfExpenditureList: "false", //是否有支出账单明细
-    showView:true,
-    showView1: true,
-    // showView2: true
   },
   //只需要动态变更select既可以改变class渲染
   //顶部tab切换
@@ -35,19 +32,6 @@ Page({
       state: JSON.stringify(e.currentTarget.dataset.idx)
     }
     this.onLoad(options);
-  },
-  //下拉框
-  onChangeShowState: function () {
-    var that = this;
-    that.setData({
-      showView: (!that.data.showView)
-    })
-  },
-  onChangeShowState1: function () {
-    var that = this;
-    that.setData({
-      showView1: (!that.data.showView1)
-    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -142,5 +126,79 @@ Page({
         }
       }
     })
+  },
+  //升序
+  ascendingOrder: function(){
+    // if (getCurrentPages().length != 0) {
+    //   //刷新当前页面的数据
+    //   getCurrentPages()[getCurrentPages().length - 1].onLoad()
+    // }
+    console.log("111111111111")
+    if (this.data.hcWalletTransactionRecordList != null && this.data.hcWalletTransactionRecordList !=''){
+      //全部明细
+      var ascendingOrderList = this.data.hcWalletTransactionRecordList.sort(this.compareUp("createTime"))
+      this.setData({
+        hcWalletTransactionRecordList: ascendingOrderList,
+      })
+    }
+    if (this.data.hcIncomeBillList != null && this.data.hcIncomeBillList != '') {
+      //收入明细
+      var ascendingOrderList = this.data.hcIncomeBillList.sort(this.compareUp("createTime"))
+      this.setData({
+        hcIncomeBillList: ascendingOrderList,
+      })
+    }
+    if (this.data.hcBillOfExpenditureList != null && this.data.hcBillOfExpenditureList != '') {
+      //支出明细
+      var ascendingOrderList = this.data.hcBillOfExpenditureList.sort(this.compareUp("createTime"))
+      this.setData({
+        hcBillOfExpenditureList: ascendingOrderList,
+      })
+    }
+  },
+  //降序
+  descendingOrder: function () {
+    // if (getCurrentPages().length != 0) {
+    //   //刷新当前页面的数据
+    //   getCurrentPages()[getCurrentPages().length - 1].onLoad()
+    // }
+    console.log("111111111111")
+    if (this.data.hcWalletTransactionRecordList != null && this.data.hcWalletTransactionRecordList != '') {
+      //全部明细
+      var ascendingOrderList = this.data.hcWalletTransactionRecordList.sort(this.compareDecrease("createTime"))
+      this.setData({
+        hcWalletTransactionRecordList: ascendingOrderList,
+      })
+    }
+    if (this.data.hcIncomeBillList != null && this.data.hcIncomeBillList != '') {
+      //收入明细
+      var ascendingOrderList = this.data.hcIncomeBillList.sort(this.compareDecrease("createTime"))
+      this.setData({
+        hcIncomeBillList: ascendingOrderList,
+      })
+    }
+    if (this.data.hcBillOfExpenditureList != null && this.data.hcBillOfExpenditureList != '') {
+      //支出明细
+      var ascendingOrderList = this.data.hcBillOfExpenditureList.sort(this.compareDecrease("createTime"))
+      this.setData({
+        hcBillOfExpenditureList: ascendingOrderList,
+      })
+    }
+  },
+  //json数组比较 ,降序
+  compareDecrease: function (property) {
+    return function (a, b) {
+      var value1 = a[property];
+      var value2 = b[property];
+      return new Date(value2.replace(/-/g, "/")).getTime() - new Date(value1.replace(/-/g, "/")).getTime() ; 
+    }
+  },
+  //json数组比较 ,升序
+  compareUp: function (property) {
+    return function (a, b) {
+      var value1 = a[property];
+      var value2 = b[property];
+      return new Date(value1.replace(/-/g, "/")).getTime() - new Date(value2.replace(/-/g, "/")).getTime();
+    }
   },
 })

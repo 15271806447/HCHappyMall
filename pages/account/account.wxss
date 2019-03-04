@@ -298,32 +298,22 @@ page {
 }
 
 /* 排序 */
+
 .sort {
-background-color: white;
-}
-.sort .img image {
-  height: 50rpx;
-  width: 50rpx;
-  margin-top: 10px;
-  margin-left: 320px;
-}
-.time {
-  border-bottom: 1px solid #d3d3d3;
-  border-top: 1px solid #d3d3d3;
+  background-color: white;
+  height: 80rpx;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
 }
 
-.type {
-  border-bottom: 1px solid #d3d3d3;
-  border-top: 1px solid #d3d3d3;
-}
-.type, .time, .up, .decrease {
-  text-align: left;
-  height: 40px;
-  line-height: 40px;
-  box-shadow: 0px 10px 5px #d3d3d3;
-  background: #fff;
+.up image {
+  height: 32rpx;
+  width: 30rpx;
 }
 
-.ml20 {
-  margin-left: 20px;
+.decrease image {
+  height: 30rpx;
+  width: 30rpx;
 }
