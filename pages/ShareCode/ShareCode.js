@@ -90,7 +90,7 @@ Page({
         }else{
           wx.showToast({
             title: '失败',
-            icon: '',
+            icon: 'none',
             duration: 2000,
           })
         }

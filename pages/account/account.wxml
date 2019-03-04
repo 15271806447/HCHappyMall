@@ -9,10 +9,12 @@
     <text>时间排序</text>
   </view>
   <view class='up' bindtap='ascendingOrder'>
-    <text>升序</text><image src='img/ascendingOrder.png'></image>
+    <text>升序</text>
+    <image src='img/ascendingOrder.png'></image>
   </view>
   <view class='decrease' bindtap='descendingOrder'>
-    <text>降序</text><image src='img/descendingOrder.png'></image>
+    <text>降序</text>
+    <image src='img/descendingOrder.png'></image>
   </view>
 </view>
 <!--全部-->
