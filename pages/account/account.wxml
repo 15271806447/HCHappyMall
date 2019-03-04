@@ -4,6 +4,19 @@
     <text>{{item}}</text>
   </lable>
 </view>
+<view class='sort'>
+  <view class='time'>
+    <text>时间排序</text>
+  </view>
+  <view class='up' bindtap='ascendingOrder'>
+    <text>升序</text>
+    <image src='img/ascendingOrder.png'></image>
+  </view>
+  <view class='decrease' bindtap='descendingOrder'>
+    <text>降序</text>
+    <image src='img/descendingOrder.png'></image>
+  </view>
+</view>
 <!--全部-->
 <view hidden="{{currentTab!==0}}" class='total'>
   <!-- 1111111 -->
@@ -32,7 +45,7 @@
       </view>
     </view>
   </view>
- <!-- 否则 -->
+  <!-- 否则 -->
   <view wx:else>
     <!-- 外层 -->
     <view class='cont_count'>
@@ -68,7 +81,7 @@
       </view>
     </view>
   </view>
-<!-- 否则 -->
+  <!-- 否则 -->
   <view wx:else>
     <!-- 外层 -->
     <view class='cont_count'>
@@ -104,7 +117,7 @@
       </view>
     </view>
   </view>
-<!-- 否则 -->
+  <!-- 否则 -->
   <view wx:else>
     <!-- 外层 -->
     <view class='cont_count'>

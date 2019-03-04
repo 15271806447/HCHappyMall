@@ -95,6 +95,7 @@ Page({
     var index = e.currentTarget.dataset.index;
     console.log(this.data.activity[index]);
     app.globalData.activeDetail = this.data.activity[index];
+    // var json = { "type": "find", "activeDetail": activeDetail}
     wx.navigateTo({
       url: '../eventDetails/eventDetails?type=find'
     })

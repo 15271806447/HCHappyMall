@@ -44,6 +44,7 @@ App({
     firstClassifyList: "",
     productCartList: null,
     activeDetail: null,
+    virtualCourse:null,
     ip: null,
     openid: null,
     imageUrl: "http://47.107.183.112:90/img/",
@@ -153,20 +154,28 @@ App({
   collectionProduct: function(userId, productId) {
     var that = this;
     var app = getApp();
+    var collectionId;
     console.log('userId:' + userId);
     console.log('productId:' + productId);
-    wx.request({
-      url: app.globalData.url + '/api/collection/collectionProduct?sid=' + app.globalData.sid + '&userId=' + userId + '&productId=' + productId,
-      method: "POST",
-      header: {
-        'X-Requested-With': 'APP'
-      },
-      success: function(res) {
-        console.log(res);
-        return res.data.data.collectionId;
+    
+      wx.request({
+        url: app.globalData.url + '/api/collection/collectionProduct?sid=' + app.globalData.sid + '&userId=' + userId + '&productId=' + productId,
+        method: "POST",
+        header: {
+          'X-Requested-With': 'APP'
+        },
+        success: function (res) {
+          console.log(888888888888888888888888)
+          console.log(res);
+          // this.globalData.collectionId = res.data.data.collectionId;
+          console.log(res.data.data.collectionId);
+          console.log(888888888888888888888888)
+          resolve(res.data.data.collectionId);
+        }
+      })
+   
+    
 
-      }
-    })
   },
   /**
    * 删除收藏商品

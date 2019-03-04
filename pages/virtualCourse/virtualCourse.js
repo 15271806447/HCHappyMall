@@ -18,6 +18,7 @@ Page({
       price: '',
       memberPrice: '',
       courseIntroduce: "",
+      // productCovermap:""
     },
     courseList: [],
     hidden: false,
@@ -44,8 +45,10 @@ Page({
       this.setData({
         'type': options.type
       });
+      console.log(app.globalData.virtualCourse);
     }else{
       json = JSON.parse(options.productInfo);
+      this.verificationCollection(json.id);
     }
     console.log(json);
     this.setData({
@@ -66,7 +69,11 @@ Page({
     vritualCourse.productSales = json.productSales;
     vritualCourse.productStock = json.productStock;
     vritualCourse.courseIntroduce = json.courseIntroduce;
-
+    // vritualCourse.productCovermap = json.productCovermap
+    if (options.type == 'search') {
+      vritualCourse.id = json.productId;
+      vritualCourse.coverPath = json.productCovermap
+    }
     this.setData({
       'vritualCourse': vritualCourse,
       goods: this.data.vritualCourse
@@ -121,15 +128,17 @@ Page({
       wx.showToast({
         title: '已收藏',
       });
-      var collectionId = app.collectionProduct(app.globalData.uid, this.data.vritualCourse.id);
-      this.setData({
-        'collectionId': collectionId
-      })
+      app.collectionProduct(app.globalData.uid, this.data.vritualCourse.id);
+      // var collectionId = 
+      // this.setData({
+      //   'collectionId': collectionId
+      // })
     } else {
       wx.showToast({
         title: '已取消收藏',
       });
-      app.removeCollection(this.data.collectionId);
+      // app.removeCollection(this.data.collectionId);
+      this.cancelCollection();
     }
     this.setData({
       isClick: !this.data.isClick
@@ -363,4 +372,67 @@ Page({
       }
     })
   },
+
+  //验证收藏
+  verificationCollection: function (productId) {
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/api/collection/isCollection?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid + "&productId=" + productId,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function (res) {
+        console.log("888888888888888888888")
+        console.log(res)
+        that.setData({
+          isClick: res.data.data.isCollection
+        })
+      }
+    })
+  },
+  //取消收藏
+  cancelCollection: function () {
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/api/collection/getAllCollection?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function (res) {
+        console.log("5555555555555555");
+        console.log(res);
+        var collectionList = res.data.data.hcCollectionVOList;
+        console.log(collectionList);
+        console.log("5555555555555555");
+        for (var i = 0; i < collectionList.length; i++) {
+          if (collectionList[i].productId == that.data.vritualCourse.id) {
+            console.log(collectionList[i].id);
+            that.deleteCollection(collectionList[i].id);
+          }
+        }
+
+      }
+
+    })
+  },
+
+  //删除收藏
+  deleteCollection: function (collectionId) {
+    wx.request({
+      url: app.globalData.url + '/api/collection/removeCollection?sid=' + app.globalData.sid + "&collectionId=" + collectionId,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function (res) {
+        console.log(555555555555555666);
+        console.log(res);
+        console.log(555555555555555666);
+
+      }
+
+    })
+  }
 })
