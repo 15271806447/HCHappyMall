@@ -527,7 +527,7 @@ Page({
         return true;
       } else if (parseInt(nowTime[1]) > parseInt(tempTime[1])) {
         return false;
-      } else if (parseInt(nowTime[2]) < parseInt(tempTime[2])) {
+      } else if (parseInt(nowTime[2]) <= parseInt(tempTime[2])) {
         return true;
       } else {
         return false;

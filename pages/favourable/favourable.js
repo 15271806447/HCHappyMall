@@ -47,9 +47,7 @@ Page({
     var type = app.globalData.couponPage;
     that.setType(type);
     that.flagPageType(that.data.type);
-    setTimeout(function() {
-      that.flagCouponType(type, that.data.currentTab);
-    }, 100) //延迟时间 这里是1秒
+    
     if (type == 1) {
       that.findUsedCoupon();
       that.findExpiredCoupon();
@@ -59,6 +57,10 @@ Page({
       that.findUnuseCoupon();
       that.findUsedCoupon();
     }
+
+    // setTimeout(function () {
+    //   that.flagCouponType(type, that.data.currentTab);
+    // }, 200) //延迟时间 这里是1秒
   },
 
   setType: function(type) {
@@ -171,7 +173,7 @@ Page({
       if (flagType == "已领取") {
         coupon.bgColor = "#5F9EA0";
       } else if (flagType == "已使用") {
-        coupon.bgColor = "#00FF00";
+        coupon.bgColor = "#2E8B57";
       } else if (flagType == "已过期") {
         coupon.bgColor = "#C0C0C0";
       }
@@ -525,7 +527,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    that.flagCouponType(type, that.data.currentTab);
   },
 
   /**
