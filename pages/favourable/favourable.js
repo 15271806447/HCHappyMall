@@ -242,9 +242,10 @@ Page({
     console.log(unuseCouponList)
     for (var i = 0; i < couponList.length; i++) {
       var flag = true;
+      
       if (couponList[i].roductUppershelf == 0) {
         flag = false;
-        break;
+        continue;
       }
       for (var j = 0; j < unuseCouponList.length; j++) {
         if (unuseCouponList[j].id == couponList[i].id) {
@@ -252,18 +253,18 @@ Page({
           break;
         }
       }
-      for (var x = 0; x < usedCouponList; x++) {
+      for (var x = 0; x < usedCouponList.length; x++) {
         if (usedCouponList[x].id == couponList[i].id) {
           flag = false;
           break;
         }
       }
-      for (var y = 0; y < expiredCouponList; y++) {
+      for (var y = 0; y < expiredCouponList.length; y++) {
         if (expiredCouponList[y].id == couponList[i].id) {
           flag = false;
           break;
         }
-      }
+      }  
       if (flag == true) {
         tempList[n++] = couponList[i];
       }
@@ -365,7 +366,7 @@ Page({
           var tempList = new Array();
           var n = 0;
           var couponVO = res.data.data.hcCouponInfoList;
-          for (var i = 0; i < couponVO;i++){
+          for (var i = 0; i < couponVO.length;i++){
             if (couponVO[i].roductUppershelf == 0){
               tempList[n++] = couponVO[i];
             }
