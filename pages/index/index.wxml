@@ -73,6 +73,7 @@
         <text class='price'>￥{{item.price}}</text>
       </view>
     </view>
+      <view class='more'  catchtap='ToMall' data-index='0'>点击加载更多...</view>
   </view>
 </view>
 
@@ -92,6 +93,7 @@
         <text class='price'>￥{{item.price}}</text>
       </view>
     </view>
+     <view class='more'  catchtap='ToMall' data-index='1' >点击加载更多...</view>
   </view>
 </view>
 <!-- 优质慕课 -->
@@ -110,5 +112,6 @@
         <text class='price'>￥{{item.price}}</text>
       </view>
     </view>
+     <view class='more'  catchtap='ToMall' data-index='2' >点击加载更多...</view>
   </view>
 </view>

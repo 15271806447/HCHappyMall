@@ -24,7 +24,7 @@
     <view wx:for="{{hcWalletTransactionRecordList}}">
       <view class='conbox'>
         <view class='paywx'>
-          <image src='img/pay.png'></image>
+          <text class='fr'>{{item.sourceType}}</text>
         </view>
         <view class='fbox'>
           <text class='fl'>商家名称:</text>
@@ -33,10 +33,6 @@
         <view class='fbox'>
           <text class='fl'>付款金额:</text>
           <text class='fr'>￥{{item.transactionAmount}}</text>
-        </view>
-        <view class='fbox'>
-          <text class='fl'>账单类型:</text>
-          <text class='fr'>{{item.sourceType}}</text>
         </view>
         <view class='fbox'>
           <text class='fl'>支付日期</text>
@@ -60,7 +56,7 @@
     <view wx:for="{{iShcIncomeBillList}}">
       <view class='conbox'>
         <view class='paywx'>
-          <image src='img/pay.png'></image>
+          <text class='fr'>{{item.sourceType}}</text>
         </view>
         <view class='fbox'>
           <text class='fl'>商家名称:</text>
@@ -69,10 +65,6 @@
         <view class='fbox'>
           <text class='fl'>付款金额:</text>
           <text class='fr'>￥{{item.transactionAmount}}</text>
-        </view>
-        <view class='fbox'>
-          <text class='fl'>账单类型:</text>
-          <text class='fr'>{{item.sourceType}}</text>
         </view>
         <view class='fbox'>
           <text class='fl'>支付日期</text>
@@ -96,7 +88,7 @@
     <view wx:for="{{hcBillOfExpenditureList}}" wx:key="key">
       <view class='conbox'>
         <view class='paywx'>
-          <image src='img/pay.png'></image>
+          <text class='fr'>{{item.sourceType}}</text>
         </view>
         <view class='fbox'>
           <text class='fl'>商家名称:</text>
@@ -105,10 +97,6 @@
         <view class='fbox'>
           <text class='fl'>付款金额:</text>
           <text class='fr'>￥{{item.transactionAmount}}</text>
-        </view>
-        <view class='fbox'>
-          <text class='fl'>账单类型:</text>
-          <text class='fr'>{{item.sourceType}}</text>
         </view>
         <view class='fbox'>
           <text class='fl'>支付日期</text>

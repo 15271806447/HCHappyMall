@@ -182,7 +182,8 @@ Page({
           hcProductInfoList[i].productCovermap = app.globalData.url + '/common/file/showPicture.do?id=' +                  hcProductInfoList[i].productCovermap;
         }
         that.setData({
-          'product': hcProductInfoList
+          'product': hcProductInfoList,
+          'TotalProduct': res.data.data.hcProductInfoList
         })
       }
     })
@@ -382,7 +383,9 @@ Page({
     var app = getApp();
     // 获取索引
     var index = e.currentTarget.dataset.index;
-    app.globalData.goodsInfo = this.data.product[index];
+    console.log(index);
+    app.globalData.goodsInfo = this.data.TotalProduct[index];
+    console.log(this.data.TotalProduct);
     //如果是声音、视频课程跳声音、视频课程
     if (app.globalData.goodsInfo.firstClassifyId == app.globalData.firstClassifyList[1].id || app.globalData.goodsInfo.firstClassifyId == app.globalData.firstClassifyList[3].id) {
       wx.navigateTo({

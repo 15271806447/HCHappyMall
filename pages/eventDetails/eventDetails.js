@@ -26,70 +26,58 @@ Page({
 
   showActiveDetail: function(options) {
     var that = this;
-    var activeDetail = null;
-    var activitiesList = new Object();
-    if (options.type == "find") {
-      activeDetail = app.globalData.activeDetail;
-      
-      console.log(activeDetail);
-      //填写属性
-      activitiesList.id = activeDetail.id;
-      activitiesList.coverPath = activeDetail.productCovermap;
-      activitiesList.productTitle = activeDetail.productTitle;
-      if (activeDetail.price == 0) {
-        activitiesList.price = "免费"
-        activitiesList.showColor = "#F9A505";
-      } else {
-        activitiesList.price = activeDetail.originalPrice;
-      }
-      activitiesList.activitiPlace = activeDetail.productTitle;
-      activitiesList.beginTime = "2019年1月10日";
-      activitiesList.endTime = "2019年1月25日";
-      activitiesList.activitiIntroduction = activeDetail.courseIntroduce;
-    } else {
-      //填写属性
-      activeDetail = options.activeDetail;
-      activitiesList.id = activeDetail.id;
-      activitiesList.coverPath = activeDetail.coverPath;
-      activitiesList.productTitle = activeDetail.productTitle;
-      if (activeDetail.price == 0) {
-        activitiesList.price = "免费"
-        activitiesList.showColor = "#F9A505";
-      } else {
-        activitiesList.price = activeDetail.price;
-      }
-      activitiesList.activitiPlace = activeDetail.activitiPlace;
-      activitiesList.beginTime = that.dateSplite(activeDetail.beginTime);
-      activitiesList.endTime = that.dateSplite(activeDetail.endTime);
-      activitiesList.activitiIntroduction = activeDetail.activitiIntroduction;
-    }
-    console.log(activitiesList);
+    var activeDetail = app.globalData.activeDetail;
+    var activitiesId = 'activitiesList.id';
+    var activitiesCoverPath = 'activitiesList.coverPath';
+    var activitiesTitle = 'activitiesList.productTitle';
+    var activitiesPrice = 'activitiesList.price';
+    if (activeDetail.price == 0) {
+      activeDetail.price = "免费"
+    };
+
     that.setData({
-      'activitiesList': activitiesList
-    })
+      [activitiesId]: activeDetail.id,
+      [activitiesCoverPath]: activeDetail.productCovermap,
+      [activitiesTitle]: activeDetail.productTitle,
+      [activitiesPrice]: activeDetail.originalPrice
+    });
+    if (options.type == 'active') {
+      that.setData({
+        [activitiesId]: activeDetail.productId,
+      });
+    }
+
+
+
+    console.log(77889911223345)
+    console.log(this.data.activitiesList.id);
+    console.log(activeDetail);
+    console.log(77889911223345)
+    this.verificationCollection(this.data.activitiesList.id);
 
   },
   /**
    * 收藏
    */
   collection: function() {
+    console.log(this.data.activitiesList)
+
+
     if (!this.data.isClick == true) {
       wx.showToast({
         title: '已收藏',
       });
-      var collectionId = app.collectionProduct(app.globalData.uid, this.data.activitiesList.id);
-      this.setData({
-        'collectionId': collectionId
-      })
+      app.collectionProduct(app.globalData.uid, this.data.activitiesList.id);
     } else {
       wx.showToast({
         title: '已取消收藏',
       });
-      app.removeCollection(this.data.collectionId);
+      this.cancelCollection();
     }
     this.setData({
       isClick: !this.data.isClick
     })
+
   },
   /**
    * 设置图片数组
@@ -131,11 +119,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    console.log(1111111)
     console.log(options);
-    // var json = JSON.parse(options);
-    // console.log(json);
+    console.log(1111111)
+    this.getAllActivities();
     this.showActiveDetail(options);
-    // this.setImgArr();
+
   },
 
 
@@ -165,6 +154,103 @@ Page({
   buyNow: function() {
     wx: wx.navigateTo({
       url: '../confirm/confirm?type=' + 'activit' + '&productInfo=' + encodeURIComponent(JSON.stringify(this.data.activitiesList)),
+    })
+  },
+
+
+  //验证收藏
+  verificationCollection: function(productId) {
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/api/collection/isCollection?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid + "&productId=" + productId,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function(res) {
+        console.log("888888888888888888888999999999999999999")
+        console.log(res)
+        console.log("88888888888888888888899999999999999999999999")
+        that.setData({
+          isClick: res.data.data.isCollection
+        })
+      }
+    })
+  },
+  //取消收藏
+  cancelCollection: function() {
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/api/collection/getAllCollection?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function(res) {
+        console.log("5555555555555555");
+        console.log(res);
+        var collectionList = res.data.data.hcCollectionVOList;
+        console.log(collectionList);
+        console.log("5555555555555555");
+        for (var i = 0; i < collectionList.length; i++) {
+          if (collectionList[i].productId == that.data.activitiesList.id) {
+            console.log(collectionList[i].id);
+            that.deleteCollection(collectionList[i].id);
+          }
+        }
+      }
+    })
+  },
+
+  //删除收藏
+  deleteCollection: function(collectionId) {
+    wx.request({
+      url: app.globalData.url + '/api/collection/removeCollection?sid=' + app.globalData.sid + "&collectionId=" + collectionId,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function(res) {
+        console.log(555555555555555666);
+        console.log(res);
+        console.log(555555555555555666);
+
+      }
+    })
+  },
+
+
+  getAllActivities: function() {
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/api/activities/getAll?sid=' + app.globalData.sid,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function(res) {
+        console.log(555555555555555666);
+        console.log(res);
+        console.log(555555555555555666);
+        var activitieArr = res.data.data.activitiesVOS;
+        for (var i = 0; i < activitieArr.length; i++) {
+          if (activitieArr[i].productId == that.data.activitiesList.id) {
+            console.log("777777777777777777777");
+            console.log(activitieArr[i]);
+            console.log("777777777777777777777")
+            var activitiesPlace = "activitiesList.activitiPlace";
+            var activitiesListBeginTime = "activitiesList.beginTime";
+            var activitiesListEndTime = "activitiesList.endTime";
+            var activitiesIntroduction = "activitiesList.activitiIntroduction";
+            that.setData({
+              [activitiesPlace]: activitieArr[i].activitiPlace,
+              [activitiesListBeginTime]: that.dateSplite(activitieArr[i].beginTime),
+              [activitiesListEndTime]: that.dateSplite(activitieArr[i].endTime),
+              [activitiesIntroduction]: activitieArr[i].courseIntroduce
+            })
+          }
+        }
+      }
     })
   }
 })
