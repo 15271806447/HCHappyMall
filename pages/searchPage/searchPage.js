@@ -52,7 +52,8 @@ Page({
     priceFilter: [0, 0],
     hidden: "hidden",
     all_state: true,
-    imageUrl: app.globalData.imageUrl
+    imageUrl: app.globalData.imageUrl,
+    searchPageNum: 1, // 设置加载的页数，默认是第一页  
   },
 
   onLoad: function(options) {
@@ -70,7 +71,7 @@ Page({
       'typesBtnActive': typesBtnActive
     })
     this.getSecondClassify();
-    this.searchProduct();
+    this.searchProduct(false);
 
     // TODO正则验证价格区间是否为正整数 若不是则弹框
     // var myreg = /^[1 - 9]\d*$/;
@@ -137,12 +138,17 @@ Page({
   },
   /**
    * 筛选搜索
+   * IsPush: 布尔变量 是否把查询的接口push在product后而不是覆盖
    */
-  searchProduct: function() {
+  searchProduct: function(IsPush) {
     var that = this;
+    var page = this.data.searchPageNum;
     var typesBtnActive = this.data.typesBtnActive;
     var firstClassifyId = "";
     console.log(app.globalData.firstClassifyList);
+    var product = that.data.product;
+    var category = this.data.category;
+    var categoryId = "";
     for (let i = 0; i < typesBtnActive.length; i++) {
       if (typesBtnActive[i] == "btnActive") {
         for (let j = 0; j < app.globalData.firstClassifyList.length; j++) {
@@ -154,9 +160,7 @@ Page({
       }
 
     }
-    console.log()
-    var category = this.data.category;
-    var categoryId = "";
+
     for (let i = 0; i < category.length; i++) {
       if (category[i].class == "btnActive") {
         categoryId = category[i].id;
@@ -169,7 +173,7 @@ Page({
       keyword = that.data.searchinput;
     }
     wx.request({
-      url: app.globalData.url + '/api/product/searchProduct?sid=' + app.globalData.sid + "&firstClassifyId=" + firstClassifyId + "&secondClassifyId=" + categoryId + "&keyword=" + keyword + "&minStr=" + minStr + "&maxStr=" + maxStr + "&page=1&size=12",
+      url: app.globalData.url + '/api/product/searchProduct?sid=' + app.globalData.sid + "&firstClassifyId=" + firstClassifyId + "&secondClassifyId=" + categoryId + "&keyword=" + keyword + "&minStr=" + minStr + "&maxStr=" + maxStr + "&page=" + page + "&size=12",
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
@@ -179,12 +183,31 @@ Page({
         console.log('=================');
         console.log(app.globalData.url + '/api/product/searchProduct?sid=' + app.globalData.sid + "&firstClassifyId=" + firstClassifyId + "&secondClassifyId=" + categoryId + "&keyword=" + that.data.searchinput + "&minStr=" + minStr + "&maxStr=" + maxStr + "&page=1&size=12");
         var hcProductInfoList = res.data.data.hcProductInfoList;
+        if (hcProductInfoList.length == 0){
+          wx.showModal({
+            title: '提示',
+            content: '已是最后一页',
+            showCancel: false,
+            confirmColor: '#ff6666'
+          })
+          return;
+        }
         for (let i = 0; i < hcProductInfoList.length; i++) {
           hcProductInfoList[i].productCovermap = app.globalData.url + '/common/file/showPicture.do?id=' + hcProductInfoList[i].productCovermap;
+          if (IsPush) {
+            product.push(hcProductInfoList[i])
+          }
         }
-        that.setData({
-          'product': hcProductInfoList
-        })
+        if (IsPush) {
+          that.setData({
+            'product': product
+          })
+        } else {
+          that.setData({
+            'product': hcProductInfoList
+          })
+        }
+
       }
     })
   },
@@ -355,7 +378,7 @@ Page({
    */
   confirm: function() {
     this.toggle();
-    this.searchProduct();
+    this.searchProduct(false);
   },
   /**
    * 输入完成
@@ -365,7 +388,7 @@ Page({
     this.setData({
       'searchinput': e.detail.value
     })
-    this.searchProduct();
+    this.searchProduct(false);
   },
   /**
    * 输入中
@@ -400,7 +423,16 @@ Page({
         url: '../eventDetails/eventDetails?type=find'
       })
     }
-
-
+  },
+  /**
+   * 加载更多
+   */
+  more: function() {
+    // 调接口push进数组
+    var searchPageNum = this.data.searchPageNum + 1;
+    this.setData({
+      searchPageNum: searchPageNum
+    })
+    this.searchProduct(true);
   }
 })

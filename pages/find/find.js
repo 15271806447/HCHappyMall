@@ -34,7 +34,8 @@ Page({
 
     fisrtCategory: "active",
     searchinput: "",
-    imageUrl: app.globalData.imageUrl
+    imageUrl: app.globalData.imageUrl,
+    searchPageNum: 1, // 设置加载的页数，默认是第一页  
   },
   onLoad: function() {
     console.log('findIndex:' + app.globalData.findIndex);
@@ -45,7 +46,7 @@ Page({
       app.globalData.findIndex = null;
     }
   },
-  onShow: function (){
+  onShow: function() {
     this.onLoad();
   },
   /**
@@ -102,9 +103,11 @@ Page({
   /**
    * 搜索
    */
-  searchProduct: function() {
+  searchProduct: function(IsPush) {
     var that = this;
     var firstClassifyId = app.globalData.firstClassifyList[4].id;
+    var page = this.data.searchPageNum;
+    var activity = that.data.activity;
     var categoryList = this.data.categoryList;
     var categoryId = "";
     for (let i = 0; i < categoryList.length; i++) {
@@ -113,7 +116,7 @@ Page({
       }
     }
     wx.request({
-      url: app.globalData.url + '/api/product/searchProduct?sid=' + app.globalData.sid + "&firstClassifyId=" + firstClassifyId + "&secondClassifyId=" + categoryId + "&keyword=" + that.data.searchinput + "&minStr=0" + "&maxStr=0" + "&page=1&size=12",
+      url: app.globalData.url + '/api/product/searchProduct?sid=' + app.globalData.sid + "&firstClassifyId=" + firstClassifyId + "&secondClassifyId=" + categoryId + "&keyword=" + that.data.searchinput + "&minStr=0" + "&maxStr=0" + "&page=" + page + "&size=4",
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
@@ -121,22 +124,32 @@ Page({
       success: function(res) {
         console.log(res);
         console.log('=================');
-        console.log(app.globalData.url + '/api/product/searchProduct?sid=' + app.globalData.sid + "&firstClassifyId=" + firstClassifyId + "&secondClassifyId=" + categoryId + "&keyword=" + that.data.searchinput + "&minStr=0" + "&maxStr=0" + "&page=1&size=12");
+        console.log(app.globalData.url + '/api/product/searchProduct?sid=' + app.globalData.sid + "&firstClassifyId=" + firstClassifyId + "&secondClassifyId=" + categoryId + "&keyword=" + that.data.searchinput + "&minStr=0" + "&maxStr=0" + "&page=1&size=4");
         var hcProductInfoList = res.data.data.hcProductInfoList;
-        if (hcProductInfoList == null) {
-          wx.showToast({
-            title: '没有内容!!!',
-            icon: 'none',
-            duration: 2000,
+        if (hcProductInfoList.length == 0) {
+          wx.showModal({
+            title: '提示',
+            content: '没有内容！',
+            showCancel: false,
+            confirmColor: '#ff6666'
           })
           return;
         }
         for (let i = 0; i < hcProductInfoList.length; i++) {
           hcProductInfoList[i].productCovermap = app.globalData.url + '/common/file/showPicture.do?id=' + hcProductInfoList[i].productCovermap;
+          if (IsPush) {
+            activity.push(hcProductInfoList[i])
+          }
         }
-        that.setData({
-          'activity': hcProductInfoList
-        })
+        if (IsPush) {
+          that.setData({
+            'activity': activity
+          })
+        } else {
+          that.setData({
+            'activity': hcProductInfoList
+          })
+        }
       }
     })
   },
@@ -153,7 +166,7 @@ Page({
       categoryList[i].isActive = "no-active";
     }
     categoryList[index].isActive = "active";
-    this.searchProduct();
+    this.searchProduct(false);
     this.setData({
       'categoryList': categoryList,
       'fisrtCategory': "no-active"
@@ -171,7 +184,7 @@ Page({
       'categoryList': categoryList,
       'fisrtCategory': "active"
     })
-    this.searchProduct();
+    this.searchProduct(false);
   },
   /*
   / 清空搜索内容
@@ -190,7 +203,18 @@ Page({
     })
   },
   query: function() {
-    this.searchProduct();
+    this.searchProduct(false);
+  },
+  /**
+   * 加载更多
+   */
+  more: function() {
+    // 调接口push进数组
+    var searchPageNum = this.data.searchPageNum + 1;
+    this.setData({
+      searchPageNum: searchPageNum
+    })
+    this.searchProduct(true);
   }
 
 })
