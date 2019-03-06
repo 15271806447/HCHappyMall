@@ -185,7 +185,7 @@ Page({
         if (hcProductInfoList.length == 0){
           wx.showModal({
             title: '提示',
-            content: '已是最后一页',
+            content: '没有内容！',
             showCancel: false,
             confirmColor: '#ff6666'
           })
