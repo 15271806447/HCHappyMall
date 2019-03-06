@@ -47,9 +47,7 @@ Page({
     var type = app.globalData.couponPage;
     that.setType(type);
     that.flagPageType(that.data.type);
-    setTimeout(function () {
-      that.flagCouponType(type, that.data.currentTab);
-    }, 100) //延迟时间 这里是1秒
+    
     if (type == 1) {
       that.findUsedCoupon();
       that.findExpiredCoupon();
@@ -60,8 +58,9 @@ Page({
       that.findUsedCoupon();
     }
 
-    
-    
+    // setTimeout(function () {
+    //   that.flagCouponType(type, that.data.currentTab);
+    // }, 200) //延迟时间 这里是1秒
   },
 
   setType: function(type) {
@@ -83,7 +82,6 @@ Page({
     })
   },
 
-
   //顶部tab切换
   navbarTap: function(e) {
     this.setData({
@@ -91,7 +89,6 @@ Page({
     });
     var options = {
       state: JSON.stringify(e.currentTarget.dataset.idx)
-
     }
     this.onLoad(options);
   },
@@ -176,7 +173,7 @@ Page({
       if (flagType == "已领取") {
         coupon.bgColor = "#5F9EA0";
       } else if (flagType == "已使用") {
-        coupon.bgColor = "#00FF00";
+        coupon.bgColor = "#2E8B57";
       } else if (flagType == "已过期") {
         coupon.bgColor = "#C0C0C0";
       }
@@ -226,7 +223,6 @@ Page({
         })
       }
     }
-
   },
 
 
@@ -241,44 +237,46 @@ Page({
     var usedCouponList = this.data.usedCouponList;
     var expiredCouponList = this.data.expiredCouponList;
 
-    var maxLength = unuseCouponList.length;
-    if (maxLength < usedCouponList.length) {
-      maxLength = usedCouponList.length;
-    }
-    if (maxLength < expiredCouponList.length) {
-      maxLength = expiredCouponList.length;
-    }
-
-
     var tempList = new Array();
     var n = 0;
     //未领取的优惠券
+    console.log('unuseCouponList')
+    console.log(unuseCouponList)
     for (var i = 0; i < couponList.length; i++) {
       var flag = true;
-      for (var j = 0; j < maxLength; j++) {
-        if (unuseCouponList.length - 1 > j && couponList[i].id == unuseCouponList[j].id) {
+      
+      if (couponList[i].roductUppershelf == 0) {
+        flag = false;
+        continue;
+      }
+      for (var j = 0; j < unuseCouponList.length; j++) {
+        if (unuseCouponList[j].id == couponList[i].id) {
           flag = false;
-          continue;
-        }
-        if (usedCouponList.length - 1 > j && couponList[i].id == usedCouponList[j].id) {
-          flag = false;
-          continue;
-        }
-        if (expiredCouponList.length - 1 > j && couponList[i].id == expiredCouponList[j].id) {
-          flag = false;
-          continue;
+          break;
         }
       }
+      for (var x = 0; x < usedCouponList.length; x++) {
+        if (usedCouponList[x].id == couponList[i].id) {
+          flag = false;
+          break;
+        }
+      }
+      for (var y = 0; y < expiredCouponList.length; y++) {
+        if (expiredCouponList[y].id == couponList[i].id) {
+          flag = false;
+          break;
+        }
+      }  
       if (flag == true) {
         tempList[n++] = couponList[i];
       }
     }
-
+    console.log('tempList')
+    console.log(tempList)
     var currentTab = that.data.currentTab
     if (currentTab == 0 && app.globalData.couponPage == 1) {
       that.setCouponData(tempList, 'couponVOS', '立即领取', that.data.currentTab);
     }
-
 
     this.setData({
       'unaccalimedCouponList': tempList
@@ -297,7 +295,9 @@ Page({
         'X-Requested-With': 'APP'
       },
       success: function(res) {
-        that.unaccalimedCoupon(res.data.data.hcCouponInfoList);
+        setTimeout(function() {
+          that.unaccalimedCoupon(res.data.data.hcCouponInfoList);
+        }, 500)
         that.setData({
           'allCouponList': res.data.data.hcCouponInfoList
         })
@@ -317,11 +317,12 @@ Page({
         'X-Requested-With': 'APP'
       },
       success: function(res) {
-        var currentTab = that.data.currentTab
-        if (currentTab == 0 && app.globalData.couponPage == 2) {
-          that.setCouponData(res.data.data.couponVOS, 'couponVOS', '立即使用', that.data.currentTab)
-        }
-
+        setTimeout(function() {
+          var currentTab = that.data.currentTab
+          if (currentTab == 0 && app.globalData.couponPage == 2) {
+            that.setCouponData(res.data.data.couponVOS, 'couponVOS', '立即使用', that.data.currentTab)
+          }
+        }, 500)
         that.setData({
           'unuseCouponList': res.data.data.couponVOS
         })
@@ -354,19 +355,47 @@ Page({
    */
   findExpiredCoupon: function() {
     var that = this;
-    wx.request({
-      url: app.globalData.url + '/api/coupon/showCoupon?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid + '&couponType=' + 3,
-      method: "POST",
-      header: {
-        'X-Requested-With': 'APP'
-      },
-      success: function(res) {
 
-        that.setData({
-          'expiredCouponList': res.data.data.couponVOS
-        })
-      }
-    })
+    //领券中心
+    if (app.globalData.couponPage == 1) {
+      wx.request({
+        url: app.globalData.url + '/api/coupon/getAll?sid=' + app.globalData.sid,
+        method: "POST",
+        header: {
+          'X-Requested-With': 'APP'
+        },
+        success: function(res) {
+          var tempList = new Array();
+          var n = 0;
+          var couponVO = res.data.data.hcCouponInfoList;
+          for (var i = 0; i < couponVO.length;i++){
+            if (couponVO[i].roductUppershelf == 0){
+              tempList[n++] = couponVO[i];
+            }
+          }
+          that.setData({
+            'expiredCouponList': tempList
+          })
+        }
+      })
+    } else if (app.globalData.couponPage ==2) {
+      //我的优惠券
+      wx.request({
+        url: app.globalData.url + '/api/coupon/showCoupon?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid + '&couponType=' + 3,
+        method: "POST",
+        header: {
+          'X-Requested-With': 'APP'
+        },
+        success: function(res) {
+
+          that.setData({
+            'expiredCouponList': res.data.data.couponVOS
+          })
+        }
+      })
+
+    }
+
   },
 
   // setCouponData: function(couponVOS, flagType, type) {
@@ -435,6 +464,8 @@ Page({
     var index = JSON.stringify(e.currentTarget.dataset.index);
     var flagType = this.data.couponVOS[index].flagType;
     var id = this.data.couponVOS[index].id;
+    console.log(app.globalData.uid);
+    console.log(id);
     if (type == 1) {
       if (flagType == '立即领取') {
         wx.request({
@@ -452,7 +483,6 @@ Page({
             })
           }
         })
-
       } else if (flagType == '已领取') {
         wx.showModal({
           title: '提示',
@@ -497,7 +527,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    that.flagCouponType(type, that.data.currentTab);
   },
 
   /**

@@ -72,3 +72,7 @@ page {
   font-size: 30rpx;
   margin-top: 40rpx;
 }
+
+.active{
+  color: red;
+}

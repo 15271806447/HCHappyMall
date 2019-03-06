@@ -1,4 +1,3 @@
-
 let QRCode = require("../../utils/qrcode.js").default;
 
 
@@ -11,18 +10,18 @@ Page({
     qrtext: ''
   },
   //生成分享二维码
-  createQRcode: function () {
+  createQRcode: function() {
     this.setData({
       //将用户id写到二维码
       qrtext: app.globalData.uid
     })
     //打印uid
-    console.log("uid:"+app.globalData.uid)
+    console.log("uid:" + app.globalData.uid)
     this.QR.clear();
     this.QR.makeCode(this.data.qrtext);
   },
   //获得用户信息
-  getUserInfo: function(){
+  getUserInfo: function() {
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -51,7 +50,7 @@ Page({
     }
   },
   //初始化二维码
-  getQrCode: function(){
+  getQrCode: function() {
     // console.log(QRCode);
     // 获取手机信息
     let sysinfo = wx.getSystemInfoSync();
@@ -73,48 +72,55 @@ Page({
   },
   //--------------------------------扫码开始----------------------------------------
   //扫码后推荐
-  getFans: function () {
+  getFans: function() {
     var that = this;
-    console.log(that.data.refereesId)
-    console.log(that.data.userId)
     wx.request({
       url: app.globalData.url + '/api/fans/becomeFans?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid + '&refereesId=' + that.data.userId,
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
       },
-      success: function (res) {
-        wx.showToast({
-          title: '成功',
-          icon: 'success',
-          duration: 2000,
-        })
-        console.log("res:" + res)
+      success: function(res) {
+        if(res.data.data.isSaveSuccess){
+          wx.showToast({
+            title: '成功',
+            icon: 'success',
+            duration: 2000,
+          })
+        }else{
+          wx.showToast({
+            title: '失败',
+            icon: 'none',
+            duration: 2000,
+          })
+        }
+        console.log("扫码返回")
+        console.log("res:" + res.data.data.isSaveSuccess)
       },
     })
   },
-  modalcnt: function () {
+  modalcnt: function() {
     var that = this
     wx.showModal({
       title: '关注',
       content: '是否关注该推荐人',
-      success: function (res) {
+      success: function(res) {
         if (res.confirm) {
           console.log('用户点击确定')
           console.log("扫码分享。。。。。。。。。")
           that.getFans()
         } else if (res.cancel) {
-            wx.showToast({
-              title: '失败',
-              icon: 'none',
-              duration: 2000
-            })
+          wx.showToast({
+            title: '失败',
+            icon: 'none',
+            duration: 2000
+          })
           console.log('用户点击取消')
         }
       }
     })
   },
-  click: function () {
+  click: function() {
     var that = this;
     wx.scanCode({
       success: (res) => {
@@ -132,7 +138,7 @@ Page({
     })
   },
   //---------------------------------扫码结束------------------------------------------
-  onLoad: function () {
+  onLoad: function() {
     this.getUserInfo();
     this.getQrCode();
   },

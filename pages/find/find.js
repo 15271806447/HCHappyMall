@@ -96,8 +96,11 @@ Page({
     var index = e.currentTarget.dataset.index;
     console.log(this.data.activity[index]);
     app.globalData.activeDetail = this.data.activity[index];
+    console.log("987654321")
+    console.log(app.globalData.activeDetail);
+    console.log("987654321")
     wx.navigateTo({
-      url: '../eventDetails/eventDetails?type=find'
+      url: '../eventDetails/eventDetails'
     })
   },
   /**

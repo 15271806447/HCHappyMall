@@ -43,8 +43,8 @@
   </view>
 
   <!-- 列表 -->
-  <view wx:for="{{courseList}}">
-    <view class='specific-title' bindtap="bounced" data-index="{{index}}">
+  <view wx:for="{{courseList}}"  bindtap='bounced' >
+    <view class='specific-title' data-index="{{index}}">
       <view class='view-box'>
         <text>{{item.chapterName}}</text>
       </view>

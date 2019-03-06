@@ -4,6 +4,19 @@
     <text>{{item}}</text>
   </lable>
 </view>
+<view class='sort'>
+  <view class='time'>
+    <text>时间排序</text>
+  </view>
+  <view class='up' bindtap='ascendingOrder'>
+    <text>升序</text>
+    <image src='img/ascendingOrder.png'></image>
+  </view>
+  <view class='decrease' bindtap='descendingOrder'>
+    <text>降序</text>
+    <image src='img/descendingOrder.png'></image>
+  </view>
+</view>
 <!--全部-->
 <view hidden="{{currentTab!==0}}" class='total'>
   <!-- 1111111 -->
@@ -11,7 +24,7 @@
     <view wx:for="{{hcWalletTransactionRecordList}}">
       <view class='conbox'>
         <view class='paywx'>
-          <image src='img/pay.png'></image>
+          <text class='fr'>{{item.sourceType}}</text>
         </view>
         <view class='fbox'>
           <text class='fl'>商家名称:</text>
@@ -22,17 +35,13 @@
           <text class='fr'>￥{{item.transactionAmount}}</text>
         </view>
         <view class='fbox'>
-          <text class='fl'>账单类型:</text>
-          <text class='fr'>{{item.sourceType}}</text>
-        </view>
-        <view class='fbox'>
           <text class='fl'>支付日期</text>
           <text class='fr'>{{item.createTime}}</text>
         </view>
       </view>
     </view>
   </view>
- <!-- 否则 -->
+  <!-- 否则 -->
   <view wx:else>
     <!-- 外层 -->
     <view class='cont_count'>
@@ -43,11 +52,11 @@
 
 <!--收入-->
 <view hidden="{{currentTab!==1}}">
-  <view wx:if="{{iShcIncomeBillList}}">
-    <view wx:for="{{hcIncomeBillList}}">
+  <view wx:if="{{false}}">
+    <view wx:for="{{iShcIncomeBillList}}">
       <view class='conbox'>
         <view class='paywx'>
-          <image src='img/pay.png'></image>
+          <text class='fr'>{{item.sourceType}}</text>
         </view>
         <view class='fbox'>
           <text class='fl'>商家名称:</text>
@@ -58,17 +67,13 @@
           <text class='fr'>￥{{item.transactionAmount}}</text>
         </view>
         <view class='fbox'>
-          <text class='fl'>账单类型:</text>
-          <text class='fr'>{{item.sourceType}}</text>
-        </view>
-        <view class='fbox'>
           <text class='fl'>支付日期</text>
           <text class='fr'>{{item.createTime}}</text>
         </view>
       </view>
     </view>
   </view>
-<!-- 否则 -->
+  <!-- 否则 -->
   <view wx:else>
     <!-- 外层 -->
     <view class='cont_count'>
@@ -83,7 +88,7 @@
     <view wx:for="{{hcBillOfExpenditureList}}" wx:key="key">
       <view class='conbox'>
         <view class='paywx'>
-          <image src='img/pay.png'></image>
+          <text class='fr'>{{item.sourceType}}</text>
         </view>
         <view class='fbox'>
           <text class='fl'>商家名称:</text>
@@ -94,17 +99,13 @@
           <text class='fr'>￥{{item.transactionAmount}}</text>
         </view>
         <view class='fbox'>
-          <text class='fl'>账单类型:</text>
-          <text class='fr'>{{item.sourceType}}</text>
-        </view>
-        <view class='fbox'>
           <text class='fl'>支付日期</text>
           <text class='fr'>{{item.createTime}}</text>
         </view>
       </view>
     </view>
   </view>
-<!-- 否则 -->
+  <!-- 否则 -->
   <view wx:else>
     <!-- 外层 -->
     <view class='cont_count'>
