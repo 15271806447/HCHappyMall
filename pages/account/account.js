@@ -18,9 +18,9 @@ Page({
     hcIncomeBillList: [{}, ],
     //支出账单信息
     hcBillOfExpenditureList: [{}, ],
-    iShcWalletTransactionRecordList: "false", //是否有全部明细
-    iShcIncomeBillList: "false", //是否有收入账单明细，
-    iShcBillOfExpenditureList: "false", //是否有支出账单明细
+    iShcWalletTransactionRecordList: false, //是否有全部明细
+    iShcIncomeBillList: false, //是否有收入账单明细，
+    iShcBillOfExpenditureList:false, //是否有支出账单明细
   },
   //只需要动态变更select既可以改变class渲染
   //顶部tab切换
@@ -39,7 +39,7 @@ Page({
   onLoad: function(options) {
     //获得账户明细
     this.accountDetails();
-    onChangeShowState();
+    console.log(this.data.hcWalletTransactionRecordList)
   },
 
   //账单类型转换
@@ -82,7 +82,7 @@ Page({
             'hcWalletTransactionRecordList': hcWalletTransactionRecordList
           })
           that.setData({
-            iShcWalletTransactionRecordList: 'true'
+            iShcWalletTransactionRecordList: true
           })
           var data = res.data.data.hcWalletTransactionRecordList;
           for (var i = 0; i < data.length; i++) {
@@ -93,7 +93,7 @@ Page({
                 [hcIncomeBillList]: datas
               })
               that.setData({
-                iShcIncomeBillList: 'true'
+                iShcIncomeBillList: true
               })
             }
             if (data[i].type == '2') {
@@ -102,7 +102,7 @@ Page({
                 [hcBillOfExpenditureList]: datas
               })
               that.setData({
-                iShcBillOfExpenditureList: 'true'
+                iShcBillOfExpenditureList: true
               })
             }
           }
@@ -128,13 +128,13 @@ Page({
     })
   },
   //升序
-  ascendingOrder: function(){
+  ascendingOrder: function() {
     // if (getCurrentPages().length != 0) {
     //   //刷新当前页面的数据
     //   getCurrentPages()[getCurrentPages().length - 1].onLoad()
     // }
     console.log("111111111111")
-    if (this.data.hcWalletTransactionRecordList != null && this.data.hcWalletTransactionRecordList !=''){
+    if (this.data.hcWalletTransactionRecordList != null && this.data.hcWalletTransactionRecordList != '') {
       //全部明细
       var ascendingOrderList = this.data.hcWalletTransactionRecordList.sort(this.compareUp("createTime"))
       this.setData({
@@ -157,7 +157,7 @@ Page({
     }
   },
   //降序
-  descendingOrder: function () {
+  descendingOrder: function() {
     // if (getCurrentPages().length != 0) {
     //   //刷新当前页面的数据
     //   getCurrentPages()[getCurrentPages().length - 1].onLoad()
@@ -186,16 +186,16 @@ Page({
     }
   },
   //json数组比较 ,降序
-  compareDecrease: function (property) {
-    return function (a, b) {
+  compareDecrease: function(property) {
+    return function(a, b) {
       var value1 = a[property];
       var value2 = b[property];
-      return new Date(value2.replace(/-/g, "/")).getTime() - new Date(value1.replace(/-/g, "/")).getTime() ; 
+      return new Date(value2.replace(/-/g, "/")).getTime() - new Date(value1.replace(/-/g, "/")).getTime();
     }
   },
   //json数组比较 ,升序
-  compareUp: function (property) {
-    return function (a, b) {
+  compareUp: function(property) {
+    return function(a, b) {
       var value1 = a[property];
       var value2 = b[property];
       return new Date(value1.replace(/-/g, "/")).getTime() - new Date(value2.replace(/-/g, "/")).getTime();

@@ -3,6 +3,8 @@
     <image src='{{avatarUrl}}'></image>
   </view>
   <view class='nickname'>{{nickName}}</view>
+  <view class='qrcode' bindtap='click'><image src="img/qrcode.png"></image></view>
+
   <!-- <view class='integral-value'>积分值：3456</view> -->
 </view>
 <view class='scan-img'>

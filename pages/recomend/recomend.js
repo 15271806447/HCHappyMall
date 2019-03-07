@@ -86,5 +86,72 @@ Page({
   onShow: function() {
 
   },
-
+  //--------------------------------扫码开始----------------------------------------
+  //扫码后推荐
+  getFans: function () {
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/api/fans/becomeFans?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid + '&refereesId=' + that.data.userId,
+      method: "POST",
+      header: {
+        'X-Requested-With': 'APP'
+      },
+      success: function (res) {
+        if (res.data.data.isSaveSuccess) {
+          wx.showToast({
+            title: '成功',
+            icon: 'success',
+            duration: 2000,
+          })
+        } else {
+          wx.showToast({
+            title: '失败',
+            icon: 'none',
+            duration: 2000,
+          })
+        }
+        console.log("扫码返回")
+        console.log("res:" + res.data.data.isSaveSuccess)
+      },
+    })
+  },
+  modalcnt: function () {
+    var that = this
+    wx.showModal({
+      title: '关注',
+      content: '是否关注该推荐人',
+      success: function (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          console.log("扫码分享。。。。。。。。。")
+          that.getFans()
+        } else if (res.cancel) {
+          wx.showToast({
+            title: '失败',
+            icon: 'none',
+            duration: 2000
+          })
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+  click: function () {
+    var that = this;
+    wx.scanCode({
+      success: (res) => {
+        //获得扫码返回的值，推荐用户ID
+        console.log("userId:" + res.result)
+        //粉丝id，也就是当前扫码用户id
+        console.log("refereesId:" + app.globalData.uid)
+        that.setData({
+          userId: res.result,
+          refereesId: app.globalData.uid
+        })
+        //获得粉丝
+        that.modalcnt();
+      }
+    })
+  },
+  //---------------------------------扫码结束------------------------------------------
 })
