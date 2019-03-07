@@ -34,7 +34,7 @@ Page({
     ismember: false,
     imageUrl: app.globalData.imageUrl
   },
-  convertHtmlToText: function (inputText) {
+  convertHtmlToText: function(inputText) {
     var returnText = "" + inputText;
     returnText = returnText.replace(/<\/div>/ig, '\r\n');
     returnText = returnText.replace(/<\/li>/ig, '\r\n');
@@ -69,7 +69,7 @@ Page({
     return returnText;
   },
   //获取会员类型
-  getMemberType: function () {
+  getMemberType: function() {
     var that = this;
     wx.request({
       url: app.globalData.url + '/api/product/getAllMemberCards?sid=' + app.globalData.sid,
@@ -79,6 +79,7 @@ Page({
       },
       success(res) {
         var hcMemberTypeList = res.data.data.memberCards;
+        console.log(res.data.data);
         var memberCategory = new Array();
         for (var i = 0; i < hcMemberTypeList.length; i++) {
           var bool = false;
@@ -90,34 +91,49 @@ Page({
           var memberType = {
             id: "",
             memberCategoryName: "",
-            productId:"",
+            productId: "",
             price: "",
             memberSign: "",
             ischecked: bool,
             program: ""
           };
           memberType.id = hcMemberTypeList[i].id;
-          memberType.memberCategoryName = hcMemberTypeList[i].memberTypeName;
-          memberType.productId = hcMemberTypeList[i].productId;
-          memberType.price = hcMemberTypeList[i].memberPrice;
-          memberType.memberSign = app.globalData.url + '/common/file/showPicture.do?id=' + hcMemberTypeList[i].memberSign;
-          memberType.program = that.convertHtmlToText(hcMemberTypeList[i].memberDescribe);
+          memberType.memberCategoryName = hcMemberTypeList[i].productTitle;
+          memberType.price = hcMemberTypeList[i].originalPrice;
+          memberType.memberSign = app.globalData.url + '/common/file/showPicture.do?id=' + hcMemberTypeList[i].productCovermap;
+          memberType.program = that.convertHtmlToText(hcMemberTypeList[i].courseIntroduce);
           memberCategory.push(memberType);
         }
+        
+        
         that.setData({
-          memberCategory: memberCategory
+          memberCategory: memberCategory,
+          productInfo: res.data.data.memberCards,
+          
         })
       }
     })
   },
-  recharge: function (e) {
+//设置count值
+  setCount: function (index){
+    var countArr = "productInfo[" + index + "].count";
+    this.setData({
+      [countArr]: 1
+    })
+  },
+  recharge: function(e) {
     var index = e.currentTarget.dataset.indext_num;
+    console.log('===================')
+    this.setCount(index);
+    this.data.productInfo[index].productCovermap = app.globalData.url + '/common/file/showPicture.do?id=' + this.data.productInfo[index].productCovermap;
+    console.log(this.data.productInfo[index]);
+    app.globalData.goodsInfo = this.data.productInfo[index];
     wx: wx.navigateTo({
-      url: '../confirm/confirm?type=' + 'member' + '&productInfo=' + encodeURIComponent(JSON.stringify(this.data.memberCategory[index])),
+      url: '../confirm/confirm?type=member'
     })
   },
   //检查是否是会员
-  cheakMember: function () {
+  cheakMember: function() {
     console.log(app.globalData.uid);
     var that = this;
     wx.request({
@@ -142,7 +158,7 @@ Page({
       }
     })
   },
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.cheakMember();
     if (options.isPaySuccess != null && options.isPaySuccess != "") {
       console.log("会员中心充值成功：");
@@ -186,11 +202,13 @@ Page({
       }
     }
     this.getMemberType();
+
+    
   },
   /**
    * 选择会员
    */
-  chooseMember: function (e) {
+  chooseMember: function(e) {
     //获取点击索引
     var index = e.currentTarget.dataset.index;
     var memberCategory = this.data.memberCategory;
@@ -203,7 +221,7 @@ Page({
       'thisindex': index
     })
   },
-  more: function () {
+  more: function() {
     var list_state = this.data.state,
       first_state = this.data.first_click;
     if (!first_state) {

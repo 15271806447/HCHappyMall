@@ -151,7 +151,7 @@ Page({
   flagMember: function () {
     var that = this;
     wx: wx.request({
-      url: app.globalData.url + '/api/personalCenter/getUserMember?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid,
+      url: app.globalData.url + '/api/member/getUserMember?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid,
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
@@ -230,29 +230,36 @@ Page({
       })
       //这个地方不做逻辑，逻辑要写在下面，否则会被覆盖
     } else if (options.type == 'member') { //充值会员的订单
-      var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
-      console.log(productInfo);
+      console.log('执行了');
       var goodsList = [1];
-      var product = {
-        id: "",
-        productTitle: "",
-        oldprice: "",
-        originalPrice: "",
-        productCovermap: "",
-        count: 1,
-        price: 0
-      };
-      product.id = productInfo.productId;
-      product.productTitle = productInfo.memberCategoryName;
-      product.oldprice = productInfo.price;
-      product.productCovermap = productInfo.coverPath;
-      product.price = productInfo.price;
-      product.originalPrice = productInfo.price;
-      goodsList[0] = product;
+      goodsList[0] = app.globalData.goodsInfo;
       that.setData({
         'goodsList': goodsList
-
       })
+     
+      // console.log("执行了=========");
+      // console.log(productInfo);
+      // var goodsList = [1];
+      // var product = {
+      //   id: "",
+      //   productTitle: "",
+      //   oldprice: "",
+      //   originalPrice: "",
+      //   productCovermap: "",
+      //   count: 1,
+      //   price: 0
+      // };
+      // product.id = productInfo.id;
+      // product.productTitle = productInfo.memberCategoryName;
+      // product.oldprice = productInfo.price;
+      // product.productCovermap = productInfo.coverPath;
+      // product.price = productInfo.price;
+      // product.originalPrice = productInfo.price;
+      // goodsList[0] = product;
+      // that.setData({
+      //   'goodsList': goodsList
+
+      // })
     } else { //拿到订单数据
       var data = this.change(app.globalData.productCartList);
       that.setData({
