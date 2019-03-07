@@ -31,8 +31,9 @@
     "pages/message/message",
     "pages/cash/cash",
     "pages/wallet/wallet",
-    "pages/eventDetails/eventDetails",
     "pages/virtualCourse/virtualCourse",
+    "pages/eventDetails/eventDetails",
+    
     "pages/orderdetails/orderdetails",
     "pages/collection/collection",
     "pages/mylession/mylession",

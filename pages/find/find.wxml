@@ -27,4 +27,5 @@
       </view>
     </view>
   </view>
+  <view class="loading" bindtap='more'>点击载入更多...</view>
 </view>

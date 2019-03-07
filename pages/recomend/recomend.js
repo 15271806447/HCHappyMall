@@ -10,7 +10,7 @@ Page({
     imageUrl: app.globalData.imageUrl
   },
   //生成分享二维码
-  createQRcode: function () {
+  createQRcode: function() {
     this.setData({
       //将用户id写到二维码
       qrtext: app.globalData.uid
@@ -28,16 +28,13 @@ Page({
         'X-Requested-With': 'APP'
       },
       success: function(res) {
-        if (res.data.data.fansVO.refereesUser.nickName == null || res.data.data.fansVO.refereesUser.nickName==''){
-          res.data.data.fansVO.refereesUser.nickName="无"
-        }else{
-          res.data.data.fansVO.refereesUser.nickName = res.data.data.fansVO.refereesUser.nickName
+        if (res.data.data.fansVO.refereesNickName == null || res.data.data.fansVO.refereesNickName == '') {
+          res.data.data.fansVO.refereesNickName = "无推荐人"
         }
         that.setData({
-          refereesUserNickName: res.data.data.fansVO.refereesUser.nickName,
+          refereesUserNickName: res.data.data.fansVO.refereesNickName,
           firstFansVOList: res.data.data.fansVO.firstFansVOList
         })
-  
       }
     })
   },
@@ -71,7 +68,7 @@ Page({
       text: '',
       //获取手机屏幕的宽和长  进行比例换算
       width: 130,
-      height:130,
+      height: 130,
       //二维码底色尽量为白色， 图案为深色
       colorDark: '#000000',
       colorLight: '#ffffff',
@@ -81,16 +78,8 @@ Page({
     this.QR = qrcode;
     //分享二维码
     this.createQRcode();
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
 
   },
-
   /**
    * 生命周期函数--监听页面显示
    */
@@ -98,38 +87,4 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  }
 })
