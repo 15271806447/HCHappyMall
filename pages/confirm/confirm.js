@@ -151,7 +151,7 @@ Page({
   flagMember: function () {
     var that = this;
     wx: wx.request({
-      url: app.globalData.url + '/api/personalCenter/getUserMember?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid,
+      url: app.globalData.url + '/api/member/getUserMember?sid=' + app.globalData.sid + "&userId=" + app.globalData.uid,
       method: "POST",
       header: {
         'X-Requested-With': 'APP'
@@ -230,29 +230,38 @@ Page({
       })
       //这个地方不做逻辑，逻辑要写在下面，否则会被覆盖
     } else if (options.type == 'member') { //充值会员的订单
-      var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
-      console.log(productInfo);
+      console.log('执行了');
       var goodsList = [1];
-      var product = {
-        id: "",
-        productTitle: "",
-        oldprice: "",
-        originalPrice: "",
-        productCovermap: "",
-        count: 1,
-        price: 0
-      };
-      product.id = productInfo.productId;
-      product.productTitle = productInfo.memberCategoryName;
-      product.oldprice = productInfo.price;
-      product.productCovermap = productInfo.coverPath;
-      product.price = productInfo.price;
-      product.originalPrice = productInfo.price;
-      goodsList[0] = product;
+      goodsList[0] = app.globalData.goodsInfo;
       that.setData({
-        'goodsList': goodsList
-
+        'goodsList': goodsList,
+        'isMemberPay': true,
+        'memberTypeId': options.memberTypeId
       })
+     
+      // console.log("执行了=========");
+      // console.log(productInfo);
+      // var goodsList = [1];
+      // var product = {
+      //   id: "",
+      //   productTitle: "",
+      //   oldprice: "",
+      //   originalPrice: "",
+      //   productCovermap: "",
+      //   count: 1,
+      //   price: 0
+      // };
+      // product.id = productInfo.id;
+      // product.productTitle = productInfo.memberCategoryName;
+      // product.oldprice = productInfo.price;
+      // product.productCovermap = productInfo.coverPath;
+      // product.price = productInfo.price;
+      // product.originalPrice = productInfo.price;
+      // goodsList[0] = product;
+      // that.setData({
+      //   'goodsList': goodsList
+
+      // })
     } else { //拿到订单数据
       var data = this.change(app.globalData.productCartList);
       that.setData({
@@ -305,85 +314,85 @@ Page({
     })
     return data;
   },
-  onShow(options) {
-    if (this.data.IsLoad == true) {
+  // onShow(options) {
+  //   if (this.data.IsLoad == true) {
 
-      if (options.type == 'goods') {
-        console.log("type=goods");
-        var productInfo = JSON.parse(options.productInfo);
-        var goodsList = [1];
-        goodsList[0] = productInfo;
-        console.log(goodsList);
-        this.setData({
-          'goodsList': goodsList
-        })
-        console.log('=============');
-        console.log(this.data.goodsList);
-      } else if (options.type == 'activit') { //参加线下活动订单
-        var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
-        console.log(productInfo);
-        var goodsList = [1];
-        var product = {
-          productTitle: "",
-          oldprice: "",
-          originalPrice: "",
-          productCovermap: "",
-          count: 1,
-          price: 0,
-          productInfo: '',
-          options: '',
-          memberPrice: ''
-        };
-        product.productTitle = productInfo.productTitle;
-        product.oldprice = productInfo.price;
-        product.productCovermap = productInfo.coverPath;
-        product.price = productInfo.price;
-        product.originalPrice = productInfo.price;
-        product.memberPrice = productInfo.memberPrice;
-        goodsList[0] = product;
-        that.setData({
-          'goodsList': goodsList,
-        })
-      } else if (options.type == 'address') {
-        this.setData({
-          options: true
-        })
-        //这个地方不做逻辑，逻辑要写在下面，否则会被覆盖
-      } else if (options.type == 'member') { //充值会员的订单
-        var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
-        console.log(productInfo);
-        var goodsList = [1];
-        var product = {
-          id: "",
-          productTitle: "",
-          oldprice: "",
-          originalPrice: "",
-          productCovermap: "",
-          count: 1,
-          price: 0
-        };
-        product.id = productInfo.id;
-        product.productTitle = productInfo.memberCategoryName;
-        product.oldprice = productInfo.price;
-        product.productCovermap = productInfo.coverPath;
-        product.price = productInfo.price;
-        product.originalPrice = productInfo.price;
-        goodsList[0] = product;
-        that.setData({
-          'goodsList': goodsList,
-          'isMemberPay': true
-        })
-      } else { //拿到订单数据
-        that.setData({
-          'goodsList': app.globalData.productCartList
-        })
-      }
-      //拿到可用优惠券
-      this.showCoupon();
-      this.getAddress();
-      this.getWallet();
-    }
-  },
+  //     if (options.type == 'goods') {
+  //       console.log("type=goods");
+  //       var productInfo = JSON.parse(options.productInfo);
+  //       var goodsList = [1];
+  //       goodsList[0] = productInfo;
+  //       console.log(goodsList);
+  //       this.setData({
+  //         'goodsList': goodsList
+  //       })
+  //       console.log('=============');
+  //       console.log(this.data.goodsList);
+  //     } else if (options.type == 'activit') { //参加线下活动订单
+  //       var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
+  //       console.log(productInfo);
+  //       var goodsList = [1];
+  //       var product = {
+  //         productTitle: "",
+  //         oldprice: "",
+  //         originalPrice: "",
+  //         productCovermap: "",
+  //         count: 1,
+  //         price: 0,
+  //         productInfo: '',
+  //         options: '',
+  //         memberPrice: ''
+  //       };
+  //       product.productTitle = productInfo.productTitle;
+  //       product.oldprice = productInfo.price;
+  //       product.productCovermap = productInfo.coverPath;
+  //       product.price = productInfo.price;
+  //       product.originalPrice = productInfo.price;
+  //       product.memberPrice = productInfo.memberPrice;
+  //       goodsList[0] = product;
+  //       that.setData({
+  //         'goodsList': goodsList,
+  //       })
+  //     } else if (options.type == 'address') {
+  //       this.setData({
+  //         options: true
+  //       })
+  //       //这个地方不做逻辑，逻辑要写在下面，否则会被覆盖
+  //     } else if (options.type == 'member') { //充值会员的订单
+  //       var productInfo = JSON.parse(decodeURIComponent(options.productInfo));
+  //       console.log(productInfo);
+  //       var goodsList = [1];
+  //       var product = {
+  //         id: "",
+  //         productTitle: "",
+  //         oldprice: "",
+  //         originalPrice: "",
+  //         productCovermap: "",
+  //         count: 1,
+  //         price: 0
+  //       };
+  //       product.id = productInfo.id;
+  //       product.productTitle = productInfo.memberCategoryName;
+  //       product.oldprice = productInfo.price;
+  //       product.productCovermap = productInfo.coverPath;
+  //       product.price = productInfo.price;
+  //       product.originalPrice = productInfo.price;
+  //       goodsList[0] = product;
+  //       that.setData({
+  //         'goodsList': goodsList,
+  //         'isMemberPay': true
+  //       })
+  //     } else { //拿到订单数据
+  //       that.setData({
+  //         'goodsList': app.globalData.productCartList
+  //       })
+  //     }
+  //     //拿到可用优惠券
+  //     this.showCoupon();
+  //     this.getAddress();
+  //     this.getWallet();
+  //   }
+  // },
 
   /**
    * 获取积分总额
@@ -682,7 +691,7 @@ Page({
         console.log("是否会员订单：");
         console.log(that.data.isMemberPay);
         wx.navigateTo({
-          url: '../pay/pay?TotalPrice=' + that.data.TotalPrice + '&orderId=' + res.data.data.orderId + '&product=' + productName + '&isMemberPay=' + that.data.isMemberPay + "&memberTypeId=" + that.data.goodsList[0].id,
+          url: '../pay/pay?TotalPrice=' + that.data.TotalPrice + '&orderId=' + res.data.data.orderId + '&product=' + productName + '&isMemberPay=' + that.data.isMemberPay + "&memberTypeId=" + that.data.memberTypeId,
         })
       }
     })

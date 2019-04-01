@@ -6,15 +6,6 @@
     <image src='{{user.userImg}}' class='userImg'></image>
     <!-- 用户名 -->
     <text class='userName'>{{user.userName}}</text>
-    <view class='QR' bindtap='qr'>
-      <image src='img/QR-code.png'></image>
-    </view>
-    <view class='view_VIP' wx:if="{{user.member}}==true">
-      <image class="VIP" src='{{imageUrl}}VIP.png'></image>
-    </view>
-    <view class='view_VIP' wx:else>
-      <image class="VIP" src='{{imageUrl}}normal.png'></image>
-    </view>
   </view>
 </view>
 <!-- 订单模块 -->

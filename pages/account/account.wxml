@@ -52,8 +52,8 @@
 
 <!--收入-->
 <view hidden="{{currentTab!==1}}">
-  <view wx:if="{{false}}">
-    <view wx:for="{{iShcIncomeBillList}}">
+  <view wx:if="{{iShcIncomeBillList}}">
+    <view wx:for="{{hcIncomeBillList}}">
       <view class='conbox'>
         <view class='paywx'>
           <text class='fr'>{{item.sourceType}}</text>

@@ -26,9 +26,11 @@ input {
   justify-content: center;
   align-items: center;
 }
+
 #region .section.mb60 {
   margin-bottom: 180rpx;
 }
+
 /* 头部 */
 
 .header {
@@ -109,19 +111,23 @@ input {
   margin-bottom: 20rpx;
   margin-left: 15rpx;
 }
-.section .sectionHeader{
+
+.section .sectionHeader {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
-.section .sectionHeader .mlnone{
+
+.section .sectionHeader .mlnone {
   margin-left: none;
 }
-.section .downArrow{
+
+.section .downArrow {
   width: 40rpx;
   height: 40rpx;
   margin-left: 20rpx;
 }
+
 .section  label {
   display: flex;
   flex-wrap: wrap;
@@ -130,6 +136,7 @@ input {
   align-items: center;
   margin-top: -20rpx;
 }
+
 .section .buttonGroup {
   display: flex;
   flex-wrap: wrap;
@@ -165,6 +172,7 @@ input {
   border-radius: 70rpx;
   padding-left: 20%;
 }
+
 #categoryList {
   display: flex;
   flex-wrap: wrap;
@@ -172,14 +180,17 @@ input {
   animation-fill-mode: forwards;
   height: auto;
 }
+
 .placeholdercenter {
   margin-left: -19%;
 }
+
 #productcategory {
   width: 29%;
   margin: 10rpx 1%;
   height: 80rpx;
 }
+
 #productcategory button {
   font-size: 14px;
   font-weight: 500;
@@ -188,6 +199,7 @@ input {
   border-radius: 70rpx;
   line-height: 80rpx;
 }
+
 .regionFooter {
   display: flex;
   flex-wrap: wrap;
@@ -230,6 +242,7 @@ input {
     width: 0;
   }
 }
+
 @keyframes slideup {
   from {
     height: auto;
@@ -249,6 +262,7 @@ input {
     height: auto;
   }
 }
+
 .up {
   animation: slideup 0.3s;
 }
@@ -332,4 +346,15 @@ input {
 .icon {
   width: 40rpx;
   height: 40rpx;
+}
+
+.loading {
+  padding: 10rpx;
+  text-align: center;
+}
+
+.loading{
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

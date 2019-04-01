@@ -190,7 +190,8 @@ Page({
 
     } else if (this.data.payMent == 'weixinPayment') {
       var that = this;
-      if (that.data.isMemberPay == true) {
+      if (that.data.isMemberPay == 'true') {
+        console.log("会员支付执行了");
         getApp().pay("同源梦商城-购买商品" + this.data.product, this.data.orderNum, this.data.TotalPrice, function() {
           that.setData({
             isPaySuccess: true
@@ -201,7 +202,7 @@ Page({
           })
         }, function() {
           wx.redirectTo({
-            url: '../memberCenter/memberCenter?isPaySuccess=' + that.data.isPaySuccess + '&memberTypeId=' + that.data.memberTypeId,
+            url: '../memberCenter/memberCenter?isPaySuccess=' + that.data.isPaySuccess + '&memberTypeId=' +that.data.memberTypeId,
           })
         });
       } else {
