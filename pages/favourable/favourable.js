@@ -47,7 +47,7 @@ Page({
     var type = app.globalData.couponPage;
     that.setType(type);
     that.flagPageType(that.data.type);
-    
+
     if (type == 1) {
       that.findUsedCoupon();
       that.findExpiredCoupon();
@@ -57,10 +57,10 @@ Page({
       that.findUnuseCoupon();
       that.findUsedCoupon();
     }
-
-    // setTimeout(function () {
-    //   that.flagCouponType(type, that.data.currentTab);
-    // }, 200) //延迟时间 这里是1秒
+    //console.log(unuseCouponList);
+    setTimeout(function () {
+      that.flagCouponType(type, that.data.currentTab);
+    }, 200) //延迟时间 这里是1秒
   },
 
   setType: function(type) {
@@ -90,6 +90,7 @@ Page({
     var options = {
       state: JSON.stringify(e.currentTarget.dataset.idx)
     }
+
     this.onLoad(options);
   },
 
@@ -230,9 +231,7 @@ Page({
    * 未领取的优惠券
    */
   unaccalimedCoupon: function(couponList) {
-
     var that = this;
-
     var unuseCouponList = this.data.unuseCouponList;
     var usedCouponList = this.data.usedCouponList;
     var expiredCouponList = this.data.expiredCouponList;
@@ -240,11 +239,9 @@ Page({
     var tempList = new Array();
     var n = 0;
     //未领取的优惠券
-    console.log('unuseCouponList')
-    console.log(unuseCouponList)
     for (var i = 0; i < couponList.length; i++) {
       var flag = true;
-      
+
       if (couponList[i].roductUppershelf == 0) {
         flag = false;
         continue;
@@ -266,13 +263,11 @@ Page({
           flag = false;
           break;
         }
-      }  
+      }
       if (flag == true) {
         tempList[n++] = couponList[i];
       }
     }
-    console.log('tempList')
-    console.log(tempList)
     var currentTab = that.data.currentTab
     if (currentTab == 0 && app.globalData.couponPage == 1) {
       that.setCouponData(tempList, 'couponVOS', '立即领取', that.data.currentTab);
@@ -297,7 +292,7 @@ Page({
       success: function(res) {
         setTimeout(function() {
           that.unaccalimedCoupon(res.data.data.hcCouponInfoList);
-        }, 500)
+        }, 100)
         that.setData({
           'allCouponList': res.data.data.hcCouponInfoList
         })
@@ -368,8 +363,8 @@ Page({
           var tempList = new Array();
           var n = 0;
           var couponVO = res.data.data.hcCouponInfoList;
-          for (var i = 0; i < couponVO.length;i++){
-            if (couponVO[i].roductUppershelf == 0){
+          for (var i = 0; i < couponVO.length; i++) {
+            if (couponVO[i].roductUppershelf == 0) {
               tempList[n++] = couponVO[i];
             }
           }
@@ -378,7 +373,7 @@ Page({
           })
         }
       })
-    } else if (app.globalData.couponPage ==2) {
+    } else if (app.globalData.couponPage == 2) {
       //我的优惠券
       wx.request({
         url: app.globalData.url + '/api/coupon/showCoupon?sid=' + app.globalData.sid + '&userId=' + app.globalData.uid + '&couponType=' + 3,
@@ -527,7 +522,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    that.flagCouponType(type, that.data.currentTab);
+    //that.flagCouponType(type, that.data.currentTab);
   },
 
   /**
